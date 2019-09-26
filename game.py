@@ -12,4 +12,9 @@ screen_width = 100
 
 ##### Player Setup #####
 class Player:
-    pass
+    def __init__(self):
+        self.name = ''
+        self.hp = 0
+        self.mp = 0
+        self.status_effects = []
+myPlayer = Player()
