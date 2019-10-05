@@ -65,7 +65,7 @@ def help_menu():
 
 ##### GAME FUNCTIONALITY #####
 def start_game():
-    
+    title_screen()
 
 
 
@@ -100,201 +100,163 @@ solved_places = {'a1': False, 'a2': False, 'a3': False, 'a4': False,
 
 zonemap = {
     'a1': {
-        ZONENAME = '',
-        DESCRIPTION = 'description'
-        EXAMINATION = 'examine'
-        SOLVED = False
-        UP = 'up', 'north'
-        DOWN = 'down', 'south'
-        LEFT = 'up', 'west'
-        RIGHT = 'up', 'east'
-    },
+        ZONENAME : '',
+        DESCRIPTION : 'description',
+        EXAMINATION : 'examine',
+        SOLVED : False,
+        UP : 'up', 
+        DOWN : 'down', 
+        LEFT : 'up', 
+        RIGHT : 'up',
+    }, 
     'a2': {
-        ZONENAME = '',
-        DESCRIPTION = 'description'
-        EXAMINATION = 'examine'
-        SOLVED = False
-        UP = 'up', 'north'
-        DOWN = 'down', 'south'
-        LEFT = 'up', 'west'
-        RIGHT = 'up', 'east'
-    },
+        ZONENAME : '',
+        DESCRIPTION : 'description',
+        EXAMINATION : 'examine',
+        SOLVED : False,
+        UP : 'up', 
+        DOWN : 'down', 
+        LEFT : 'up', 
+        RIGHT : 'up',
+    }, 
     'a3': {
-        ZONENAME = '',
-        DESCRIPTION = 'description'
-        EXAMINATION = 'examine'
-        SOLVED = False
-        UP = 'up', 'north'
-        DOWN = 'down', 'south'
-        LEFT = 'up', 'west'
-        RIGHT = 'up', 'east'
-    },
+        ZONENAME : '',
+        DESCRIPTION : 'description',
+        EXAMINATION : 'examine',
+        SOLVED : False,
+        UP : 'up', 
+        DOWN : 'down', 
+        LEFT : 'up', 
+        RIGHT : 'up',
+    }, 
     'a4': {
-        ZONENAME = '',
-        DESCRIPTION = 'description'
-        EXAMINATION = 'examine'
-        SOLVED = False
-        UP = 'up', 'north'
-        DOWN = 'down', 'south'
-        LEFT = 'up', 'west'
-        RIGHT = 'up', 'east'
-    },
+        ZONENAME : '',
+        DESCRIPTION : 'description',
+        EXAMINATION : 'examine',
+        SOLVED : False,
+        UP : 'up', 
+        DOWN : 'down', 
+        LEFT : 'up', 
+        RIGHT : 'up',
+    }, 
     'b1': {
-        ZONENAME = '',
-        DESCRIPTION = 'description'
-        EXAMINATION = 'examine'
-        SOLVED = False
-        UP = 'up', 'north'
-        DOWN = 'down', 'south'
-        LEFT = 'up', 'west'
-        RIGHT = 'up', 'east'
-    },
+        ZONENAME : '',
+        DESCRIPTION : 'description',
+        EXAMINATION : 'examine',
+        SOLVED : False,
+        UP : 'up', 
+        DOWN : 'down', 
+        LEFT : 'up', 
+        RIGHT : 'up',
+    }, 
     'b2': {
-        ZONENAME = 'Home',
-        DESCRIPTION = 'description'
-        EXAMINATION = 'examine'
-        SOLVED = False
-        UP = 'up', 'north'
-        DOWN = 'down', 'south'
-        LEFT = 'up', 'west'
-        RIGHT = 'up', 'east'
-    },
+        ZONENAME : '',
+        DESCRIPTION : 'description',
+        EXAMINATION : 'examine',
+        SOLVED : False,
+        UP : 'up', 
+        DOWN : 'down', 
+        LEFT : 'up', 
+        RIGHT : 'up',
+    }, 
     'b3': {
-        ZONENAME = '',
-        DESCRIPTION = 'description'
-        EXAMINATION = 'examine'
-        SOLVED = False
-        UP = 'up', 'north'
-        DOWN = 'down', 'south'
-        LEFT = 'up', 'west'
-        RIGHT = 'up', 'east'
-    },
+        ZONENAME : '',
+        DESCRIPTION : 'description',
+        EXAMINATION : 'examine',
+        SOLVED : False,
+        UP : 'up', 
+        DOWN : 'down', 
+        LEFT : 'up', 
+        RIGHT : 'up',
+    }, 
     'b4': {
-        ZONENAME = '',
-        DESCRIPTION = 'description'
-        EXAMINATION = 'examine'
-        SOLVED = False
-        UP = 'up', 'north'
-        DOWN = 'down', 'south'
-        LEFT = 'up', 'west'
-        RIGHT = 'up', 'east'
-    },
+        ZONENAME : '',
+        DESCRIPTION : 'description',
+        EXAMINATION : 'examine',
+        SOLVED : False,
+        UP : 'up', 
+        DOWN : 'down', 
+        LEFT : 'up', 
+        RIGHT : 'up',
+    }, 
     'c1': {
-        ZONENAME = '',
-        DESCRIPTION = 'description'
-        EXAMINATION = 'examine'
-        SOLVED = False
-        UP = 'up', 'north'
-        DOWN = 'down', 'south'
-        LEFT = 'up', 'west'
-        RIGHT = 'up', 'east'
-    },
+        ZONENAME : '',
+        DESCRIPTION : 'description',
+        EXAMINATION : 'examine',
+        SOLVED : False,
+        UP : 'up', 
+        DOWN : 'down', 
+        LEFT : 'up', 
+        RIGHT : 'up',
+    }, 
     'c2': {
-        ZONENAME = '',
-        DESCRIPTION = 'description'
-        EXAMINATION = 'examine'
-        SOLVED = False
-        UP = 'up', 'north'
-        DOWN = 'down', 'south'
-        LEFT = 'up', 'west'
-        RIGHT = 'up', 'east'
-    },
+        ZONENAME : '',
+        DESCRIPTION : 'description',
+        EXAMINATION : 'examine',
+        SOLVED : False,
+        UP : 'up', 
+        DOWN : 'down', 
+        LEFT : 'up', 
+        RIGHT : 'up',
+    }, 
     'c3': {
-        ZONENAME = '',
-        DESCRIPTION = 'description'
-        EXAMINATION = 'examine'
-        SOLVED = False
-        UP = 'up', 'north'
-        DOWN = 'down', 'south'
-        LEFT = 'up', 'west'
-        RIGHT = 'up', 'east'
-    },
+        ZONENAME : '',
+        DESCRIPTION : 'description',
+        EXAMINATION : 'examine',
+        SOLVED : False,
+        UP : 'up', 
+        DOWN : 'down', 
+        LEFT : 'up', 
+        RIGHT : 'up',
+    }, 
     'c4': {
-        ZONENAME = '',
-        DESCRIPTION = 'description'
-        EXAMINATION = 'examine'
-        SOLVED = False
-        UP = 'up', 'north'
-        DOWN = 'down', 'south'
-        LEFT = 'up', 'west'
-        RIGHT = 'up', 'east'
-    },
+        ZONENAME : '',
+        DESCRIPTION : 'description',
+        EXAMINATION : 'examine',
+        SOLVED : False,
+        UP : 'up', 
+        DOWN : 'down', 
+        LEFT : 'up', 
+        RIGHT : 'up',
+    }, 
     'd1': {
-        ZONENAME = '',
-        DESCRIPTION = 'description'
-        EXAMINATION = 'examine'
-        SOLVED = False
-        UP = 'up', 'north'
-        DOWN = 'down', 'south'
-        LEFT = 'up', 'west'
-        RIGHT = 'up', 'east'
-    },
+        ZONENAME : '',
+        DESCRIPTION : 'description',
+        EXAMINATION : 'examine',
+        SOLVED : False,
+        UP : 'up', 
+        DOWN : 'down', 
+        LEFT : 'up', 
+        RIGHT : 'up',
+    }, 
     'd2': {
-        ZONENAME = '',
-        DESCRIPTION = 'description'
-        EXAMINATION = 'examine'
-        SOLVED = False
-        UP = 'up', 'north'
-        DOWN = 'down', 'south'
-        LEFT = 'up', 'west'
-        RIGHT = 'up', 'east'
-    },
+        ZONENAME : '',
+        DESCRIPTION : 'description',
+        EXAMINATION : 'examine',
+        SOLVED : False,
+        UP : 'up', 
+        DOWN : 'down', 
+        LEFT : 'up', 
+        RIGHT : 'up',
+    }, 
     'd3': {
-        ZONENAME = '',
-        DESCRIPTION = 'description'
-        EXAMINATION = 'examine'
-        SOLVED = False
-        UP = 'up', 'north'
-        DOWN = 'down', 'south'
-        LEFT = 'up', 'west'
-        RIGHT = 'up', 'east'
-    },
+        ZONENAME : '',
+        DESCRIPTION : 'description',
+        EXAMINATION : 'examine',
+        SOLVED : False,
+        UP : 'up', 
+        DOWN : 'down', 
+        LEFT : 'up', 
+        RIGHT : 'up',
+    }, 
     'd4': {
-        ZONENAME = '',
-        DESCRIPTION = 'description'
-        EXAMINATION = 'examine'
-        SOLVED = False
-        UP = 'up', 'north'
-        DOWN = 'down', 'south'
-        LEFT = 'up', 'west'
-        RIGHT = 'up', 'east'
-    },
+        ZONENAME : '',
+        DESCRIPTION : 'description',
+        EXAMINATION : 'examine',
+        SOLVED : False,
+        UP : 'up', 
+        DOWN : 'down', 
+        LEFT : 'up', 
+        RIGHT : 'up',
+    },     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
