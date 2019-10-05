@@ -17,7 +17,7 @@ class player:
         self.hp = 0
         self.mp = 0
         self.status_effects = []
-        self.location = 'start'
+        self.location = 'b2'
 myPlayer = player()
 
 ##### Title Screen #####
@@ -253,12 +253,58 @@ zonemap = {
 }
 
 
-##### #####
+##### GAME INTERACTIVITY #####
+def print_location():
+    print('\n' + ('#' * (4 + len(myPlayer.location))))
+    print('# ' + myPlayer.location.upper() + ' #')
+    print('# ' + zonemap[myPlayer.location][DESCRIPTION] +' #')
+    print('#' * (4 + len(myPlayer.location)))
+
+def prompt():
+    print('\n' + '===============================')
+    print('What would you like to do?')
+    action = input('> ')
+    acceptable_actions = ['move', 'go', 'travel', 'walk', 'quit', 'examine', 'inspect', 'interact', 'look']
+    while action.lower().strip() not in acceptable_actions:
+        print('Unknown action, try again.\n')
+        action = input('> ')
+    if action.lower().strip() == 'quit':
+        sys.exit()
+    elif action.lower().strip() == ['move', 'go', 'travel', 'walk']:
+        player_move(action.lower().strip())
+    elif action.lower().strip() == ['examine', 'inspect', 'interact', 'look']:
+        player_examine(action.lower().strip())        
+    
+def player_move(myAction):
+    ask = 'Where would you like to move to?\n'
+    dest = input(ask)
+    if dest == ['up', 'north']
+        destination = zonemap[myPlayer.location][UP]
+        movement_handler(destination)
+    elif dest == ['down', 'south']
+        destination = zonemap[myPlayer.location][DOWN]
+        movement_handler(destination)
+    elif dest == ['left', 'west']
+        destination = zonemap[myPlayer.location][LEFT]
+        movement_handler(destination)
+    elif dest == ['right', 'east']
+        destination = zonemap[myPlayer.location][RIGHT]
+        movement_handler(destination)
+def movement_handler(destination):
+    print('\n'+ 'You have moved to ' + destination + '.')
+    myPlayer.location = destination
+    print_location()
+
+def player_examine(action):
+    if zonemap[myPlayer.location][SOLVED]:
+        print('You have already exhasted this zone.')
+    else:
+        print('You triggered a fight against a monster')
+
+
 
 ##### GAME FUNCTIONALITY #####
 def start_game():
-    title_screen()
-
-
+    return
 
 
