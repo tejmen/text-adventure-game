@@ -21,11 +21,13 @@ class player:
         self.job = ''
         self.hp = 0
         self.ap = 0
+        self.heal = 0
         self.status_effects = []
         self.location = 'b2'
         self.game_over = False
         self.inventory = ''
         self.weapon = ''
+        self.xp = 0
 myPlayer = player()
 
 class Gslime:
@@ -33,8 +35,7 @@ class Gslime:
         self.hp = 300
         self.ap = 20
 GreenS = Gslime()
-while GreenS.hp <= 0:
-    GreenS.hp = 0
+
 
 ##### Title Screen #####
 def title_screen_selections():
@@ -44,6 +45,8 @@ def title_screen_selections():
     elif option.lower().strip() == ("help"):
         help_menu()
     elif option.lower().strip() == ("quit"):
+        print('You have')
+        print(myPlayer.xp)
         sys.exit()
     elif option.lower().strip() == ('resume'):
         main_game_loop()
@@ -70,6 +73,8 @@ def title_screen_selections():
         elif option.lower().strip() == ("help"):
             help_menu()
         elif option.lower().strip() == ("quit"):
+            print('You have')
+            print(myPlayer.xp)
             sys.exit()
         elif option.lower().strip() == ('resume'):
             main_game_loop()
@@ -227,7 +232,7 @@ zonemap = {
     'b4': {
         ZONENAME : '???',
         DESCRIPTION : 'This is an old Building.',
-        EXAMINATION : 'There is a button and a circle on the floor.',
+        EXAMINATION : 'There is a button and a glowing circle on the floor.',
         SOLVED : False,
         UP : 'a4',
         DOWN : 'c4',
@@ -326,13 +331,15 @@ def print_location():
 def prompt():
     print('\n' + '===============================')
     print('What would you like to do?')
-    print("(You can 'move', 'quit', 'look' or 'act')")
+    print("(You can 'move', 'quit', 'look', 'xp' or 'act')")
     action = input('> ')
-    acceptable_actions = ['move', 'quit', 'look', '/god', 'acceptable_actions', 'act']
+    acceptable_actions = ['move', 'quit', 'look', '/god', 'acceptable_actions', 'act', 'xp']
     while action.lower() not in acceptable_actions:
         print('Unknown action, try again.\n')
         action = input('> ')
     if action.lower().strip() == 'quit':
+        print('You have')
+        print(myPlayer.xp)
         sys.exit()
     if action.lower().strip() == 'move':
         player_move()
@@ -347,6 +354,9 @@ def prompt():
         print("Don't tell anyone." + " ;)")
     elif action.lower().strip() == 'act':
         player_act()
+    elif action.lower().strip() == 'xp':
+        print('You have')
+        print(myPlayer.xp)
 
 def player_move():
 
@@ -383,9 +393,6 @@ def movement_handler(destination):
     print_location()
 
 def player_examine():
-    if myPlayer.location == 'd4':
-        title_screen();
-
     print(zonemap[myPlayer.location][EXAMINATION])
 
 
@@ -441,6 +448,7 @@ def setup_game():
     elif myPlayer.job == 'healer':
         myPlayer.hp = 200
         myPlayer.ap = 40
+        myPlayer.heal = 40
         myPlayer.weapon = 'magic book'
 
     ### INTRODUCTION ###
@@ -481,10 +489,12 @@ def player_act():
     if zonemap[myPlayer.location][SOLVED] == False:
         if myPlayer.location == 'b4':
             myPlayer.location = 'c1'
+            zonemap[myPlayer.location][ZONENAME] = 'Telporter'
             destination = myPlayer.location
             movement_handler(destination)
         elif myPlayer.location == 'c1':
             myPlayer.location = 'b4'
+            zonemap[myPlayer.location][ZONENAME] = 'Telporter'
             destination = myPlayer.location
             movement_handler(destination)
         elif myPlayer.location == 'd4':
@@ -549,7 +559,7 @@ def turn_based_combat():
         print('What would you like to do?')
         print("(You can type 'attack' to attack the Green slime.)")
         attack = input('> ')
-        acceptable_attack = ['attack','kill']
+        acceptable_attack = ['attack','kill', 'heal']
         while attack.lower().strip() not in acceptable_attack:
             print('Unknown action, try again.\n')
             attack = input('> ')
@@ -563,22 +573,43 @@ def turn_based_combat():
                 print(GreenS.hp)
         if attack.lower().strip() == 'attack':
             GreenS.hp = GreenS.hp - myPlayer.ap
-            print("The green slime's health is ")
-            print(GreenS.hp)
+            if GreenS.hp < 0:
+                GreenS.hp = 0
+                print("The green slime's health is ")
+                print(GreenS.hp)
+            else:
+                print("The green slime's health is ")
+                print(GreenS.hp)
         elif attack.lower().strip() == 'kill':
             GreenS.hp = 0
             print("The green slime's health is ")
             print(GreenS.hp)
         if attack.lower().strip() == 'heal':
             if myPlayer.job == 'healer':
-                print('poop')
+                myPlayer.hp = myPlayer.hp + myPlayer.heal
+                if myPlayer.hp > 200:
+                    myPlayer.hp = 200
+                text3 = 'You have '
+                text4 = 'health now.\n'
+                for character in text3:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.1)
+                print(myPlayer.hp)
+                time.sleep(1)
+                for character in text4:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.1)
+            else:
+                print("You can't heal. You're not a healer.")
         if GreenS.hp > 0:
-            print('################################')
+            print('\n################################')
             print('# The Green Slime attacked you.#')
             print('################################')
             myPlayer.hp = myPlayer.hp - GreenS.ap
             text = 'You have '
-            text2 = 'health left.'
+            text2 = 'health left.\n'
             for character in text:
                 sys.stdout.write(character)
                 sys.stdout.flush()
@@ -592,6 +623,7 @@ def turn_based_combat():
     print('# You have defeated a green slime. #')
     print('#     You have gained 100 XP.      #')
     print('####################################')
+    myPlayer.xp = 100
     GreenS.hp = 300
     zonemap[myPlayer.location][SOLVED] = True
     main_game_loop()
