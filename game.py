@@ -1,8 +1,8 @@
 # Python Text RPG
 # Created by tej_men
-#     \
-# (:D)-<
 #     /
+# (:D)-<
+#     \
 
 
 import cmd
@@ -35,7 +35,16 @@ class Gslime:
         self.hp = 300
         self.ap = 20
 GreenS = Gslime()
-
+class Zomboy:
+    def __init__(self):
+        self.hp = 500
+        self.ap = 40
+Zombie = Zomboy()
+class Skelemob:
+    def __init__(self):
+        self.hp = 500
+        self.ap = 40
+Skeleton = Skelemob()
 
 ##### Title Screen #####
 def title_screen_selections():
@@ -47,6 +56,7 @@ def title_screen_selections():
     elif option.lower().strip() == ("quit"):
         print('You have')
         print(myPlayer.xp)
+        print('xp.')
         sys.exit()
     elif option.lower().strip() == ('resume'):
         main_game_loop()
@@ -75,6 +85,7 @@ def title_screen_selections():
         elif option.lower().strip() == ("quit"):
             print('You have')
             print(myPlayer.xp)
+            print('xp.')
             sys.exit()
         elif option.lower().strip() == ('resume'):
             main_game_loop()
@@ -104,11 +115,16 @@ def title_screen():
 def help_menu():
     print('###############################')
     print('#            Help             #')
-    print('# • Use move command to move  #')
+    print('# • Type "move" command to    #')
+    print('#   move                      #')
     print('# • Type your commands to do  #')
     print('#   them                      #')
-    print('# • Use "look" to inspect     #')
+    print('# • Type "look" to inspect    #')
     print('#   something                 #')
+    print('# • Type "act" to do what you #')
+    print('#   can on your place         #')
+    print('# • If you find a Dungeon,    #')
+    print('#  please help to excavate it #')
     print('#   Copyright 2019 tejmen09   #')
     print('###############################')
     time.sleep(5)
