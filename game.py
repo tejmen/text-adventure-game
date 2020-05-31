@@ -103,6 +103,7 @@ def title_screen_selections():
                     print('Hello god. Fancy seeing you here.')
                     godbool = 'yes'
                     title_screen()
+            title_screen()
 
 def title_screen():
     print('############################')
@@ -113,7 +114,6 @@ def title_screen():
     print('#   - Acknowledgements -   #')
     print('#         - Quit -         #')
     print('# Copyright 2019 tejmen09  #')
-    print(random_attacker)
     title_screen_selections()
 
 def help_menu():
@@ -572,79 +572,229 @@ def player_act():
         print('This place has already been excavated...')
         print('BY YOU!')
 def turn_based_combat():
-    print('##########################################')
-    print('# A Green Slime appeared out of the dark #')
-    print('##########################################')
-    while GreenS.hp > 0:
-        print('What would you like to do?')
-        print("(You can type 'attack' to attack the Green slime.)")
-        attack = input('> ')
-        acceptable_attack = ['attack','kill', 'heal']
-        while attack.lower().strip() not in acceptable_attack:
-            print('Unknown action, try again.\n')
+    random_attacker = (random.randint(1,3))
+    if random_attacker == 1 :
+        print('##########################################')
+        print('# A Green Slime appeared out of the dark #')
+        print('##########################################')
+        while GreenS.hp > 0:
+            print('What would you like to do?')
+            print("(You can type 'attack' to attack the Green slime.)")
             attack = input('> ')
+            acceptable_attack = ['attack','kill', 'heal']
+            while attack.lower().strip() not in acceptable_attack:
+                print('Unknown action, try again.\n')
+                attack = input('> ')
+                if attack.lower().strip() == 'attack':
+                    GreenS.hp = GreenS.hp - myPlayer.ap
+                    print("The green slime's health is ")
+                    print(GreenS.hp)
+                elif attack.lower().strip() == 'kill':
+                    GreenS.hp = 0
+                    print("The green slime's health is ")
+                    print(GreenS.hp)
             if attack.lower().strip() == 'attack':
                 GreenS.hp = GreenS.hp - myPlayer.ap
-                print("The green slime's health is ")
-                print(GreenS.hp)
+                if GreenS.hp < 0:
+                    GreenS.hp = 0
+                    print("The green slime's health is ")
+                    print(GreenS.hp)
+                else:
+                    print("The green slime's health is ")
+                    print(GreenS.hp)
             elif attack.lower().strip() == 'kill':
                 GreenS.hp = 0
                 print("The green slime's health is ")
                 print(GreenS.hp)
-        if attack.lower().strip() == 'attack':
-            GreenS.hp = GreenS.hp - myPlayer.ap
-            if GreenS.hp < 0:
-                GreenS.hp = 0
-                print("The green slime's health is ")
-                print(GreenS.hp)
-            else:
-                print("The green slime's health is ")
-                print(GreenS.hp)
-        elif attack.lower().strip() == 'kill':
-            GreenS.hp = 0
-            print("The green slime's health is ")
-            print(GreenS.hp)
-        if attack.lower().strip() == 'heal':
-            if myPlayer.job == 'healer':
-                myPlayer.hp = myPlayer.hp + myPlayer.heal
-                if myPlayer.hp > 200:
-                    myPlayer.hp = 200
-                text3 = 'You have '
-                text4 = 'health now.\n'
-                for character in text3:
+            if attack.lower().strip() == 'heal':
+                if myPlayer.job == 'healer':
+                    myPlayer.hp = myPlayer.hp + myPlayer.heal
+                    if myPlayer.hp > 200:
+                        myPlayer.hp = 200
+                    text3 = 'You have '
+                    text4 = 'health now.\n'
+                    for character in text3:
+                        sys.stdout.write(character)
+                        sys.stdout.flush()
+                        time.sleep(0.1)
+                    print(myPlayer.hp)
+                    time.sleep(1)
+                    for character in text4:
+                        sys.stdout.write(character)
+                        sys.stdout.flush()
+                        time.sleep(0.1)
+                else:
+                    print("You can't heal. You're not a healer.")
+            if GreenS.hp > 0:
+                print('\n################################')
+                print('# The Green Slime attacked you.#')
+                print('################################')
+                myPlayer.hp = myPlayer.hp - GreenS.ap
+                text = 'You have '
+                text2 = 'health left.\n'
+                for character in text:
                     sys.stdout.write(character)
                     sys.stdout.flush()
                     time.sleep(0.1)
                 print(myPlayer.hp)
-                time.sleep(1)
-                for character in text4:
+                for character in text2:
                     sys.stdout.write(character)
                     sys.stdout.flush()
                     time.sleep(0.1)
-            else:
-                print("You can't heal. You're not a healer.")
-        if GreenS.hp > 0:
-            print('\n################################')
-            print('# The Green Slime attacked you.#')
-            print('################################')
-            myPlayer.hp = myPlayer.hp - GreenS.ap
-            text = 'You have '
-            text2 = 'health left.\n'
-            for character in text:
-                sys.stdout.write(character)
-                sys.stdout.flush()
-                time.sleep(0.1)
-            print(myPlayer.hp)
-            for character in text2:
-                sys.stdout.write(character)
-                sys.stdout.flush()
-                time.sleep(0.1)
-    print('####################################')
-    print('# You have defeated a green slime. #')
-    print('#     You have gained 100 XP.      #')
-    print('####################################')
-    myPlayer.xp = 100
-    GreenS.hp = 300
+        print('####################################')
+        print('# You have defeated a green slime. #')
+        print('#     You have gained 100 XP.      #')
+        print('####################################')
+        myPlayer.xp = myPlayer.xp + 100
+        GreenS.hp = 300
+    elif random_attacker == 2:
+        print('#####################################')
+        print('# A skeleton appeared out of the dark #')
+        print('#####################################')
+        while skeleton.hp > 0:
+            print('What would you like to do?')
+            print("(You can type 'attack' to attack the skeleton.)")
+            attack = input('> ')
+            acceptable_attack = ['attack','kill', 'heal']
+            while attack.lower().strip() not in acceptable_attack:
+                print('Unknown action, try again.\n')
+                attack = input('> ')
+                if attack.lower().strip() == 'attack':
+                    skeleton.hp = skeleton.hp - myPlayer.ap
+                    print("The skeleton's health is ")
+                    print(skeleton.hp)
+                elif attack.lower().strip() == 'kill':
+                    skeleton.hp = 0
+                    print("The skeleton's health is ")
+                    print(skeleton.hp)
+            if attack.lower().strip() == 'attack':
+                skeleton.hp = skeleton.hp - myPlayer.ap
+                if skeleton.hp < 0:
+                    skeleton.hp = 0
+                    print("The skeleton's health is ")
+                    print(skeleton.hp)
+                else:
+                    print("The skeleton's health is ")
+                    print(skeleton.hp)
+            elif attack.lower().strip() == 'kill':
+                skeleton.hp = 0
+                print("The skeleton's health is ")
+                print(skeleton.hp)
+            if attack.lower().strip() == 'heal':
+                if myPlayer.job == 'healer':
+                    myPlayer.hp = myPlayer.hp + myPlayer.heal
+                    if myPlayer.hp > 200:
+                        myPlayer.hp = 200
+                    text3 = 'You have '
+                    text4 = 'health now.\n'
+                    for character in text3:
+                        sys.stdout.write(character)
+                        sys.stdout.flush()
+                        time.sleep(0.1)
+                    print(myPlayer.hp)
+                    time.sleep(1)
+                    for character in text4:
+                        sys.stdout.write(character)
+                        sys.stdout.flush()
+                        time.sleep(0.1)
+                else:
+                    print("You can't heal. You're not a healer.")
+            if skeleton.hp > 0:
+                print('\n##########################')
+                print('# The skeleton attacked you. #')
+                print('############################')
+                myPlayer.hp = myPlayer.hp - skeleton.ap
+                text = 'You have '
+                text2 = 'health left.\n'
+                for character in text:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.1)
+                print(myPlayer.hp)
+                for character in text2:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.1)
+        print('####################################')
+        print('#   You have defeated a skeleton.    #')
+        print('#     You have gained 300 XP.      #')
+        print('####################################')
+        myPlayer.xp = myPlayer.xp + 300
+        skeleton.hp = 500
+    elif random_attacker == 3:
+        print('#####################################')
+        print('# A Zombie appeared out of the dark #')
+        print('#####################################')
+        while zombie.hp > 0:
+            print('What would you like to do?')
+            print("(You can type 'attack' to attack the Zombie.)")
+            attack = input('> ')
+            acceptable_attack = ['attack','kill', 'heal']
+            while attack.lower().strip() not in acceptable_attack:
+                print('Unknown action, try again.\n')
+                attack = input('> ')
+                if attack.lower().strip() == 'attack':
+                    zombie.hp = zombie.hp - myPlayer.ap
+                    print("The Zombie's health is ")
+                    print(zombie.hp)
+                elif attack.lower().strip() == 'kill':
+                    zombie.hp = 0
+                    print("The Zombie's health is ")
+                    print(zombie.hp)
+            if attack.lower().strip() == 'attack':
+                zombie.hp = zombie.hp - myPlayer.ap
+                if zombie.hp < 0:
+                    zombie.hp = 0
+                    print("The Zombie's health is ")
+                    print(zombie.hp)
+                else:
+                    print("The Zombie's health is ")
+                    print(zombie.hp)
+            elif attack.lower().strip() == 'kill':
+                zombie.hp = 0
+                print("The Zombie's health is ")
+                print(zombie.hp)
+            if attack.lower().strip() == 'heal':
+                if myPlayer.job == 'healer':
+                    myPlayer.hp = myPlayer.hp + myPlayer.heal
+                    if myPlayer.hp > 200:
+                        myPlayer.hp = 200
+                    text3 = 'You have '
+                    text4 = 'health now.\n'
+                    for character in text3:
+                        sys.stdout.write(character)
+                        sys.stdout.flush()
+                        time.sleep(0.1)
+                    print(myPlayer.hp)
+                    time.sleep(1)
+                    for character in text4:
+                        sys.stdout.write(character)
+                        sys.stdout.flush()
+                        time.sleep(0.1)
+                else:
+                    print("You can't heal. You're not a healer.")
+            if zombie.hp > 0:
+                print('\n##########################')
+                print('# The Zombie attacked you. #')
+                print('############################')
+                myPlayer.hp = myPlayer.hp - zombie.ap
+                text = 'You have '
+                text2 = 'health left.\n'
+                for character in text:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.1)
+                print(myPlayer.hp)
+                for character in text2:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.1)
+        print('####################################')
+        print('#   You have defeated a zombie.    #')
+        print('#     You have gained 500 XP.      #')
+        print('####################################')
+        myPlayer.xp = myPlayer.xp + 500
+        zombie.hp = 500
     zonemap[myPlayer.location][SOLVED] = True
     main_game_loop()
 
