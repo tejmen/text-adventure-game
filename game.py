@@ -677,7 +677,7 @@ def turn_based_combat():
                 if myPlayer.hp <= 0:
                     myPlayer.hp = 0
                     myPlayer.game_over = True
-                if myPlayer.game_over = True:
+                if myPlayer.game_over == True:
                     print('############################################')
                     print('# You are Dieing slowly, incased in slime. #')
                     print('############################################')
