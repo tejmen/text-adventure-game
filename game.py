@@ -11,8 +11,11 @@ import sys
 import os
 import time
 import random
+from random import randrange
 
+random_attacker = (random.randint(1,3))
 screen_width = 100
+
 godbool = '1'
 ##### Player Setup #####
 class player:
@@ -39,12 +42,12 @@ class Zomboy:
     def __init__(self):
         self.hp = 500
         self.ap = 40
-Zombie = Zomboy()
+zombie = Zomboy()
 class Skelemob:
     def __init__(self):
         self.hp = 500
         self.ap = 40
-Skeleton = Skelemob()
+skeleton = Skelemob()
 
 ##### Title Screen #####
 def title_screen_selections():
@@ -110,6 +113,7 @@ def title_screen():
     print('#   - Acknowledgements -   #')
     print('#         - Quit -         #')
     print('# Copyright 2019 tejmen09  #')
+    print(random_attacker)
     title_screen_selections()
 
 def help_menu():
