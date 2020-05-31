@@ -1,8 +1,8 @@
 # Python Text RPG
 # Created by tej_men
-#     /
-# (:D)-<
 #     \
+# (:D)-<
+#     /
 
 
 import cmd
@@ -641,6 +641,14 @@ def turn_based_combat():
                     sys.stdout.write(character)
                     sys.stdout.flush()
                     time.sleep(0.1)
+                if myPlayer.hp <= 0:
+                    myPlayer.hp = 0
+                    myPlayer.game_over = True
+                if myPlayer.game_over = True:
+                    print('############################################')
+                    print('# You are Dieing slowly, incased in slime. #')
+                    print('############################################')
+                    title_screen()
         print('####################################')
         print('# You have defeated a green slime. #')
         print('#     You have gained 100 XP.      #')
