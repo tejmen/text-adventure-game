@@ -57,6 +57,10 @@ def title_screen_selections():
         print('You have')
         print(myPlayer.xp)
         print('xp.')
+        print('###############')
+        print('#  GOODBYE!!  #')
+        print('###############')
+        time.sleep(0.5)
         sys.exit()
     elif option.lower().strip() == ('resume'):
         main_game_loop()
@@ -64,7 +68,7 @@ def title_screen_selections():
         acknowledgements_menu()
     elif option.lower().strip() == '/god':
         print('God mode not enabled, you cheat.')
-        print('PLAY THE GAME PROPERLY YOU WEASAL!')
+        print('PLAY THE GAME PROPERLY YOU WEASEL!')
         godquestion = "DON'T CHEAT EVER AGAIN!"
         godanswer = input(godquestion)
 
@@ -86,6 +90,10 @@ def title_screen_selections():
             print('You have')
             print(myPlayer.xp)
             print('xp.')
+            print('###############')
+            print('#  GOODBYE!!  #')
+            print('###############')
+            time.sleep(0.5)
             sys.exit()
         elif option.lower().strip() == ('resume'):
             main_game_loop()
@@ -141,7 +149,7 @@ def acknowledgements_menu():
     print('# • Pranot Mengle             #')
     print('# Copyright 2019 Tejas Mengle #')
     print('###############################')
-    time.sleep(5)
+    time.sleep(3)
     title_screen()
 
 
@@ -167,6 +175,7 @@ UP = 'up', 'north'
 DOWN = 'down', 'south'
 LEFT = 'up', 'west'
 RIGHT = 'up', 'east'
+DIALOGUE = 'dialogue'
 
 solved_places = {'a1': False, 'a2': False, 'a3': False, 'a4': False,
                 'b1': False, 'b2': False, 'b3': False, 'b4': False,
@@ -184,6 +193,7 @@ zonemap = {
         DOWN : 'b1',
         LEFT : 'a1',
         RIGHT : 'a2',
+        DIALOGUE : 'A Seller in the Market says: "I used to go fishing at the beach, but now theres monsters nearby!"'
     },
     'a2': {
         ZONENAME : 'Town Entrance',
@@ -194,6 +204,7 @@ zonemap = {
         DOWN : 'b2',
         LEFT : 'a1',
         RIGHT : 'a3',
+        DIALOGUE : 'A old villager by the entrance says: "Hello my dear child, where have you come from?"'
     },
     'a3': {
         ZONENAME : 'Town Square',
@@ -204,6 +215,7 @@ zonemap = {
         DOWN : 'b3',
         LEFT : 'a2',
         RIGHT : 'a4',
+        DIALOGUE : 'A villager by the Well in the middle says: "You should throw a gold coin in the well for good luck"'
     },
     'a4': {
         ZONENAME : 'Town Hall',
@@ -214,6 +226,7 @@ zonemap = {
         DOWN : 'b4',
         LEFT : 'a3',
         RIGHT : 'a4',
+        DIALOGUE : 'The Mayor comes out of the town hall. He says: "Beware all, for there are monsters south of here!"'
     },
     'b1': {
         ZONENAME : 'Chest',
@@ -224,6 +237,7 @@ zonemap = {
         DOWN : 'c1',
         LEFT : 'b1',
         RIGHT : 'b2',
+        DIALOGUE : 'Theres nobody to talk to here...'
     },
     'b2': {
         ZONENAME : 'Home',
@@ -234,6 +248,7 @@ zonemap = {
         DOWN : 'c2',
         LEFT : 'b1',
         RIGHT : 'b3',
+        DIALOGUE : 'Theres nobody to talk to here...'
     },
     'b3': {
         ZONENAME : 'Forest',
@@ -244,6 +259,7 @@ zonemap = {
         DOWN : 'c3',
         LEFT : 'b2',
         RIGHT : 'b4',
+        DIALOGUE : 'Theres nobody to talk to here...'
     },
     'b4': {
         ZONENAME : '???',
@@ -254,6 +270,7 @@ zonemap = {
         DOWN : 'c4',
         LEFT : 'b3',
         RIGHT : 'b4',
+        DIALOGUE : 'Theres nobody to talk to here...'
     },
     'c1': {
         ZONENAME : '???',
@@ -264,6 +281,7 @@ zonemap = {
         DOWN : 'd1',
         LEFT : 'c1',
         RIGHT : 'c2',
+        DIALOGUE : 'Theres nobody to talk to here...'
     },
     'c2': {
         ZONENAME : 'Forest',
@@ -274,6 +292,7 @@ zonemap = {
         DOWN : 'd2',
         LEFT : 'c1',
         RIGHT : 'c3',
+        DIALOGUE : 'Theres nobody to talk to here...'
     },
     'c3': {
         ZONENAME : 'Forest',
@@ -284,6 +303,7 @@ zonemap = {
         DOWN : 'd3',
         LEFT : 'c2',
         RIGHT : 'c4',
+        DIALOGUE : 'Theres nobody to talk to here...'
     },
     'c4': {
         ZONENAME : 'Dungeon',
@@ -294,6 +314,7 @@ zonemap = {
         DOWN : 'd4',
         LEFT : 'c3',
         RIGHT : 'c4',
+        DIALOGUE : 'Theres nobody to talk to here...'
     },
     'd1': {
         ZONENAME : 'Beach',
@@ -304,6 +325,7 @@ zonemap = {
         DOWN : 'd1',
         LEFT : 'd1',
         RIGHT : 'd2',
+        DIALOGUE : 'Theres nobody to talk to here...'
     },
     'd2': {
         ZONENAME : 'Beach',
@@ -314,6 +336,7 @@ zonemap = {
         DOWN : 'd2',
         LEFT : 'd1',
         RIGHT : 'd3',
+        DIALOGUE : 'Theres nobody to talk to here...'
     },
     'd3': {
         ZONENAME : 'Dungeon',
@@ -324,6 +347,7 @@ zonemap = {
         DOWN : 'd2',
         LEFT : 'd2',
         RIGHT : 'd4',
+        DIALOGUE : 'Theres nobody to talk to here...'
     },
     'd4': {
         ZONENAME : 'End Portal',
@@ -334,6 +358,7 @@ zonemap = {
         DOWN : 'd4',
         LEFT : 'd3',
         RIGHT : 'd4',
+        DIALOGUE : 'Theres nobody to talk to here...'
     },
 }
 
@@ -347,15 +372,20 @@ def print_location():
 def prompt():
     print('\n' + '===============================')
     print('What would you like to do?')
-    print("(You can 'move', 'quit', 'look', 'xp' or 'act')")
+    print("(You can 'move', 'quit', 'look', 'xp', 'talk' or 'act')")
     action = input('> ')
-    acceptable_actions = ['move', 'quit', 'look', '/god', 'acceptable_actions', 'act', 'xp']
+    acceptable_actions = ['move', 'quit', 'look', '/god', 'acceptable_actions', 'act', 'xp', 'talk']
     while action.lower() not in acceptable_actions:
         print('Unknown action, try again.\n')
         action = input('> ')
     if action.lower().strip() == 'quit':
         print('You have')
         print(myPlayer.xp)
+        print('xp.')
+        print('###############')
+        print('#  GOODBYE!!  #')
+        print('###############')
+        time.sleep(0.5)
         sys.exit()
     if action.lower().strip() == 'move':
         player_move()
@@ -373,6 +403,8 @@ def prompt():
     elif action.lower().strip() == 'xp':
         print('You have')
         print(myPlayer.xp)
+    elif action.lower().strip() == 'talk':
+        print(zonemap[myPlayer.location][DIALOGUE])
 
 def player_move():
 
@@ -573,7 +605,8 @@ def turn_based_combat():
     print('##########################################')
     while GreenS.hp > 0:
         print('What would you like to do?')
-        print("(You can type 'attack' to attack the Green slime.)")
+        print("(You can type 'attack' to attack the Green slime. )")
+        print("(If you are a healer, you can type 'heal' to heal.)")
         attack = input('> ')
         acceptable_attack = ['attack','kill', 'heal']
         while attack.lower().strip() not in acceptable_attack:
