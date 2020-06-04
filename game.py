@@ -1,8 +1,8 @@
 # Python Text RPG
 # Created by tej_men
-#     \
-# (:D)-<
 #     /
+# (:D)-<
+#     \
 
 
 import cmd
@@ -340,7 +340,7 @@ zonemap = {
         DOWN : 'd2',
         LEFT : 'd1',
         RIGHT : 'd3',
-        DIALOGUE : 'Theres nobody to talk to here...'
+        DIALOGUE : 'my moomy sed dat da plase right of us is wery danegrus'
     },
     'd3': {
         ZONENAME : 'Dungeon',
@@ -407,9 +407,13 @@ def prompt():
     elif action.lower().strip() == 'xp':
         print('You have')
         print(myPlayer.xp)
+        print('xp.')
     elif action.lower().strip() == 'talk':
-        print(zonemap[myPlayer.location][DIALOGUE])
-
+        dialogue = zonemap[myPlayer.location][DIALOGUE]
+        for character in dialogue:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.02)
 def player_move():
 
     ask = 'Where would you like to move to?\n'
@@ -552,24 +556,25 @@ def player_act():
         elif myPlayer.location == 'd4':
             title_screen()
         elif myPlayer.location == 'a1':
-            zonemap[myPlayer.location][SOLVED] = True
             print('I was going to buy an apple, but I dont have any money.')
         elif myPlayer.location == 'a2':
             zonemap[myPlayer.location][SOLVED] = True
-            print('There is nothing you can do ' + myPlayer.name + ' the ' + myPlayer.job)
         elif myPlayer.location == 'a3':
-            zonemap[myPlayer.location][SOLVED] = True
             print('The mayoral election are going on. I wish I could vote, but I am too young.')
         elif myPlayer.location == 'a4':
-            zonemap[myPlayer.location][SOLVED] = True
             print("There is a weird smell of rotten eggs inside. I'm not going inside!")
         elif myPlayer.location == 'b1':
             zonemap[myPlayer.location][SOLVED] = True
             print('You pick up the ' + myPlayer.weapon)
             myPlayer.inventory = myPlayer.weapon
         elif myPlayer.location == 'b2':
-            zonemap[myPlayer.location][SOLVED] = True
             print1 = 'You take a nap'
+            if myPlayer.job == 'fighter':
+                myPlayer.hp = 120
+            elif myPlayer.job == 'wizard':
+                myPlayer.hp = 300
+            elif myPlayer.job =='healer':
+                myPlayer.hp = 200
             for character in print1:
                 sys.stdout.write(character)
                 sys.stdout.flush()
@@ -577,13 +582,10 @@ def player_act():
             time.sleep(1)
         elif myPlayer.location == 'b3':
             zonemap[myPlayer.location][SOLVED] = True
-            print('There is nothing you can do ' + myPlayer.name + ' the ' + myPlayer.job)
         elif myPlayer.location == 'c2':
             zonemap[myPlayer.location][SOLVED] = True
-            print('There is nothing you can do ' + myPlayer.name + ' the ' + myPlayer.job)
         elif myPlayer.location == 'c3':
             zonemap[myPlayer.location][SOLVED] = True
-            print('There is nothing you can do ' + myPlayer.name + ' the ' + myPlayer.job)
         elif myPlayer.location == 'c4':
             turn_based_combat()
         elif myPlayer.location == 'd1':
@@ -593,6 +595,12 @@ def player_act():
             zonemap[myPlayer.location][SOLVED] = True
             print('this beach is so sandy that...')
             print1 = 'you take a nap.'
+            if myPlayer.job == 'fighter':
+                myPlayer.hp = 120
+            elif myPlayer.job == 'wizard':
+                myPlayer.hp = 300
+            elif myPlayer.job == 'healer':
+                myPlayer.hp = 200
             for character in print1:
                 sys.stdout.write(character)
                 sys.stdout.flush()
@@ -663,6 +671,15 @@ def turn_based_combat():
                 print('# The Green Slime attacked you.#')
                 print('################################')
                 myPlayer.hp = myPlayer.hp - GreenS.ap
+                if myPlayer.hp <= 0:
+                    myPlayer.hp = 0
+                    myPlayer.game_over = True
+                if myPlayer.game_over == True:
+                    print('############################################')
+                    print('# You are Dieing slowly, incased in slime. #')
+                    print('############################################')
+                    time.sleep(5)
+                    title_screen()
                 text = 'You have '
                 text2 = 'health left.\n'
                 for character in text:
@@ -674,14 +691,6 @@ def turn_based_combat():
                     sys.stdout.write(character)
                     sys.stdout.flush()
                     time.sleep(0.1)
-                if myPlayer.hp <= 0:
-                    myPlayer.hp = 0
-                    myPlayer.game_over = True
-                if myPlayer.game_over == True:
-                    print('############################################')
-                    print('# You are Dieing slowly, incased in slime. #')
-                    print('############################################')
-                    title_screen()
         print('####################################')
         print('# You have defeated a green slime. #')
         print('#     You have gained 100 XP.      #')
@@ -745,6 +754,15 @@ def turn_based_combat():
                 print('# The skeleton attacked you. #')
                 print('############################')
                 myPlayer.hp = myPlayer.hp - skeleton.ap
+                if myPlayer.hp <= 0:
+                    myPlayer.hp = 0
+                    myPlayer.game_over = True
+                if myPlayer.game_over == True:
+                    print('#####################################################')
+                    print('# You are Dead, with a arrow inpaled in your heart. #')
+                    print('#####################################################')
+                    time.sleep(5)
+                    title_screen()
                 text = 'You have '
                 text2 = 'health left.\n'
                 for character in text:
@@ -757,7 +775,7 @@ def turn_based_combat():
                     sys.stdout.flush()
                     time.sleep(0.1)
         print('####################################')
-        print('#   You have defeated a skeleton.    #')
+        print('#   You have defeated a skeleton.  #')
         print('#     You have gained 300 XP.      #')
         print('####################################')
         myPlayer.xp = myPlayer.xp + 300
@@ -819,6 +837,15 @@ def turn_based_combat():
                 print('# The Zombie attacked you. #')
                 print('############################')
                 myPlayer.hp = myPlayer.hp - zombie.ap
+                if myPlayer.hp <= 0:
+                    myPlayer.hp = 0
+                    myPlayer.game_over = True
+                if myPlayer.game_over == True:
+                    print('##########################################################################')
+                    print('# You are now a zombie as the zombie who just killed you is now a human. #')
+                    print('##########################################################################')
+                    time.sleep(5)
+                    title_screen()
                 text = 'You have '
                 text2 = 'health left.\n'
                 for character in text:
