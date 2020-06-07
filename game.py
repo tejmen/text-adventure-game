@@ -261,6 +261,7 @@ def player_move():
 def movement_handler(destination):
     print('\n'+ 'You have moved to ' + destination + '.')
     myPlayer.location = destination
+    print_location()
 
 def player_examine():
     print(map.zonemap[myPlayer.location][EXAMINATION])
@@ -272,6 +273,7 @@ def start_game():
     setup_game()
 
 def main_game_loop():
+    print_location()
     while myPlayer.game_over is False:
         prompt()
 
