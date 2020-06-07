@@ -180,6 +180,7 @@ DOWN = 'down', 'south'
 LEFT = 'up', 'west'
 RIGHT = 'up', 'east'
 DIALOGUE = 'dialogue'
+ACTION = 'action'
 
 solved_places = {'a1': False, 'a2': False, 'a3': False, 'a4': False,
                 'b1': False, 'b2': False, 'b3': False, 'b4': False,
@@ -197,7 +198,8 @@ zonemap = {
         DOWN : 'b1',
         LEFT : 'a1',
         RIGHT : 'a2',
-        DIALOGUE : 'A Seller in the Market says: "I used to go fishing at the beach, but now theres monsters nearby!"'
+        DIALOGUE : 'A Seller in the Market says: "I used to go fishing at the beach, but now theres monsters nearby!"',
+        ACTION : ''
     },
     'a2': {
         ZONENAME : 'Town Entrance',
@@ -208,7 +210,8 @@ zonemap = {
         DOWN : 'b2',
         LEFT : 'a1',
         RIGHT : 'a3',
-        DIALOGUE : 'A old villager by the entrance says: "Hello my dear child, where have you come from?"'
+        DIALOGUE : 'A old villager by the entrance says: "Hello my dear child, where have you come from?"',
+        ACTION : ''
     },
     'a3': {
         ZONENAME : 'Town Square',
@@ -219,7 +222,8 @@ zonemap = {
         DOWN : 'b3',
         LEFT : 'a2',
         RIGHT : 'a4',
-        DIALOGUE : 'A villager by the Well in the middle says: "You should throw a gold coin in the well for good luck"'
+        DIALOGUE : 'A villager by the Well in the middle says: "You should throw a gold coin in the well for good luck"',
+        ACTION : ''
     },
     'a4': {
         ZONENAME : 'Town Hall',
@@ -230,7 +234,8 @@ zonemap = {
         DOWN : 'b4',
         LEFT : 'a3',
         RIGHT : 'a4',
-        DIALOGUE : 'The Mayor comes out of the town hall. He says: "Beware all, for there are monsters south of here!"'
+        DIALOGUE : 'The Mayor comes out of the town hall. He says: "Beware all, for there are monsters south of here!"',
+        ACTION : ''
     },
     'b1': {
         ZONENAME : 'Chest',
@@ -241,7 +246,8 @@ zonemap = {
         DOWN : 'c1',
         LEFT : 'b1',
         RIGHT : 'b2',
-        DIALOGUE : 'Theres nobody to talk to here...'
+        DIALOGUE : 'Theres nobody to talk to here...',
+        ACTION : ''
     },
     'b2': {
         ZONENAME : 'Home',
@@ -252,7 +258,8 @@ zonemap = {
         DOWN : 'c2',
         LEFT : 'b1',
         RIGHT : 'b3',
-        DIALOGUE : 'Theres nobody to talk to here...'
+        DIALOGUE : 'Theres nobody to talk to here...',
+        ACTION : ''
     },
     'b3': {
         ZONENAME : 'Forest',
@@ -263,7 +270,8 @@ zonemap = {
         DOWN : 'c3',
         LEFT : 'b2',
         RIGHT : 'b4',
-        DIALOGUE : 'Theres nobody to talk to here...'
+        DIALOGUE : 'Theres nobody to talk to here...',
+        ACTION : ''
     },
     'b4': {
         ZONENAME : '???',
@@ -274,7 +282,8 @@ zonemap = {
         DOWN : 'c4',
         LEFT : 'b3',
         RIGHT : 'b4',
-        DIALOGUE : 'Theres nobody to talk to here...'
+        DIALOGUE : 'Theres nobody to talk to here...',
+        ACTION : ''
     },
     'c1': {
         ZONENAME : '???',
@@ -285,7 +294,8 @@ zonemap = {
         DOWN : 'd1',
         LEFT : 'c1',
         RIGHT : 'c2',
-        DIALOGUE : 'Theres nobody to talk to here...'
+        DIALOGUE : 'Theres nobody to talk to here...',
+        ACTION : ''
     },
     'c2': {
         ZONENAME : 'Forest',
@@ -296,7 +306,8 @@ zonemap = {
         DOWN : 'd2',
         LEFT : 'c1',
         RIGHT : 'c3',
-        DIALOGUE : 'Theres nobody to talk to here...'
+        DIALOGUE : 'Theres nobody to talk to here...',
+        ACTION : ''
     },
     'c3': {
         ZONENAME : 'Forest',
@@ -307,7 +318,8 @@ zonemap = {
         DOWN : 'd3',
         LEFT : 'c2',
         RIGHT : 'c4',
-        DIALOGUE : 'Theres nobody to talk to here...'
+        DIALOGUE : 'Theres nobody to talk to here...',
+        ACTION : ''
     },
     'c4': {
         ZONENAME : 'Dungeon',
@@ -318,7 +330,8 @@ zonemap = {
         DOWN : 'd4',
         LEFT : 'c3',
         RIGHT : 'c4',
-        DIALOGUE : 'Theres nobody to talk to here...'
+        DIALOGUE : 'Theres nobody to talk to here...',
+        ACTION : ''
     },
     'd1': {
         ZONENAME : 'Beach',
@@ -329,18 +342,20 @@ zonemap = {
         DOWN : 'd1',
         LEFT : 'd1',
         RIGHT : 'd2',
-        DIALOGUE : 'Theres nobody to talk to here...'
+        DIALOGUE : 'Theres nobody to talk to here...',
+        ACTION : ''
     },
     'd2': {
         ZONENAME : 'Beach',
-        DESCRIPTION : 'This is a white, sandy Beach.',
+        DESCRIPTION : 'This is a white, sandy Beach, with lots of children playing in the sand.',
         EXAMINATION : 'This beach has lots of children playing on it.',
         SOLVED : False,
         UP : 'c2',
         DOWN : 'd2',
         LEFT : 'd1',
         RIGHT : 'd3',
-        DIALOGUE : 'my moomy sed dat da plase right of us is wery danegrus'
+        DIALOGUE : 'my moomy sed dat da plase right of us is wery danegrus',
+        ACTION : ''
     },
     'd3': {
         ZONENAME : 'Dungeon',
@@ -351,7 +366,8 @@ zonemap = {
         DOWN : 'd2',
         LEFT : 'd2',
         RIGHT : 'd4',
-        DIALOGUE : 'Theres nobody to talk to here...'
+        DIALOGUE : 'Theres nobody to talk to here...',
+        ACTION : ''
     },
     'd4': {
         ZONENAME : 'End Portal',
@@ -362,16 +378,17 @@ zonemap = {
         DOWN : 'd4',
         LEFT : 'd3',
         RIGHT : 'd4',
-        DIALOGUE : 'Theres nobody to talk to here...'
+        DIALOGUE : 'Theres nobody to talk to here...',
+        ACTION : ''
     },
 }
 
 ##### GAME INTERACTIVITY #####
 def print_location():
-    print('\n' + ('#' * (4 + len(myPlayer.location))))
-    print('# ' + zonemap[myPlayer.location][ZONENAME] + ' #')
+    print('\n' + ('#' * (4 + len(zonemap[myPlayer.location][DESCRIPTION]))))
+    print('# ' + zonemap[myPlayer.location][ZONENAME] + ' ' * (len(zonemap[myPlayer.location][DESCRIPTION]) - len(zonemap[myPlayer.location][ZONENAME])) +' #')
     print('# ' + zonemap[myPlayer.location][DESCRIPTION] +' #')
-    print('#' * (4 + len(myPlayer.location)))
+    print('#' * (4 + len(zonemap[myPlayer.location][DESCRIPTION])))
 
 def prompt():
     print('\n' + '===============================')
@@ -420,12 +437,10 @@ def player_move():
     print("You can move 'up', 'down', 'left' or 'right'.")
     dest = input(ask)
     if dest == 'up' or dest == 'north':
-        print('I will move up now')
         print(zonemap[myPlayer.location][UP])
         destination = zonemap[myPlayer.location][UP]
         movement_handler(destination)
     elif dest == 'down' or dest == 'south':
-        print('I will move down now')
         print(zonemap[myPlayer.location][DOWN])
         destination = zonemap[myPlayer.location][DOWN]
         movement_handler(destination)
@@ -446,7 +461,6 @@ def player_move():
 def movement_handler(destination):
     print('\n'+ 'You have moved to ' + destination + '.')
     myPlayer.location = destination
-    print_location()
 
 def player_examine():
     print(zonemap[myPlayer.location][EXAMINATION])
