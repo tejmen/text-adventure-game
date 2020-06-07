@@ -12,6 +12,7 @@ import os
 import time
 import random
 from random import randrange
+import map
 
 random_attacker = (random.randint(1,3))
 screen_width = 100
@@ -170,7 +171,6 @@ def acknowledgements_menu():
 #   |   |       |   |   |  d
 #   ---------------------
 
-
 ZONENAME = ''
 DESCRIPTION = 'description'
 EXAMINATION = 'examine'
@@ -182,213 +182,13 @@ RIGHT = 'up', 'east'
 DIALOGUE = 'dialogue'
 ACTION = 'action'
 
-solved_places = {'a1': False, 'a2': False, 'a3': False, 'a4': False,
-                'b1': False, 'b2': False, 'b3': False, 'b4': False,
-                'c1': False, 'c2': False, 'c3': False, 'c4': False,
-                'd1': False, 'd2': False, 'd3': False, 'd4': False,
-                }
-
-zonemap = {
-    'a1': {
-        ZONENAME : 'Town Market',
-        DESCRIPTION : 'This is your Local Marketplace',
-        EXAMINATION : 'There is a vague smell of fish and fresh produce.',
-        SOLVED : False,
-        UP : 'a1',
-        DOWN : 'b1',
-        LEFT : 'a1',
-        RIGHT : 'a2',
-        DIALOGUE : 'A Seller in the Market says: "I used to go fishing at the beach, but now theres monsters nearby!"',
-        ACTION : ''
-    },
-    'a2': {
-        ZONENAME : 'Town Entrance',
-        DESCRIPTION : 'This is an entrance to your Town.',
-        EXAMINATION : 'The angel on the top symbolizes that your village is peaceful.',
-        SOLVED : False,
-        UP : 'a2',
-        DOWN : 'b2',
-        LEFT : 'a1',
-        RIGHT : 'a3',
-        DIALOGUE : 'A old villager by the entrance says: "Hello my dear child, where have you come from?"',
-        ACTION : ''
-    },
-    'a3': {
-        ZONENAME : 'Town Square',
-        DESCRIPTION : 'This is your Town Square.',
-        EXAMINATION : 'There is a wishing well in the middle.',
-        SOLVED : False,
-        UP : 'a3',
-        DOWN : 'b3',
-        LEFT : 'a2',
-        RIGHT : 'a4',
-        DIALOGUE : 'A villager by the Well in the middle says: "You should throw a gold coin in the well for good luck"',
-        ACTION : ''
-    },
-    'a4': {
-        ZONENAME : 'Town Hall',
-        DESCRIPTION : 'This is where the mayor lives',
-        EXAMINATION : 'Mum said "This Building has a prison for baddies!"',
-        SOLVED : False,
-        UP : 'a4',
-        DOWN : 'b4',
-        LEFT : 'a3',
-        RIGHT : 'a4',
-        DIALOGUE : 'The Mayor comes out of the town hall. He says: "Beware all, for there are monsters south of here!"',
-        ACTION : ''
-    },
-    'b1': {
-        ZONENAME : 'Chest',
-        DESCRIPTION : 'This is an unlocked chest!',
-        EXAMINATION : 'The key is already in the Chest lock.',
-        SOLVED : False,
-        UP : 'a1',
-        DOWN : 'c1',
-        LEFT : 'b1',
-        RIGHT : 'b2',
-        DIALOGUE : 'Theres nobody to talk to here...',
-        ACTION : ''
-    },
-    'b2': {
-        ZONENAME : 'Home',
-        DESCRIPTION : 'This is your home!',
-        EXAMINATION : 'Your home is the same - nothing has changed',
-        SOLVED : False,
-        UP : 'a2',
-        DOWN : 'c2',
-        LEFT : 'b1',
-        RIGHT : 'b3',
-        DIALOGUE : 'Theres nobody to talk to here...',
-        ACTION : ''
-    },
-    'b3': {
-        ZONENAME : 'Forest',
-        DESCRIPTION : 'This is an oak forest.',
-        EXAMINATION : 'This forest has a crossway so you can go any way you want',
-        SOLVED : True,
-        UP : 'a3',
-        DOWN : 'c3',
-        LEFT : 'b2',
-        RIGHT : 'b4',
-        DIALOGUE : 'Theres nobody to talk to here...',
-        ACTION : ''
-    },
-    'b4': {
-        ZONENAME : '???',
-        DESCRIPTION : 'This is an old Building.',
-        EXAMINATION : 'There is a button and a glowing circle on the floor.',
-        SOLVED : False,
-        UP : 'a4',
-        DOWN : 'c4',
-        LEFT : 'b3',
-        RIGHT : 'b4',
-        DIALOGUE : 'Theres nobody to talk to here...',
-        ACTION : ''
-    },
-    'c1': {
-        ZONENAME : '???',
-        DESCRIPTION : 'This is an old Building.',
-        EXAMINATION : 'There is a button and a circle on the floor.',
-        SOLVED : False,
-        UP : 'b1',
-        DOWN : 'd1',
-        LEFT : 'c1',
-        RIGHT : 'c2',
-        DIALOGUE : 'Theres nobody to talk to here...',
-        ACTION : ''
-    },
-    'c2': {
-        ZONENAME : 'Forest',
-        DESCRIPTION : 'This is an ash forest.',
-        EXAMINATION : 'This forest has a crossway so you can go any way you want',
-        SOLVED : True,
-        UP : 'b2',
-        DOWN : 'd2',
-        LEFT : 'c1',
-        RIGHT : 'c3',
-        DIALOGUE : 'Theres nobody to talk to here...',
-        ACTION : ''
-    },
-    'c3': {
-        ZONENAME : 'Forest',
-        DESCRIPTION : 'This is a birch forest.',
-        EXAMINATION : 'This forest has a crossway so you can go any way you want.',
-        SOLVED : True,
-        UP : 'b3',
-        DOWN : 'd3',
-        LEFT : 'c2',
-        RIGHT : 'c4',
-        DIALOGUE : 'Theres nobody to talk to here...',
-        ACTION : ''
-    },
-    'c4': {
-        ZONENAME : 'Dungeon',
-        DESCRIPTION : 'This is a dangerous Dungeon.',
-        EXAMINATION : 'This Dungeon has dangers. Mum said to stay away from dangerous places.',
-        SOLVED : False,
-        UP : 'b4',
-        DOWN : 'd4',
-        LEFT : 'c3',
-        RIGHT : 'c4',
-        DIALOGUE : 'Theres nobody to talk to here...',
-        ACTION : ''
-    },
-    'd1': {
-        ZONENAME : 'Beach',
-        DESCRIPTION : 'This is a rocky beach',
-        EXAMINATION : 'This beach has lots of seaweed.',
-        SOLVED : False,
-        UP : 'c1',
-        DOWN : 'd1',
-        LEFT : 'd1',
-        RIGHT : 'd2',
-        DIALOGUE : 'Theres nobody to talk to here...',
-        ACTION : ''
-    },
-    'd2': {
-        ZONENAME : 'Beach',
-        DESCRIPTION : 'This is a white, sandy Beach, with lots of children playing in the sand.',
-        EXAMINATION : 'This beach has lots of children playing on it.',
-        SOLVED : False,
-        UP : 'c2',
-        DOWN : 'd2',
-        LEFT : 'd1',
-        RIGHT : 'd3',
-        DIALOGUE : 'my moomy sed dat da plase right of us is wery danegrus',
-        ACTION : ''
-    },
-    'd3': {
-        ZONENAME : 'Dungeon',
-        DESCRIPTION : 'This is a dangerous Dungeon.',
-        EXAMINATION : 'This Dungeon has dangers. Mum said to stay away from dangerous places.',
-        SOLVED : False,
-        UP : 'c3',
-        DOWN : 'd2',
-        LEFT : 'd2',
-        RIGHT : 'd4',
-        DIALOGUE : 'Theres nobody to talk to here...',
-        ACTION : ''
-    },
-    'd4': {
-        ZONENAME : 'End Portal',
-        DESCRIPTION : 'This is where you go if you want to stop exploring.',
-        EXAMINATION : 'This is a way to go to the main menu.',
-        SOLVED : False,
-        UP : 'c4',
-        DOWN : 'd4',
-        LEFT : 'd3',
-        RIGHT : 'd4',
-        DIALOGUE : 'Theres nobody to talk to here...',
-        ACTION : ''
-    },
-}
 
 ##### GAME INTERACTIVITY #####
 def print_location():
-    print('\n' + ('#' * (4 + len(zonemap[myPlayer.location][DESCRIPTION]))))
-    print('# ' + zonemap[myPlayer.location][ZONENAME] + ' ' * (len(zonemap[myPlayer.location][DESCRIPTION]) - len(zonemap[myPlayer.location][ZONENAME])) +' #')
-    print('# ' + zonemap[myPlayer.location][DESCRIPTION] +' #')
-    print('#' * (4 + len(zonemap[myPlayer.location][DESCRIPTION])))
+    print('\n' + ('#' * (4 + len(map.zonemap[myPlayer.location][DESCRIPTION]))))
+    print('# ' + map.zonemap[myPlayer.location][ZONENAME] + ' ' * (len(map.zonemap[myPlayer.location][DESCRIPTION]) - len(map.zonemap[myPlayer.location][ZONENAME])) +' #')
+    print('# ' + map.zonemap[myPlayer.location][DESCRIPTION] +' #')
+    print('#' * (4 + len(map.zonemap[myPlayer.location][DESCRIPTION])))
 
 def prompt():
     print('\n' + '===============================')
@@ -426,7 +226,7 @@ def prompt():
         print(myPlayer.xp)
         print('xp.')
     elif action.lower().strip() == 'talk':
-        dialogue = zonemap[myPlayer.location][DIALOGUE]
+        dialogue = map.zonemap[myPlayer.location][DIALOGUE]
         for character in dialogue:
             sys.stdout.write(character)
             sys.stdout.flush()
@@ -437,18 +237,18 @@ def player_move():
     print("You can move 'up', 'down', 'left' or 'right'.")
     dest = input(ask)
     if dest == 'up' or dest == 'north':
-        print(zonemap[myPlayer.location][UP])
-        destination = zonemap[myPlayer.location][UP]
+        print(map.zonemap[myPlayer.location][UP])
+        destination = map.zonemap[myPlayer.location][UP]
         movement_handler(destination)
     elif dest == 'down' or dest == 'south':
-        print(zonemap[myPlayer.location][DOWN])
-        destination = zonemap[myPlayer.location][DOWN]
+        print(map.zonemap[myPlayer.location][DOWN])
+        destination = map.zonemap[myPlayer.location][DOWN]
         movement_handler(destination)
     elif dest == 'left' or dest == 'west':
-        destination = zonemap[myPlayer.location][LEFT]
+        destination = map.zonemap[myPlayer.location][LEFT]
         movement_handler(destination)
     elif dest == 'right' or dest == 'east':
-        destination = zonemap[myPlayer.location][RIGHT]
+        destination = map.zonemap[myPlayer.location][RIGHT]
         movement_handler(destination)
     #if godbool == 'yes':
     if dest == 'tp':
@@ -461,9 +261,10 @@ def player_move():
 def movement_handler(destination):
     print('\n'+ 'You have moved to ' + destination + '.')
     myPlayer.location = destination
+    print_location()
 
 def player_examine():
-    print(zonemap[myPlayer.location][EXAMINATION])
+    print(map.zonemap[myPlayer.location][EXAMINATION])
 
 
 
@@ -472,6 +273,7 @@ def start_game():
     setup_game()
 
 def main_game_loop():
+    print_location()
     while myPlayer.game_over is False:
         prompt()
 
@@ -556,15 +358,15 @@ def setup_game():
     main_game_loop()
 
 def player_act():
-    if zonemap[myPlayer.location][SOLVED] == False:
+    if map.zonemap[myPlayer.location][SOLVED] == False:
         if myPlayer.location == 'b4':
             myPlayer.location = 'c1'
-            zonemap[myPlayer.location][ZONENAME] = 'Telporter'
+            map.zonemap[myPlayer.location][ZONENAME] = 'Telporter'
             destination = myPlayer.location
             movement_handler(destination)
         elif myPlayer.location == 'c1':
             myPlayer.location = 'b4'
-            zonemap[myPlayer.location][ZONENAME] = 'Telporter'
+            map.zonemap[myPlayer.location][ZONENAME] = 'Telporter'
             destination = myPlayer.location
             movement_handler(destination)
         elif myPlayer.location == 'd4':
@@ -572,13 +374,13 @@ def player_act():
         elif myPlayer.location == 'a1':
             print('I was going to buy an apple, but I dont have any money.')
         elif myPlayer.location == 'a2':
-            zonemap[myPlayer.location][SOLVED] = True
+            map.zonemap[myPlayer.location][SOLVED] = True
         elif myPlayer.location == 'a3':
             print('The mayoral election are going on. I wish I could vote, but I am too young.')
         elif myPlayer.location == 'a4':
             print("There is a weird smell of rotten eggs inside. I'm not going inside!")
         elif myPlayer.location == 'b1':
-            zonemap[myPlayer.location][SOLVED] = True
+            map.zonemap[myPlayer.location][SOLVED] = True
             print('You pick up the ' + myPlayer.weapon)
             myPlayer.inventory = myPlayer.weapon
         elif myPlayer.location == 'b2':
@@ -595,18 +397,18 @@ def player_act():
                 time.sleep(0.1)
             time.sleep(1)
         elif myPlayer.location == 'b3':
-            zonemap[myPlayer.location][SOLVED] = True
+            map.zonemap[myPlayer.location][SOLVED] = True
         elif myPlayer.location == 'c2':
-            zonemap[myPlayer.location][SOLVED] = True
+            map.zonemap[myPlayer.location][SOLVED] = True
         elif myPlayer.location == 'c3':
-            zonemap[myPlayer.location][SOLVED] = True
+            map.zonemap[myPlayer.location][SOLVED] = True
         elif myPlayer.location == 'c4':
             turn_based_combat()
         elif myPlayer.location == 'd1':
-            zonemap[myPlayer.location][SOLVED] = True
+            map.zonemap[myPlayer.location][SOLVED] = True
             print('This beach is too rocky and full of seaweed to do anything ' + myPlayer.name + ' the ' + myPlayer.job)
         elif myPlayer.location == 'd2':
-            zonemap[myPlayer.location][SOLVED] = True
+            map.zonemap[myPlayer.location][SOLVED] = True
             print('this beach is so sandy that...')
             print1 = 'you take a nap.'
             if myPlayer.job == 'fighter':
@@ -877,7 +679,7 @@ def turn_based_combat():
         print('####################################')
         myPlayer.xp = myPlayer.xp + 500
         zombie.hp = 500
-    zonemap[myPlayer.location][SOLVED] = True
+    map.zonemap[myPlayer.location][SOLVED] = True
     main_game_loop()
 
 title_screen()
