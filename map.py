@@ -26,7 +26,7 @@ zonemap = {
         LEFT : 'a1',
         RIGHT : 'a2',
         DIALOGUE : 'A Seller in the Market says: "I used to go fishing at the beach, but now theres monsters nearby!"',
-        ACTION : ''
+        ACTION : 'I was going to buy an apple, but I dont have any money.'
     },
     'a2': {
         ZONENAME : 'Town Entrance',
