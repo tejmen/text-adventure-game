@@ -432,24 +432,35 @@ def prompt():
             sys.stdout.flush()
             time.sleep(0.02)
 def player_move():
-
     ask = 'Where would you like to move to?\n'
     print("You can move 'up', 'down', 'left' or 'right'.")
     dest = input(ask)
     if dest == 'up' or dest == 'north':
-        print(zonemap[myPlayer.location][UP])
-        destination = zonemap[myPlayer.location][UP]
-        movement_handler(destination)
+        if 'a' in myPlayer.location:
+            print("You have reached the end of the map. Don't go up.")
+        else:
+            print(zonemap[myPlayer.location][UP])
+            destination = zonemap[myPlayer.location][UP]
+            movement_handler(destination)
     elif dest == 'down' or dest == 'south':
-        print(zonemap[myPlayer.location][DOWN])
-        destination = zonemap[myPlayer.location][DOWN]
-        movement_handler(destination)
+        if 'd' in myPlayer.location:
+            print("You have reached the end of the map. Don't go down.")
+        else:
+            print(zonemap[myPlayer.location][DOWN])
+            destination = zonemap[myPlayer.location][DOWN]
+            movement_handler(destination)
     elif dest == 'left' or dest == 'west':
-        destination = zonemap[myPlayer.location][LEFT]
-        movement_handler(destination)
+        if '1' in myPlayer.location:
+            print("You have reached the end of the map. Don't go left.")
+        else:
+            destination = zonemap[myPlayer.location][LEFT]
+            movement_handler(destination)
     elif dest == 'right' or dest == 'east':
-        destination = zonemap[myPlayer.location][RIGHT]
-        movement_handler(destination)
+        if '4' in myPlayer.location:
+            print("You have reached the end of the map. Don't go right.")
+        else:
+            destination = zonemap[myPlayer.location][RIGHT]
+            movement_handler(destination)
     #if godbool == 'yes':
     if dest == 'tp':
         print('Where do you want to go god?')
@@ -459,6 +470,7 @@ def player_move():
         movement_handler(destination)
 
 def movement_handler(destination):
+
     print('\n'+ 'You have moved to ' + destination + '.')
     myPlayer.location = destination
 
