@@ -236,7 +236,6 @@ def player_move():
     print("You can move 'up', 'down', 'left' or 'right'.")
     dest = input(ask)
     if dest == 'up' or dest == 'north':
-<<<<<<< HEAD
         if 'a' in myPlayer.location:
             print("You have reached the end of the map. Don't go up.")
         else:
@@ -262,21 +261,6 @@ def player_move():
         else:
             destination = zonemap[myPlayer.location][RIGHT]
             movement_handler(destination)
-=======
-        print(map.zonemap[myPlayer.location][UP])
-        destination = map.zonemap[myPlayer.location][UP]
-        movement_handler(destination)
-    elif dest == 'down' or dest == 'south':
-        print(map.zonemap[myPlayer.location][DOWN])
-        destination = map.zonemap[myPlayer.location][DOWN]
-        movement_handler(destination)
-    elif dest == 'left' or dest == 'west':
-        destination = map.zonemap[myPlayer.location][LEFT]
-        movement_handler(destination)
-    elif dest == 'right' or dest == 'east':
-        destination = map.zonemap[myPlayer.location][RIGHT]
-        movement_handler(destination)
->>>>>>> d6a3cf61da103043f470c0c2d80db622c361d213
     #if godbool == 'yes':
     if dest == 'tp':
         print('Where do you want to go god?')
