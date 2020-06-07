@@ -185,7 +185,7 @@ ACTION = 'action'
 
 ##### GAME INTERACTIVITY #####
 def print_location():
-    print('\n' + ('#' * (4 + len(map.zonemap[myPlayer.location][DESCRIPTION]))))
+    print('\n' + ('#' * (4 + len([myPlayer.location][DESCRIPTION]))))
     print('# ' + map.zonemap[myPlayer.location][ZONENAME] + ' ' * (len(map.zonemap[myPlayer.location][DESCRIPTION]) - len(map.zonemap[myPlayer.location][ZONENAME])) +' #')
     print('# ' + map.zonemap[myPlayer.location][DESCRIPTION] +' #')
     print('#' * (4 + len(map.zonemap[myPlayer.location][DESCRIPTION])))
