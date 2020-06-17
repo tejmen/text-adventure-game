@@ -185,7 +185,7 @@ ACTION = 'action'
 
 ##### GAME INTERACTIVITY #####
 def print_location():
-    print('\n' + ('#' * (4 + len([myPlayer.location][DESCRIPTION]))))
+    print('\n' + ('#' * (4 + len(map.zonemap[myPlayer.location][DESCRIPTION]))))
     print('# ' + map.zonemap[myPlayer.location][ZONENAME] + ' ' * (len(map.zonemap[myPlayer.location][DESCRIPTION]) - len(map.zonemap[myPlayer.location][ZONENAME])) +' #')
     print('# ' + map.zonemap[myPlayer.location][DESCRIPTION] +' #')
     print('#' * (4 + len(map.zonemap[myPlayer.location][DESCRIPTION])))
@@ -370,75 +370,96 @@ def setup_game():
     main_game_loop()
 
 def player_act():
-    if map.zonemap[myPlayer.location][SOLVED] == False:
-        if myPlayer.location == 'b4':
-            myPlayer.location = 'c1'
-            map.zonemap[myPlayer.location][ZONENAME] = 'Telporter'
-            destination = myPlayer.location
-            movement_handler(destination)
-        elif myPlayer.location == 'c1':
-            myPlayer.location = 'b4'
-            map.zonemap[myPlayer.location][ZONENAME] = 'Telporter'
-            destination = myPlayer.location
-            movement_handler(destination)
-        elif myPlayer.location == 'd4':
-            title_screen()
-        elif myPlayer.location == 'a1':
-            print('I was going to buy an apple, but I dont have any money.')
-        elif myPlayer.location == 'a2':
-            map.zonemap[myPlayer.location][SOLVED] = True
-        elif myPlayer.location == 'a3':
-            print('The mayoral election are going on. I wish I could vote, but I am too young.')
-        elif myPlayer.location == 'a4':
-            print("There is a weird smell of rotten eggs inside. I'm not going inside!")
-        elif myPlayer.location == 'b1':
-            map.zonemap[myPlayer.location][SOLVED] = True
-            print('You pick up the ' + myPlayer.weapon)
-            myPlayer.inventory = myPlayer.weapon
-        elif myPlayer.location == 'b2':
-            print1 = 'You take a nap'
-            if myPlayer.job == 'fighter':
-                myPlayer.hp = 120
-            elif myPlayer.job == 'wizard':
-                myPlayer.hp = 300
-            elif myPlayer.job =='healer':
-                myPlayer.hp = 200
-            for character in print1:
-                sys.stdout.write(character)
-                sys.stdout.flush()
-                time.sleep(0.1)
-            time.sleep(1)
-        elif myPlayer.location == 'b3':
-            map.zonemap[myPlayer.location][SOLVED] = True
-        elif myPlayer.location == 'c2':
-            map.zonemap[myPlayer.location][SOLVED] = True
-        elif myPlayer.location == 'c3':
-            map.zonemap[myPlayer.location][SOLVED] = True
-        elif myPlayer.location == 'c4':
-            turn_based_combat()
-        elif myPlayer.location == 'd1':
-            map.zonemap[myPlayer.location][SOLVED] = True
-            print('This beach is too rocky and full of seaweed to do anything ' + myPlayer.name + ' the ' + myPlayer.job)
-        elif myPlayer.location == 'd2':
-            map.zonemap[myPlayer.location][SOLVED] = True
-            print('this beach is so sandy that...')
-            print1 = 'you take a nap.'
-            if myPlayer.job == 'fighter':
-                myPlayer.hp = 120
-            elif myPlayer.job == 'wizard':
-                myPlayer.hp = 300
-            elif myPlayer.job == 'healer':
-                myPlayer.hp = 200
-            for character in print1:
-                sys.stdout.write(character)
-                sys.stdout.flush()
-                time.sleep(0.1)
-            time.sleep(1)
-        elif myPlayer.location == 'd3':
-            turn_based_combat()
+    if myPlayer.location == 'b4':
+        myPlayer.location = 'c1'
+        map.zonemap[myPlayer.location][ZONENAME] = 'Telporter'
+        destination = myPlayer.location
+        movement_handler(destination)
+    elif myPlayer.location == 'c1':
+        myPlayer.location = 'b4'
+        map.zonemap[myPlayer.location][ZONENAME] = 'Telporter'
+        destination = myPlayer.location
+        movement_handler(destination)
+    elif myPlayer.location == 'd4':
+        title_screen()
+    elif myPlayer.location == 'b1':
+        print('You pick up the ' + myPlayer.weapon)
+        myPlayer.inventory = myPlayer.weapon
+    elif myPlayer.location == 'b2':
+        print1 = 'You take a nap'
+        if myPlayer.job == 'fighter':
+            myPlayer.hp = 120
+        elif myPlayer.job == 'wizard':
+            myPlayer.hp = 300
+        elif myPlayer.job =='healer':
+            myPlayer.hp = 200
+        for character in print1:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.1)
+        time.sleep(1)
+    elif myPlayer.location == 'b3':
+        print1 = 'You take a nap'
+        if myPlayer.job == 'fighter':
+            myPlayer.hp = 120
+        elif myPlayer.job == 'wizard':
+            myPlayer.hp = 300
+        elif myPlayer.job =='healer':
+            myPlayer.hp = 200
+        for character in print1:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.1)
+        time.sleep(1)
+    elif myPlayer.location == 'c2':
+        print1 = 'You take a nap'
+        if myPlayer.job == 'fighter':
+            myPlayer.hp = 120
+        elif myPlayer.job == 'wizard':
+            myPlayer.hp = 300
+        elif myPlayer.job =='healer':
+            myPlayer.hp = 200
+        for character in print1:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.1)
+        time.sleep(1)
+    elif myPlayer.location == 'c3':
+        print1 = 'You take a nap'
+        if myPlayer.job == 'fighter':
+            myPlayer.hp = 120
+        elif myPlayer.job == 'wizard':
+            myPlayer.hp = 300
+        elif myPlayer.job =='healer':
+            myPlayer.hp = 200
+        for character in print1:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.1)
+        time.sleep(1)
+    elif myPlayer.location == 'c4':
+        turn_based_combat()
+    elif myPlayer.location == 'd3':
+        turn_based_combat()
+    elif myPlayer.location == 'd2':
+        print('this beach is so sandy that...')
+        print1 = 'you take a nap.'
+        if myPlayer.job == 'fighter':
+            myPlayer.hp = 120
+        elif myPlayer.job == 'wizard':
+            myPlayer.hp = 300
+        elif myPlayer.job == 'healer':
+            myPlayer.hp = 200
+        for character in print1:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.1)
+        time.sleep(1)
     else:
-        print('This place has already been excavated...')
-        print('BY YOU!')
+        print(map.zonemap[myPlayer.location][ACTION])
+    map.zonemap[myPlayer.location][SOLVED] = True
+
+
 def turn_based_combat():
     random_attacker = (random.randint(1,3))
     if random_attacker == 1 :
