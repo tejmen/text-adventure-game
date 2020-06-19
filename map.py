@@ -38,7 +38,7 @@ zonemap = {
         LEFT : 'a1',
         RIGHT : 'a3',
         DIALOGUE : 'A old villager by the entrance says: "Hello my dear child, where have you come from?"',
-        ACTION : ''
+        ACTION : 'The mayoral election are going on. Everyone is talking about it.'
     },
     'a3': {
         ZONENAME : 'Town Square',
@@ -50,7 +50,7 @@ zonemap = {
         LEFT : 'a2',
         RIGHT : 'a4',
         DIALOGUE : 'A villager by the Well in the middle says: "You should throw a gold coin in the well for good luck"',
-        ACTION : ''
+        ACTION : 'I wish I could get good luck, but I dont have any money.'
     },
     'a4': {
         ZONENAME : 'Town Hall',
@@ -62,7 +62,7 @@ zonemap = {
         LEFT : 'a3',
         RIGHT : 'a4',
         DIALOGUE : 'The Mayor comes out of the town hall. He says: "Beware all, for there are monsters south of here!"',
-        ACTION : ''
+        ACTION : "There is a weird smell of rotten eggs inside. I'm not going inside!"
     },
     'b1': {
         ZONENAME : 'Chest',
@@ -74,7 +74,7 @@ zonemap = {
         LEFT : 'b1',
         RIGHT : 'b2',
         DIALOGUE : 'Theres nobody to talk to here...',
-        ACTION : ''
+        ACTION : 'You are looking at the code'
     },
     'b2': {
         ZONENAME : 'Home',
@@ -86,7 +86,7 @@ zonemap = {
         LEFT : 'b1',
         RIGHT : 'b3',
         DIALOGUE : 'Theres nobody to talk to here...',
-        ACTION : ''
+        ACTION : 'You are looking at the code'
     },
     'b3': {
         ZONENAME : 'Forest',
@@ -98,7 +98,7 @@ zonemap = {
         LEFT : 'b2',
         RIGHT : 'b4',
         DIALOGUE : 'Theres nobody to talk to here...',
-        ACTION : ''
+        ACTION : 'You are looking at the code'
     },
     'b4': {
         ZONENAME : '???',
@@ -110,7 +110,7 @@ zonemap = {
         LEFT : 'b3',
         RIGHT : 'b4',
         DIALOGUE : 'Theres nobody to talk to here...',
-        ACTION : ''
+        ACTION : 'You are looking at the code'
     },
     'c1': {
         ZONENAME : '???',
@@ -122,7 +122,7 @@ zonemap = {
         LEFT : 'c1',
         RIGHT : 'c2',
         DIALOGUE : 'Theres nobody to talk to here...',
-        ACTION : ''
+        ACTION : 'You are looking at the code'
     },
     'c2': {
         ZONENAME : 'Forest',
@@ -134,7 +134,7 @@ zonemap = {
         LEFT : 'c1',
         RIGHT : 'c3',
         DIALOGUE : 'Theres nobody to talk to here...',
-        ACTION : ''
+        ACTION : 'You are looking at the code'
     },
     'c3': {
         ZONENAME : 'Forest',
@@ -146,7 +146,7 @@ zonemap = {
         LEFT : 'c2',
         RIGHT : 'c4',
         DIALOGUE : 'Theres nobody to talk to here...',
-        ACTION : ''
+        ACTION : 'You are looking at the code'
     },
     'c4': {
         ZONENAME : 'Dungeon',
@@ -158,7 +158,7 @@ zonemap = {
         LEFT : 'c3',
         RIGHT : 'c4',
         DIALOGUE : 'Theres nobody to talk to here...',
-        ACTION : ''
+        ACTION : 'You are looking at the code'
     },
     'd1': {
         ZONENAME : 'Beach',
@@ -170,7 +170,7 @@ zonemap = {
         LEFT : 'd1',
         RIGHT : 'd2',
         DIALOGUE : 'Theres nobody to talk to here...',
-        ACTION : ''
+        ACTION : 'The beach is too rocky to do anything.'
     },
     'd2': {
         ZONENAME : 'Beach',
@@ -181,7 +181,7 @@ zonemap = {
         DOWN : 'd2',
         LEFT : 'd1',
         RIGHT : 'd3',
-        DIALOGUE : 'my moomy sed dat da plase right of us is wery danegrus',
+        DIALOGUE : '"my moomy sed dat da plase right of us is wery danegrus" said one of the children',
         ACTION : ''
     },
     'd3': {
@@ -194,7 +194,7 @@ zonemap = {
         LEFT : 'd2',
         RIGHT : 'd4',
         DIALOGUE : 'Theres nobody to talk to here...',
-        ACTION : ''
+        ACTION : 'You are looking at the code'
     },
     'd4': {
         ZONENAME : 'End Portal',
@@ -206,6 +206,6 @@ zonemap = {
         LEFT : 'd3',
         RIGHT : 'd4',
         DIALOGUE : 'Theres nobody to talk to here...',
-        ACTION : ''
+        ACTION : 'You are looking at the code'
     },
 }
