@@ -29,7 +29,7 @@ class player:
         self.status_effects = []
         self.location = 'b2'
         self.game_over = False
-        self.inventory = ''
+        self.inventory = []
         self.weapon = ''
         self.xp = 0
 myPlayer = player()
@@ -49,6 +49,22 @@ class Skelemob:
         self.hp = 500
         self.ap = 40
 skeleton = Skelemob()
+class Sword:
+    def __init__(self):
+        self.name = "Soldier's Broadsword"
+        self.ap = 100
+class Staff:
+    def __init__(self):
+        self.name = "Wizard's Arcane Staff"
+        self.ap = 75
+class MagicBook:
+    def __init__(self):
+        self.name = "Healer's Book of Magic"
+        self.ap = 50
+class Knife:
+    def __init__(self):
+        self.name = "Traveller's Knife"
+        self.ap = 80
 
 ##### Title Screen #####
 def title_screen_selections():
@@ -193,9 +209,9 @@ def print_location():
 def prompt():
     print('\n' + '===============================')
     print('What would you like to do?')
-    print("(You can 'move', 'quit', 'look', 'xp', 'talk' or 'act')")
+    print("(You can 'move', 'quit', 'look', 'xp', 'talk', 'switchweapon', 'stats' or 'act')")
     action = input('> ')
-    acceptable_actions = ['move', 'quit', 'look', '/god', 'acceptable_actions', 'act', 'xp', 'talk']
+    acceptable_actions = ['move', 'quit', 'look', '/god', 'acceptable_actions', 'act', 'xp', 'talk', 'switchweapon', 'stats']
     while action.lower() not in acceptable_actions:
         print('Unknown action, try again.\n')
         action = input('> ')
@@ -231,6 +247,10 @@ def prompt():
             sys.stdout.write(character)
             sys.stdout.flush()
             time.sleep(0.02)
+    elif action.lower().strip() == 'switchweapon':
+        switch_weapon()
+    elif action.lower().strip() == 'stats':
+        stats()
 def player_move():
     ask = 'Where would you like to move to?\n'
     print("You can move 'up', 'down', 'left' or 'right'.")
@@ -278,6 +298,28 @@ def movement_handler(destination):
 def player_examine():
     print(map.zonemap[myPlayer.location][EXAMINATION])
 
+def switch_weapon():
+    askweaponsw = 'which weapon do you want to switch to?\n>'
+    print('You can switch weapons now.')
+    weapon_to_switch = input(askweaponsw)
+    if weapon_to_switch == 'knife' and 'knife' in myPlayer.inventory:
+        myPlayer.inventory.append(myPlayer.weapon)
+        myPlayer.inventory.remove('knife')
+        myPlayer.weapon = Knife()
+        print('You equipped the ' + myPlayer.weapon.name)
+    else:
+        print('Are you sure you own that weapon?')
+
+def stats():
+    print('#######################################################')
+    print('                         STATS                         ')
+    print('You are ' + myPlayer.name + ' the ' + myPlayer.job + '.')
+    print('You have ' + str(myPlayer.hp) + ' hp.')
+    print('You have ' + str(myPlayer.xp) + ' xp.')
+    print('You have ' + str(myPlayer.ap) + ' strength.')
+    print('Your current weapon, the ' + myPlayer.weapon.name + ' does ' + str(myPlayer.weapon.ap) + ' of damage.')
+    print('Your Inventory contains ' + str(myPlayer.inventory) + ' .')
+
 
 
 ##### GAME FUNCTIONALITY #####
@@ -323,17 +365,17 @@ def setup_game():
     ### PLAYER STATS ###
     if myPlayer.job == 'fighter':
         myPlayer.hp = 120
-        myPlayer.ap = 50
-        myPlayer.weapon = 'sword'
+        myPlayer.ap = 40
+        myPlayer.weapon = Sword()
     elif myPlayer.job == 'wizard':
         myPlayer.hp = 300
-        myPlayer.ap = 30
-        myPlayer.weapon = 'staff'
+        myPlayer.ap = 20
+        myPlayer.weapon = Staff()
     elif myPlayer.job == 'healer':
         myPlayer.hp = 200
-        myPlayer.ap = 40
+        myPlayer.ap = 20
         myPlayer.heal = 40
-        myPlayer.weapon = 'magic book'
+        myPlayer.weapon = MagicBook()
 
     ### INTRODUCTION ###
     question3 = 'Welcome ' + player_name +' the ' + player_job + '.\n'
@@ -383,8 +425,8 @@ def player_act():
     elif myPlayer.location == 'd4':
         title_screen()
     elif myPlayer.location == 'b1':
-        print('You pick up the ' + myPlayer.weapon)
-        myPlayer.inventory = myPlayer.weapon
+        print('You pick up the knife')
+        myPlayer.inventory.append('knife')
     elif myPlayer.location == 'b2':
         print1 = 'You take a nap'
         if myPlayer.job == 'fighter':
@@ -476,7 +518,7 @@ def turn_based_combat():
                 print('Unknown action, try again.\n')
                 attack = input('> ')
                 if attack.lower().strip() == 'attack':
-                    GreenS.hp = GreenS.hp - myPlayer.ap
+                    GreenS.hp = GreenS.hp - (myPlayer.weapon.ap + myPlayer.ap)
                     print("The green slime's health is ")
                     print(GreenS.hp)
                 elif attack.lower().strip() == 'kill':
@@ -484,7 +526,7 @@ def turn_based_combat():
                     print("The green slime's health is ")
                     print(GreenS.hp)
             if attack.lower().strip() == 'attack':
-                GreenS.hp = GreenS.hp - myPlayer.ap
+                GreenS.hp = GreenS.hp - (myPlayer.ap + myPlayer.weapon.ap)
                 if GreenS.hp < 0:
                     GreenS.hp = 0
                     print("The green slime's health is ")
@@ -559,7 +601,7 @@ def turn_based_combat():
                 print('Unknown action, try again.\n')
                 attack = input('> ')
                 if attack.lower().strip() == 'attack':
-                    skeleton.hp = skeleton.hp - myPlayer.ap
+                    skeleton.hp = skeleton.hp - (myPlayer.ap + myPlayer.weapon.ap)
                     print("The skeleton's health is ")
                     print(skeleton.hp)
                 elif attack.lower().strip() == 'kill':
@@ -567,7 +609,7 @@ def turn_based_combat():
                     print("The skeleton's health is ")
                     print(skeleton.hp)
             if attack.lower().strip() == 'attack':
-                skeleton.hp = skeleton.hp - myPlayer.ap
+                skeleton.hp = skeleton.hp - (myPlayer.ap + myPlayer.weapon.ap)
                 if skeleton.hp < 0:
                     skeleton.hp = 0
                     print("The skeleton's health is ")
@@ -642,7 +684,7 @@ def turn_based_combat():
                 print('Unknown action, try again.\n')
                 attack = input('> ')
                 if attack.lower().strip() == 'attack':
-                    zombie.hp = zombie.hp - myPlayer.ap
+                    zombie.hp = zombie.hp - (myPlayer.ap + myPlayer.weapon.ap)
                     print("The Zombie's health is ")
                     print(zombie.hp)
                 elif attack.lower().strip() == 'kill':
@@ -650,7 +692,7 @@ def turn_based_combat():
                     print("The Zombie's health is ")
                     print(zombie.hp)
             if attack.lower().strip() == 'attack':
-                zombie.hp = zombie.hp - myPlayer.ap
+                zombie.hp = zombie.hp - (myPlayer.ap + myPlayer.weapon.ap)
                 if zombie.hp < 0:
                     zombie.hp = 0
                     print("The Zombie's health is ")
