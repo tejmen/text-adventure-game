@@ -51,15 +51,19 @@ class Skelemob:
 skeleton = Skelemob()
 class Sword:
     def __init__(self):
+        self.name = "Soldier's Broadsword"
         self.ap = 100
 class Staff:
     def __init__(self):
+        self.name = "Wizard's Arcane Staff"
         self.ap = 75
 class MagicBook:
     def __init__(self):
+        self.name = "Healer's Book of Magic"
         self.ap = 50
 class Knife:
     def __init__(self):
+        self.name = "Traveller's Knife"
         self.ap = 80
 
 ##### Title Screen #####
@@ -205,9 +209,9 @@ def print_location():
 def prompt():
     print('\n' + '===============================')
     print('What would you like to do?')
-    print("(You can 'move', 'quit', 'look', 'xp', 'talk', 'switchweapon' or 'act')")
+    print("(You can 'move', 'quit', 'look', 'xp', 'talk', 'switchweapon', 'stats' or 'act')")
     action = input('> ')
-    acceptable_actions = ['move', 'quit', 'look', '/god', 'acceptable_actions', 'act', 'xp', 'talk', 'switchweapon']
+    acceptable_actions = ['move', 'quit', 'look', '/god', 'acceptable_actions', 'act', 'xp', 'talk', 'switchweapon', 'stats']
     while action.lower() not in acceptable_actions:
         print('Unknown action, try again.\n')
         action = input('> ')
@@ -245,6 +249,8 @@ def prompt():
             time.sleep(0.02)
     elif action.lower().strip() == 'switchweapon':
         switch_weapon()
+    elif action.lower().strip() == 'stats':
+        stats()
 def player_move():
     ask = 'Where would you like to move to?\n'
     print("You can move 'up', 'down', 'left' or 'right'.")
@@ -300,8 +306,20 @@ def switch_weapon():
         myPlayer.inventory.append(myPlayer.weapon)
         myPlayer.inventory.remove('knife')
         myPlayer.weapon = Knife()
+        print('You equipped the ' + myPlayer.weapon.name)
     else:
         print('Are you sure you own that weapon?')
+
+def stats():
+    print('#######################################################')
+    print('                         STATS                         ')
+    print('You are ' + myPlayer.name + ' the ' + myPlayer.job + '.')
+    print('You have ' + str(myPlayer.hp) + ' hp.')
+    print('You have ' + str(myPlayer.xp) + ' xp.')
+    print('You have ' + str(myPlayer.ap) + ' strength.')
+    print('Your current weapon, the ' + myPlayer.weapon.name + ' does ' + str(myPlayer.weapon.ap) + ' of damage.')
+    print('Your Inventory contains ' + str(myPlayer.inventory) + ' .')
+
 
 
 ##### GAME FUNCTIONALITY #####
