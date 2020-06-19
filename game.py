@@ -205,9 +205,9 @@ def print_location():
 def prompt():
     print('\n' + '===============================')
     print('What would you like to do?')
-    print("(You can 'move', 'quit', 'look', 'xp', 'talk' or 'act')")
+    print("(You can 'move', 'quit', 'look', 'xp', 'talk', 'switchweapon' or 'act')")
     action = input('> ')
-    acceptable_actions = ['move', 'quit', 'look', '/god', 'acceptable_actions', 'act', 'xp', 'talk']
+    acceptable_actions = ['move', 'quit', 'look', '/god', 'acceptable_actions', 'act', 'xp', 'talk', 'switchweapon']
     while action.lower() not in acceptable_actions:
         print('Unknown action, try again.\n')
         action = input('> ')
@@ -243,6 +243,8 @@ def prompt():
             sys.stdout.write(character)
             sys.stdout.flush()
             time.sleep(0.02)
+    elif action.lower().strip() == 'switchweapon':
+        switch_weapon()
 def player_move():
     ask = 'Where would you like to move to?\n'
     print("You can move 'up', 'down', 'left' or 'right'.")
@@ -290,6 +292,16 @@ def movement_handler(destination):
 def player_examine():
     print(map.zonemap[myPlayer.location][EXAMINATION])
 
+def switch_weapon():
+    askweaponsw = 'which weapon do you want to switch to?\n>'
+    print('You can switch weapons now.')
+    weapon_to_switch = input(askweaponsw)
+    if weapon_to_switch == 'knife' and 'knife' in myPlayer.inventory:
+        myPlayer.inventory.append(myPlayer.weapon)
+        myPlayer.inventory.remove('knife')
+        myPlayer.weapon = Knife()
+    else:
+        print('Are you sure you own that weapon?')
 
 
 ##### GAME FUNCTIONALITY #####
@@ -396,7 +408,7 @@ def player_act():
         title_screen()
     elif myPlayer.location == 'b1':
         print('You pick up the knife')
-        myPlayer.inventory.append(Knife())
+        myPlayer.inventory.append('knife')
     elif myPlayer.location == 'b2':
         print1 = 'You take a nap'
         if myPlayer.job == 'fighter':
