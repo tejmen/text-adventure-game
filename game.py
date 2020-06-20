@@ -296,11 +296,11 @@ def player_examine():
     print(map.zonemap[myPlayer.location][EXAMINATION])
 
 def player_talk():
-    if myPlayer.xp != 0 & myPlayer.location == 'a1' or myPlayer.location == 'a4':
+    if myPlayer.xp != 0 and myPlayer.location == 'a1' or myPlayer.location == 'a4':
         dialogue = 'Thanks for getting rid of some monsters' + myPlayer.name + ', although there is still more'
-    elif myPlayer.xp != 0 & myPlayer.location == 'b3':
+    elif myPlayer.xp != 0 and myPlayer.location == 'b3':
         dialogue = 'I will give you 2 more levels if you kill more monsters for me.'
-        levels = levels + 2
+        myPlayer.xp = myPlayer.xp + 2000
     else:
         dialogue = map.zonemap[myPlayer.location][DIALOGUE]
     for character in dialogue:
