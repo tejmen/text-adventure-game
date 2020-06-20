@@ -13,6 +13,7 @@ import time
 import random
 from random import randrange
 import map
+import math
 
 random_attacker = (random.randint(1,3))
 screen_width = 100
@@ -311,15 +312,16 @@ def switch_weapon():
         print('Are you sure you own that weapon?')
 
 def stats():
+    levels = str(math.floor((myPlayer.xp/1000)))
     print('#######################################################')
     print('                         STATS                         ')
     print('You are ' + myPlayer.name + ' the ' + myPlayer.job + '.')
     print('You have ' + str(myPlayer.hp) + ' hp.')
-    print('You have ' + str(myPlayer.xp) + ' xp.')
+    print('You have ' + str(myPlayer.xp) + ' xp and you are at level ' + levels + '.')
     print('You have ' + str(myPlayer.ap) + ' strength.')
     print('Your current weapon, the ' + myPlayer.weapon.name + ' does ' + str(myPlayer.weapon.ap) + ' of damage.')
     print('Your Inventory contains ' + str(myPlayer.inventory) + ' .')
-
+    print('#######################################################')
 
 
 ##### GAME FUNCTIONALITY #####
