@@ -1,8 +1,8 @@
 # Python Text RPG
 # Created by tej_men
-#     /
-# (:D)-<
 #     \
+# (:D)-<
+#     /
 
 
 import cmd
@@ -243,11 +243,7 @@ def prompt():
         print(myPlayer.xp)
         print('xp.')
     elif action.lower().strip() == 'talk':
-        dialogue = map.zonemap[myPlayer.location][DIALOGUE]
-        for character in dialogue:
-            sys.stdout.write(character)
-            sys.stdout.flush()
-            time.sleep(0.02)
+        player_talk()
     elif action.lower().strip() == 'switchweapon':
         switch_weapon()
     elif action.lower().strip() == 'stats':
@@ -298,6 +294,19 @@ def movement_handler(destination):
 
 def player_examine():
     print(map.zonemap[myPlayer.location][EXAMINATION])
+
+def player_talk():
+    if myPlayer.xp != 0 & myPlayer.location == 'a1' or myPlayer.location == 'a4':
+        dialogue = 'Thanks for getting rid of some monsters' + myPlayer.name + ', although there is still more'
+    elif myPlayer.xp != 0 & myPlayer.location == 'b3':
+        dialogue = 'I will give you 2 more levels if you kill more monsters for me.'
+        levels = levels + 2
+    else:
+        dialogue = map.zonemap[myPlayer.location][DIALOGUE]
+    for character in dialogue:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.02)
 
 def switch_weapon():
     askweaponsw = 'which weapon do you want to switch to?\n>'

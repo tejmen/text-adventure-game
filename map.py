@@ -85,7 +85,7 @@ zonemap = {
         DOWN : 'c2',
         LEFT : 'b1',
         RIGHT : 'b3',
-        DIALOGUE : 'Theres nobody to talk to here...',
+        DIALOGUE : '"Good luck on your journey.",Said your Mom .',
         ACTION : 'You are looking at the code'
     },
     'b3': {
@@ -97,7 +97,7 @@ zonemap = {
         DOWN : 'c3',
         LEFT : 'b2',
         RIGHT : 'b4',
-        DIALOGUE : 'Theres nobody to talk to here...',
+        DIALOGUE : '"I will give you a reward if you save to town from the monsters", said an old man',
         ACTION : 'You are looking at the code'
     },
     'b4': {
