@@ -1,8 +1,8 @@
 # Python Text RPG
 # Created by tej_men
-#     /
-# (:D)-<
 #     \
+# (:D)-<
+#     /
 
 
 import cmd
@@ -13,6 +13,7 @@ import time
 import random
 from random import randrange
 import map
+import math
 
 random_attacker = (random.randint(1,3))
 screen_width = 100
@@ -242,11 +243,7 @@ def prompt():
         print(myPlayer.xp)
         print('xp.')
     elif action.lower().strip() == 'talk':
-        dialogue = map.zonemap[myPlayer.location][DIALOGUE]
-        for character in dialogue:
-            sys.stdout.write(character)
-            sys.stdout.flush()
-            time.sleep(0.02)
+        player_talk()
     elif action.lower().strip() == 'switchweapon':
         switch_weapon()
     elif action.lower().strip() == 'stats':
@@ -298,6 +295,19 @@ def movement_handler(destination):
 def player_examine():
     print(map.zonemap[myPlayer.location][EXAMINATION])
 
+def player_talk():
+    if myPlayer.xp != 0 and myPlayer.location == 'a1' or myPlayer.location == 'a4':
+        dialogue = 'Thanks for getting rid of some monsters' + myPlayer.name + ', although there is still more'
+    elif myPlayer.xp != 0 and myPlayer.location == 'b3':
+        dialogue = 'I will give you 2 more levels if you kill more monsters for me.'
+        myPlayer.xp = myPlayer.xp + 2000
+    else:
+        dialogue = map.zonemap[myPlayer.location][DIALOGUE]
+    for character in dialogue:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.02)
+
 def switch_weapon():
     askweaponsw = 'which weapon do you want to switch to?\n>'
     print('You can switch weapons now.')
@@ -311,15 +321,16 @@ def switch_weapon():
         print('Are you sure you own that weapon?')
 
 def stats():
+    levels = str(math.floor((myPlayer.xp/1000)))
     print('#######################################################')
     print('                         STATS                         ')
     print('You are ' + myPlayer.name + ' the ' + myPlayer.job + '.')
     print('You have ' + str(myPlayer.hp) + ' hp.')
-    print('You have ' + str(myPlayer.xp) + ' xp.')
+    print('You have ' + str(myPlayer.xp) + ' xp and you are at level ' + levels + '.')
     print('You have ' + str(myPlayer.ap) + ' strength.')
     print('Your current weapon, the ' + myPlayer.weapon.name + ' does ' + str(myPlayer.weapon.ap) + ' of damage.')
     print('Your Inventory contains ' + str(myPlayer.inventory) + ' .')
-
+    print('#######################################################')
 
 
 ##### GAME FUNCTIONALITY #####
