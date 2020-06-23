@@ -483,3 +483,4 @@ healthchecksdb
 MigrationBackup/
 
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,visualstudio
+.vscode/settings.json
