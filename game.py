@@ -39,16 +39,22 @@ class Gslime:
     def __init__(self):
         self.hp = 300
         self.ap = 20
+        self.xp = 100
+        self.max = 300
 GreenS = Gslime()
 class Zomboy:
     def __init__(self):
         self.hp = 500
         self.ap = 40
+        self.xp = 500
+        self.max = 500
 zombie = Zomboy()
 class Skelemob:
     def __init__(self):
         self.hp = 500
         self.ap = 40
+        self.xp = 300
+        self.max = 500
 skeleton = Skelemob()
 class Sword:
     def __init__(self):
@@ -496,7 +502,8 @@ def player_act():
     elif myPlayer.location == 'c4':
         turn_based_combat()
     elif myPlayer.location == 'd3':
-        turn_based_combat()
+        thing = randint()
+        combat(thing)
     elif myPlayer.location == 'd2':
         print('this beach is so sandy that...')
         print1 = 'you take a nap.'
@@ -515,18 +522,21 @@ def player_act():
         print(map.zonemap[myPlayer.location][ACTION])
     map.zonemap[myPlayer.location][SOLVED] = True
 
-# Enemy vars
-GreenShp = 300
-GreenSappear = '##########################################\n# A Green Slime appeared out of the dark #\n##########################################'
-def turn_based_combat():
-    random_attacker = (random.randint(1,3))
-    if random_attacker == 1 :
-        print('##########################################')
-        print('# A Green Slime appeared out of the dark #')
-        print('##########################################')
-        while GreenS.hp > 0:
+        if enemy == GreenS:
+            print('##########################################')
+            print('# A Green Slime appeared out of the dark #')
+            print('##########################################')
+        elif enemy == skeleton:
+            print('#######################################')
+            print('# A skeleton appeared out of the dark #')
+            print('#######################################')
+        elif enemy == zombie:
+            print('#####################################')
+            print('# A Zombie appeared out of the dark #')
+            print('#####################################')
+        while enemy.hp > 0:
             print('What would you like to do?')
-            print("(You can type 'attack' to attack the Green slime.)")
+            print("(You can type 'attack' to attack the monster.)")
             print("(If you are a healer, you can type 'heal' to heal.)")
             attack = input('> ')
             acceptable_attack = ['attack','kill', 'heal']
@@ -534,26 +544,26 @@ def turn_based_combat():
                 print('Unknown action, try again.\n')
                 attack = input('> ')
                 if attack.lower().strip() == 'attack':
-                    GreenS.hp = GreenS.hp - (myPlayer.weapon.ap + myPlayer.ap)
-                    print("The green slime's health is ")
-                    print(GreenS.hp)
+                    enemy.hp = enemy.hp - (myPlayer.weapon.ap + myPlayer.ap)
+                    print("The monster's health is ")
+                    print(enemy.hp)
                 elif attack.lower().strip() == 'kill':
-                    GreenS.hp = 0
-                    print("The green slime's health is ")
-                    print(GreenS.hp)
+                    enemy.hp = 0
+                    print("The monster's health is ")
+                    print(enemy.hp)
             if attack.lower().strip() == 'attack':
-                GreenS.hp = GreenS.hp - (myPlayer.ap + myPlayer.weapon.ap)
-                if GreenS.hp < 0:
-                    GreenS.hp = 0
-                    print("The green slime's health is ")
-                    print(GreenS.hp)
+                enemy.hp = enemy.hp - (myPlayer.ap + myPlayer.weapon.ap)
+                if enemy.hp < 0:
+                    enemy.hp = 0
+                    print("The monster's health is ")
+                    print(enemy.hp)
                 else:
-                    print("The green slime's health is ")
-                    print(GreenS.hp)
+                    print("The monster's health is ")
+                    print(enemy.hp)
             elif attack.lower().strip() == 'kill':
-                GreenS.hp = 0
-                print("The green slime's health is ")
-                print(GreenS.hp)
+                enemy.hp = 0
+                print("The monster's health is ")
+                print(enemy.hp)
             if attack.lower().strip() == 'heal':
                 if myPlayer.job == 'healer':
                     myPlayer.hp = myPlayer.hp + myPlayer.heal
@@ -573,11 +583,11 @@ def turn_based_combat():
                         time.sleep(0.1)
                 else:
                     print("You can't heal. You're not a healer.")
-            if GreenS.hp > 0:
-                print('\n################################')
+            if enemy.hp > 0:
+                print('################################')
                 print('# The Green Slime attacked you.#')
                 print('################################')
-                myPlayer.hp = myPlayer.hp - GreenS.ap
+                myPlayer.hp = myPlayer.hp - enemy.ap
                 if myPlayer.hp <= 0:
                     myPlayer.hp = 0
                     myPlayer.game_over = True
@@ -602,176 +612,262 @@ def turn_based_combat():
         print('# You have defeated a green slime. #')
         print('#     You have gained 100 XP.      #')
         print('####################################')
-        myPlayer.xp = myPlayer.xp + 100
-        GreenS.hp = 300
-    elif random_attacker == 2:
-        print('#####################################')
-        print('# A skeleton appeared out of the dark #')
-        print('#####################################')
-        while skeleton.hp > 0:
-            print('What would you like to do?')
-            print("(You can type 'attack' to attack the skeleton.)")
-            attack = input('> ')
-            acceptable_attack = ['attack','kill', 'heal']
-            while attack.lower().strip() not in acceptable_attack:
-                print('Unknown action, try again.\n')
-                attack = input('> ')
-                if attack.lower().strip() == 'attack':
-                    skeleton.hp = skeleton.hp - (myPlayer.ap + myPlayer.weapon.ap)
-                    print("The skeleton's health is ")
-                    print(skeleton.hp)
-                elif attack.lower().strip() == 'kill':
-                    skeleton.hp = 0
-                    print("The skeleton's health is ")
-                    print(skeleton.hp)
-            if attack.lower().strip() == 'attack':
-                skeleton.hp = skeleton.hp - (myPlayer.ap + myPlayer.weapon.ap)
-                if skeleton.hp < 0:
-                    skeleton.hp = 0
-                    print("The skeleton's health is ")
-                    print(skeleton.hp)
-                else:
-                    print("The skeleton's health is ")
-                    print(skeleton.hp)
-            elif attack.lower().strip() == 'kill':
-                skeleton.hp = 0
-                print("The skeleton's health is ")
-                print(skeleton.hp)
-            if attack.lower().strip() == 'heal':
-                if myPlayer.job == 'healer':
-                    myPlayer.hp = myPlayer.hp + myPlayer.heal
-                    if myPlayer.hp > 200:
-                        myPlayer.hp = 200
-                    text3 = 'You have '
-                    text4 = 'health now.\n'
-                    for character in text3:
-                        sys.stdout.write(character)
-                        sys.stdout.flush()
-                        time.sleep(0.1)
-                    print(myPlayer.hp)
-                    time.sleep(1)
-                    for character in text4:
-                        sys.stdout.write(character)
-                        sys.stdout.flush()
-                        time.sleep(0.1)
-                else:
-                    print("You can't heal. You're not a healer.")
-            if skeleton.hp > 0:
-                print('\n##########################')
-                print('# The skeleton attacked you. #')
-                print('############################')
-                myPlayer.hp = myPlayer.hp - skeleton.ap
-                if myPlayer.hp <= 0:
-                    myPlayer.hp = 0
-                    myPlayer.game_over = True
-                if myPlayer.game_over == True:
-                    print('#####################################################')
-                    print('# You are Dead, with a arrow inpaled in your heart. #')
-                    print('#####################################################')
-                    time.sleep(5)
-                    title_screen()
-                text = 'You have '
-                text2 = 'health left.\n'
-                for character in text:
-                    sys.stdout.write(character)
-                    sys.stdout.flush()
-                    time.sleep(0.1)
-                print(myPlayer.hp)
-                for character in text2:
-                    sys.stdout.write(character)
-                    sys.stdout.flush()
-                    time.sleep(0.1)
-        print('####################################')
-        print('#   You have defeated a skeleton.  #')
-        print('#     You have gained 300 XP.      #')
-        print('####################################')
-        myPlayer.xp = myPlayer.xp + 300
-        skeleton.hp = 500
-    elif random_attacker == 3:
-        print('#####################################')
-        print('# A Zombie appeared out of the dark #')
-        print('#####################################')
-        while zombie.hp > 0:
-            print('What would you like to do?')
-            print("(You can type 'attack' to attack the Zombie.)")
-            attack = input('> ')
-            acceptable_attack = ['attack','kill', 'heal']
-            while attack.lower().strip() not in acceptable_attack:
-                print('Unknown action, try again.\n')
-                attack = input('> ')
-                if attack.lower().strip() == 'attack':
-                    zombie.hp = zombie.hp - (myPlayer.ap + myPlayer.weapon.ap)
-                    print("The Zombie's health is ")
-                    print(zombie.hp)
-                elif attack.lower().strip() == 'kill':
-                    zombie.hp = 0
-                    print("The Zombie's health is ")
-                    print(zombie.hp)
-            if attack.lower().strip() == 'attack':
-                zombie.hp = zombie.hp - (myPlayer.ap + myPlayer.weapon.ap)
-                if zombie.hp < 0:
-                    zombie.hp = 0
-                    print("The Zombie's health is ")
-                    print(zombie.hp)
-                else:
-                    print("The Zombie's health is ")
-                    print(zombie.hp)
-            elif attack.lower().strip() == 'kill':
-                zombie.hp = 0
-                print("The Zombie's health is ")
-                print(zombie.hp)
-            if attack.lower().strip() == 'heal':
-                if myPlayer.job == 'healer':
-                    myPlayer.hp = myPlayer.hp + myPlayer.heal
-                    if myPlayer.hp > 200:
-                        myPlayer.hp = 200
-                    text3 = 'You have '
-                    text4 = 'health now.\n'
-                    for character in text3:
-                        sys.stdout.write(character)
-                        sys.stdout.flush()
-                        time.sleep(0.1)
-                    print(myPlayer.hp)
-                    time.sleep(1)
-                    for character in text4:
-                        sys.stdout.write(character)
-                        sys.stdout.flush()
-                        time.sleep(0.1)
-                else:
-                    print("You can't heal. You're not a healer.")
-            if zombie.hp > 0:
-                print('\n##########################')
-                print('# The Zombie attacked you. #')
-                print('############################')
-                myPlayer.hp = myPlayer.hp - zombie.ap
-                if myPlayer.hp <= 0:
-                    myPlayer.hp = 0
-                    myPlayer.game_over = True
-                if myPlayer.game_over == True:
-                    print('##########################################################################')
-                    print('# You are now a zombie as the zombie who just killed you is now a human. #')
-                    print('##########################################################################')
-                    time.sleep(5)
-                    title_screen()
-                text = 'You have '
-                text2 = 'health left.\n'
-                for character in text:
-                    sys.stdout.write(character)
-                    sys.stdout.flush()
-                    time.sleep(0.1)
-                print(myPlayer.hp)
-                for character in text2:
-                    sys.stdout.write(character)
-                    sys.stdout.flush()
-                    time.sleep(0.1)
-        print('####################################')
-        print('#   You have defeated a zombie.    #')
-        print('#     You have gained 500 XP.      #')
-        print('####################################')
-        myPlayer.xp = myPlayer.xp + 500
-        zombie.hp = 500
-    map.zonemap[myPlayer.location][SOLVED] = True
-    main_game_loop()
+        myPlayer.xp = myPlayer.xp + enemy.xp
+        enemy.hp = 300
+# def turn_based_combat():
+#     random_attacker = (random.randint(1,3))
+#     if random_attacker == 1 :
+#         print('##########################################')
+#         print('# A Green Slime appeared out of the dark #')
+#         print('##########################################')
+#         while enemy.hp > 0:
+#             print('What would you like to do?')
+#             print("(You can type 'attack' to attack the Green slime.)")
+#             print("(If you are a healer, you can type 'heal' to heal.)")
+#             attack = input('> ')
+#             acceptable_attack = ['attack','kill', 'heal']
+#             while attack.lower().strip() not in acceptable_attack:
+#                 print('Unknown action, try again.\n')
+#                 attack = input('> ')
+#                 if attack.lower().strip() == 'attack':
+#                     GreenS.hp = GreenS.hp - (myPlayer.weapon.ap + myPlayer.ap)
+#                     print("The monster's health is ")
+#                     print(GreenS.hp)
+#                 elif attack.lower().strip() == 'kill':
+#                     GreenS.hp = 0
+#                     print("The monster's health is ")
+#                     print(GreenS.hp)
+#             if attack.lower().strip() == 'attack':
+#                 GreenS.hp = GreenS.hp - (myPlayer.ap + myPlayer.weapon.ap)
+#                 if GreenS.hp < 0:
+#                     GreenS.hp = 0
+#                     print("The monster's health is ")
+#                     print(GreenS.hp)
+#                 else:
+#                     print("The monster's health is ")
+#                     print(GreenS.hp)
+#             elif attack.lower().strip() == 'kill':
+#                 GreenS.hp = 0
+#                 print("The monster's health is ")
+#                 print(GreenS.hp)
+#             if attack.lower().strip() == 'heal':
+#                 if myPlayer.job == 'healer':
+#                     myPlayer.hp = myPlayer.hp + myPlayer.heal
+#                     if myPlayer.hp > 200:
+#                         myPlayer.hp = 200
+#                     text3 = 'You have '
+#                     text4 = 'health now.\n'
+#                     for character in text3:
+#                         sys.stdout.write(character)
+#                         sys.stdout.flush()
+#                         time.sleep(0.1)
+#                     print(myPlayer.hp)
+#                     time.sleep(1)
+#                     for character in text4:
+#                         sys.stdout.write(character)
+#                         sys.stdout.flush()
+#                         time.sleep(0.1)
+#                 else:
+#                     print("You can't heal. You're not a healer.")
+#             if GreenS.hp > 0:
+#                 print('################################')
+#                 print('# The Green Slime attacked you.#')
+#                 print('################################')
+#                 myPlayer.hp = myPlayer.hp - GreenS.ap
+#                 if myPlayer.hp <= 0:
+#                     myPlayer.hp = 0
+#                     myPlayer.game_over = True
+#                 if myPlayer.game_over == True:
+#                     print('############################################')
+#                     print('# You are Dieing slowly, incased in slime. #')
+#                     print('############################################')
+#                     time.sleep(5)
+#                     title_screen()
+#                 text = 'You have '
+#                 text2 = 'health left.\n'
+#                 for character in text:
+#                     sys.stdout.write(character)
+#                     sys.stdout.flush()
+#                     time.sleep(0.1)
+#                 print(myPlayer.hp)
+#                 for character in text2:
+#                     sys.stdout.write(character)
+#                     sys.stdout.flush()
+#                     time.sleep(0.1)
+#         print('####################################')
+#         print('# You have defeated a green slime. #')
+#         print('#     You have gained 100 XP.      #')
+#         print('####################################')
+#         myPlayer.xp = myPlayer.xp + 100
+#         GreenS.hp = 300
+#     elif random_attacker == 2:
+#         print('#######################################')
+#         print('# A skeleton appeared out of the dark #')
+#         print('#######################################')
+#         while skeleton.hp > 0:
+#             print('What would you like to do?')
+#             print("(You can type 'attack' to attack the skeleton.)")
+#             attack = input('> ')
+#             acceptable_attack = ['attack','kill', 'heal']
+#             while attack.lower().strip() not in acceptable_attack:
+#                 print('Unknown action, try again.\n')
+#                 attack = input('> ')
+#                 if attack.lower().strip() == 'attack':
+#                     skeleton.hp = skeleton.hp - (myPlayer.ap + myPlayer.weapon.ap)
+#                     print("The skeleton's health is ")
+#                     print(skeleton.hp)
+#                 elif attack.lower().strip() == 'kill':
+#                     skeleton.hp = 0
+#                     print("The skeleton's health is ")
+#                     print(skeleton.hp)
+#             if attack.lower().strip() == 'attack':
+#                 skeleton.hp = skeleton.hp - (myPlayer.ap + myPlayer.weapon.ap)
+#                 if skeleton.hp < 0:
+#                     skeleton.hp = 0
+#                     print("The skeleton's health is ")
+#                     print(skeleton.hp)
+#                 else:
+#                     print("The skeleton's health is ")
+#                     print(skeleton.hp)
+#             elif attack.lower().strip() == 'kill':
+#                 skeleton.hp = 0
+#                 print("The skeleton's health is ")
+#                 print(skeleton.hp)
+#             if attack.lower().strip() == 'heal':
+#                 if myPlayer.job == 'healer':
+#                     myPlayer.hp = myPlayer.hp + myPlayer.heal
+#                     if myPlayer.hp > 200:
+#                         myPlayer.hp = 200
+#                     text3 = 'You have '
+#                     text4 = 'health now.\n'
+#                     for character in text3:
+#                         sys.stdout.write(character)
+#                         sys.stdout.flush()
+#                         time.sleep(0.1)
+#                     print(myPlayer.hp)
+#                     time.sleep(1)
+#                     for character in text4:
+#                         sys.stdout.write(character)
+#                         sys.stdout.flush()
+#                         time.sleep(0.1)
+#                 else:
+#                     print("You can't heal. You're not a healer.")
+#             if skeleton.hp > 0:
+#                 print('\n##########################')
+#                 print('# The skeleton attacked you. #')
+#                 print('############################')
+#                 myPlayer.hp = myPlayer.hp - skeleton.ap
+#                 if myPlayer.hp <= 0:
+#                     myPlayer.hp = 0
+#                     myPlayer.game_over = True
+#                 if myPlayer.game_over == True:
+#                     print('#####################################################')
+#                     print('# You are Dead, with a arrow inpaled in your heart. #')
+#                     print('#####################################################')
+#                     time.sleep(5)
+#                     title_screen()
+#                 text = 'You have '
+#                 text2 = 'health left.\n'
+#                 for character in text:
+#                     sys.stdout.write(character)
+#                     sys.stdout.flush()
+#                     time.sleep(0.1)
+#                 print(myPlayer.hp)
+#                 for character in text2:
+#                     sys.stdout.write(character)
+#                     sys.stdout.flush()
+#                     time.sleep(0.1)
+#         print('####################################')
+#         print('#   You have defeated a skeleton.  #')
+#         print('#     You have gained 300 XP.      #')
+#         print('####################################')
+#         myPlayer.xp = myPlayer.xp + 300
+#         skeleton.hp = 500
+#     elif random_attacker == 3:
+#         print('#####################################')
+#         print('# A Zombie appeared out of the dark #')
+#         print('#####################################')
+#         while zombie.hp > 0:
+#             print('What would you like to do?')
+#             print("(You can type 'attack' to attack the Zombie.)")
+#             attack = input('> ')
+#             acceptable_attack = ['attack','kill', 'heal']
+#             while attack.lower().strip() not in acceptable_attack:
+#                 print('Unknown action, try again.\n')
+#                 attack = input('> ')
+#                 if attack.lower().strip() == 'attack':
+#                     zombie.hp = zombie.hp - (myPlayer.ap + myPlayer.weapon.ap)
+#                     print("The Zombie's health is ")
+#                     print(zombie.hp)
+#                 elif attack.lower().strip() == 'kill':
+#                     zombie.hp = 0
+#                     print("The Zombie's health is ")
+#                     print(zombie.hp)
+#             if attack.lower().strip() == 'attack':
+#                 zombie.hp = zombie.hp - (myPlayer.ap + myPlayer.weapon.ap)
+#                 if zombie.hp < 0:
+#                     zombie.hp = 0
+#                     print("The Zombie's health is ")
+#                     print(zombie.hp)
+#                 else:
+#                     print("The Zombie's health is ")
+#                     print(zombie.hp)
+#             elif attack.lower().strip() == 'kill':
+#                 zombie.hp = 0
+#                 print("The Zombie's health is ")
+#                 print(zombie.hp)
+#             if attack.lower().strip() == 'heal':
+#                 if myPlayer.job == 'healer':
+#                     myPlayer.hp = myPlayer.hp + myPlayer.heal
+#                     if myPlayer.hp > 200:
+#                         myPlayer.hp = 200
+#                     text3 = 'You have '
+#                     text4 = 'health now.\n'
+#                     for character in text3:
+#                         sys.stdout.write(character)
+#                         sys.stdout.flush()
+#                         time.sleep(0.1)
+#                     print(myPlayer.hp)
+#                     time.sleep(1)
+#                     for character in text4:
+#                         sys.stdout.write(character)
+#                         sys.stdout.flush()
+#                         time.sleep(0.1)
+#                 else:
+#                     print("You can't heal. You're not a healer.")
+#             if zombie.hp > 0:
+#                 print('\n##########################')
+#                 print('# The Zombie attacked you. #')
+#                 print('############################')
+#                 myPlayer.hp = myPlayer.hp - zombie.ap
+#                 if myPlayer.hp <= 0:
+#                     myPlayer.hp = 0
+#                     myPlayer.game_over = True
+#                 if myPlayer.game_over == True:
+#                     print('##########################################################################')
+#                     print('# You are now a zombie as the zombie who just killed you is now a human. #')
+#                     print('##########################################################################')
+#                     time.sleep(5)
+#                     title_screen()
+#                 text = 'You have '
+#                 text2 = 'health left.\n'
+#                 for character in text:
+#                     sys.stdout.write(character)
+#                     sys.stdout.flush()
+#                     time.sleep(0.1)
+#                 print(myPlayer.hp)
+#                 for character in text2:
+#                     sys.stdout.write(character)
+#                     sys.stdout.flush()
+#                     time.sleep(0.1)
+#         print('####################################')
+#         print('#   You have defeated a zombie.    #')
+#         print('#     You have gained 500 XP.      #')
+#         print('####################################')
+#         myPlayer.xp = myPlayer.xp + 500
+#         zombie.hp = 500
+#     map.zonemap[myPlayer.location][SOLVED] = True
+#     main_game_loop()
 
 print('________________        _________            _______ ______          _______ _      _________        _______ _______             _______ _______ _______ _______  ')
 print('\__   __(  ____ |\     /\__   __/           (  ___  (  __  \|\     /(  ____ ( (    /\__   __|\     /(  ____ (  ____ \           (  ____ (  ___  (       (  ____ \ ')
