@@ -515,7 +515,9 @@ def player_act():
         print(map.zonemap[myPlayer.location][ACTION])
     map.zonemap[myPlayer.location][SOLVED] = True
 
-
+# Enemy vars
+GreenShp = 300
+GreenSappear = '##########################################\n# A Green Slime appeared out of the dark #\n##########################################'
 def turn_based_combat():
     random_attacker = (random.randint(1,3))
     if random_attacker == 1 :
