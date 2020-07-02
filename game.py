@@ -342,12 +342,12 @@ def switch_weapon():
         print('Are you sure you own that weapon?')
 
 def stats():
-    levels = str(math.floor((myPlayer.xp/1000)))
+    levels = math.floor((myPlayer.xp/1000))
     print('#######################################################')
     print('                         STATS                         ')
     print('You are ' + myPlayer.name + ' the ' + myPlayer.job + '.')
     print('You have ' + str(myPlayer.hp) + ' hp.')
-    print('You have ' + str(myPlayer.xp) + ' xp and you are at level ' + levels + '.')
+    print('You have ' + str(myPlayer.xp) + ' xp and you are at level ' + str(levels) + '.')
     print('You have ' + str(myPlayer.ap) + ' strength.')
     print('Your current weapon, the ' + myPlayer.weapon.name + ' does ' + str(myPlayer.weapon.ap) + ' of damage.')
     print('Your Inventory contains ' + str(myPlayer.inventory) + ' .')
@@ -607,6 +607,9 @@ def combat(enemy, name):
                 time.sleep(0.1)
     print(enemy.defeat)
     myPlayer.xp = myPlayer.xp + enemy.xp
+    levels = math.floor((myPlayer.xp/1000))
+    if levels%10 == 0:
+        myPlayer.ap = myPlayer.ap + 1
     enemy.hp = enemy.max
 def turn_based_combat():
     random_attacker = (random.randint(1,3))
