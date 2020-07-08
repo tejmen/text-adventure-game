@@ -19,14 +19,14 @@ zonemap = {
     'a1': {
         ZONENAME : 'Town Market',
         DESCRIPTION : 'This is your Local Marketplace',
-        EXAMINATION : 'There is a vague smell of fish and fresh produce.',
+        EXAMINATION : 'There is a vague smell of meat, herbs and fresh produce.',
         SOLVED : False,
         UP : 'a1',
         DOWN : 'b1',
         LEFT : 'a1',
         RIGHT : 'a2',
         DIALOGUE : 'A Seller in the Market says: "I used to go fishing at the beach, but now theres monsters nearby!"',
-        ACTION : 'I was going to buy an apple, but I dont have any money.'
+        ACTION : 'You are looking at the code'
     },
     'a2': {
         ZONENAME : 'Town Entrance',
@@ -182,7 +182,7 @@ zonemap = {
         LEFT : 'd1',
         RIGHT : 'd3',
         DIALOGUE : '"my moomy sed dat da plase right of us is wery danegrus" said one of the children',
-        ACTION : ''
+        ACTION : 'You are looking at the code'
     },
     'd3': {
         ZONENAME : 'Dungeon',

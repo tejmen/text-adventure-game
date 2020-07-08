@@ -33,6 +33,7 @@ class player:
         self.inventory = []
         self.weapon = ''
         self.xp = 0
+        self.money = 0
 myPlayer = player()
 
 class Gslime:
@@ -40,33 +41,36 @@ class Gslime:
         self.hp = 300
         self.ap = 20
         self.xp = 100
+        self.money = 10
         self.max = 300
         self.appear = '##########################################\n# A Green Slime appeared out of the dark #\n##########################################'
         self.attack = '################################\n# The Green Slime attacked you.#\n################################'
         self.die = '############################################\n# You are Dieing slowly, incased in slime. #\n############################################'
-        self.defeat = '####################################\n# You have defeated a green slime. #\n#     You have gained 100 XP.      #\n####################################\n'
+        self.defeat = '####################################\n# You have defeated a green slime. #\n#     You have gained 100 XP.      #\n#    You have gained 10 money.     #\n####################################\n'
 GreenS = Gslime()
 class Zomboy:
     def __init__(self):
         self.hp = 500
         self.ap = 40
         self.xp = 500
+        self.money = 25
         self.max = 500
         self.appear = '#####################################\n# A Zombie appeared out of the dark #\n#####################################'
         self.attack = '############################\n# The Zombie attacked you. #\n############################'
         self.die = '##########################################################################\n# You are now a zombie as the zombie who just killed you is now a human. #\n##########################################################################'
-        self.defeat = '####################################\n#   You have defeated a zombie.    #\n#     You have gained 500 XP.      #\n####################################\n'
+        self.defeat = '####################################\n#   You have defeated a zombie.    #\n#     You have gained 500 XP.      #\n#    You have gained 25 money.     #\n####################################\n'
 zombie = Zomboy()
 class Skelemob:
     def __init__(self):
         self.hp = 500
         self.ap = 40
-        self.xp = 300
+        self.xp = 500
+        self.money = 25    
         self.max = 500
         self.appear = '#######################################\n# A skeleton appeared out of the dark #\n#######################################'
         self.attack = '##############################\n# The skeleton attacked you. #\n##############################'
         self.die = '#####################################################\n# You are Dead, with a arrow inpaled in your heart. #\n#####################################################'
-        self.defeat = '####################################\n#   You have defeated a skeleton.  #\n#     You have gained 300 XP.      #\n####################################\n'
+        self.defeat = '####################################\n#   You have defeated a skeleton.  #\n#    You have gained 25 money.     #\n#     You have gained 300 XP.      #\n####################################\n'
 skeleton = Skelemob()
 class Sword:
     def __init__(self):
@@ -113,7 +117,6 @@ def title_screen_selections():
 
         if godanswer == 'a':
             print('Hello god. Fancy seeing you here.')
-            godbool = 'yes'
             title_screen()
 
         else:
@@ -319,9 +322,6 @@ def player_examine():
 def player_talk():
     if myPlayer.xp != 0 and myPlayer.location == 'a1' or myPlayer.location == 'a4':
         dialogue = 'Thanks for getting rid of some monsters' + myPlayer.name + ', although there is still more'
-    elif myPlayer.xp != 0 and myPlayer.location == 'b3':
-        dialogue = 'I will give you 2 more levels if you kill more monsters for me.'
-        myPlayer.xp = myPlayer.xp + 2000
     else:
         dialogue = map.zonemap[myPlayer.location][DIALOGUE]
     for character in dialogue:
@@ -344,13 +344,14 @@ def switch_weapon():
 def stats():
     levels = math.floor((myPlayer.xp/1000))
     print('#######################################################')
-    print('                         STATS                         ')
-    print('You are ' + myPlayer.name + ' the ' + myPlayer.job + '.')
-    print('You have ' + str(myPlayer.hp) + ' hp.')
-    print('You have ' + str(myPlayer.xp) + ' xp and you are at level ' + str(levels) + '.')
-    print('You have ' + str(myPlayer.ap) + ' strength.')
-    print('Your current weapon, the ' + myPlayer.weapon.name + ' does ' + str(myPlayer.weapon.ap) + ' of damage.')
-    print('Your Inventory contains ' + str(myPlayer.inventory) + ' .')
+    print('#                         STATS                         ')
+    print('# You are ' + myPlayer.name + ' the ' + myPlayer.job + '.')
+    print('# You have ' + str(myPlayer.hp) + ' hp.')
+    print('# You have ' + str(myPlayer.xp) + ' xp and you are at level ' + str(levels) + '.')
+    print('# You have ' + str(myPlayer.ap) + ' strength.')
+    print('# You have ' + str(myPlayer.money) + ' money.')
+    print('# Your current weapon, the ' + myPlayer.weapon.name + ' does ' + str(myPlayer.weapon.ap) + ' of damage.')
+    print('# Your Inventory contains ' + str(myPlayer.inventory) + ' .')
     print('#######################################################')
 
 
@@ -444,94 +445,96 @@ def setup_game():
     main_game_loop()
 
 def player_act():
-    if myPlayer.location == 'b4':
-        myPlayer.location = 'c1'
-        map.zonemap[myPlayer.location][ZONENAME] = 'Telporter'
-        destination = myPlayer.location
-        movement_handler(destination)
-    elif myPlayer.location == 'c1':
-        myPlayer.location = 'b4'
-        map.zonemap[myPlayer.location][ZONENAME] = 'Telporter'
-        destination = myPlayer.location
-        movement_handler(destination)
-    elif myPlayer.location == 'd4':
-        title_screen()
-    elif myPlayer.location == 'b1':
-        print('You pick up the knife')
-        myPlayer.inventory.append('knife')
-    elif myPlayer.location == 'b2':
-        print1 = 'You take a nap'
-        if myPlayer.job == 'fighter':
-            myPlayer.hp = 120
-        elif myPlayer.job == 'wizard':
-            myPlayer.hp = 300
-        elif myPlayer.job =='healer':
-            myPlayer.hp = 200
-        for character in print1:
-            sys.stdout.write(character)
-            sys.stdout.flush()
-            time.sleep(0.1)
-        time.sleep(1)
-    elif myPlayer.location == 'b3':
-        print1 = 'You take a nap'
-        if myPlayer.job == 'fighter':
-            myPlayer.hp = 120
-        elif myPlayer.job == 'wizard':
-            myPlayer.hp = 300
-        elif myPlayer.job =='healer':
-            myPlayer.hp = 200
-        for character in print1:
-            sys.stdout.write(character)
-            sys.stdout.flush()
-            time.sleep(0.1)
-        time.sleep(1)
-    elif myPlayer.location == 'c2':
-        print1 = 'You take a nap'
-        if myPlayer.job == 'fighter':
-            myPlayer.hp = 120
-        elif myPlayer.job == 'wizard':
-            myPlayer.hp = 300
-        elif myPlayer.job =='healer':
-            myPlayer.hp = 200
-        for character in print1:
-            sys.stdout.write(character)
-            sys.stdout.flush()
-            time.sleep(0.1)
-        time.sleep(1)
-    elif myPlayer.location == 'c3':
-        print1 = 'You take a nap'
-        if myPlayer.job == 'fighter':
-            myPlayer.hp = 120
-        elif myPlayer.job == 'wizard':
-            myPlayer.hp = 300
-        elif myPlayer.job =='healer':
-            myPlayer.hp = 200
-        for character in print1:
-            sys.stdout.write(character)
-            sys.stdout.flush()
-            time.sleep(0.1)
-        time.sleep(1)
-    elif myPlayer.location == 'c4':
-        turn_based_combat()
-    elif myPlayer.location == 'd3':
-        turn_based_combat()
-    elif myPlayer.location == 'd2':
-        print('this beach is so sandy that...')
-        print1 = 'you take a nap.'
-        if myPlayer.job == 'fighter':
-            myPlayer.hp = 120
-        elif myPlayer.job == 'wizard':
-            myPlayer.hp = 300
-        elif myPlayer.job == 'healer':
-            myPlayer.hp = 200
-        for character in print1:
-            sys.stdout.write(character)
-            sys.stdout.flush()
-            time.sleep(0.1)
-        time.sleep(1)
+    if map.zonemap[myPlayer.location][SOLVED] == False:
+        if myPlayer.location == 'b4':
+            myPlayer.location = 'c1'
+            map.zonemap[myPlayer.location][ZONENAME] = 'Telporter'
+            destination = myPlayer.location
+            movement_handler(destination)
+        elif myPlayer.location == 'c1':
+            myPlayer.location = 'b4'
+            map.zonemap[myPlayer.location][ZONENAME] = 'Telporter'
+            destination = myPlayer.location
+            movement_handler(destination)
+        elif myPlayer.location == 'd4':
+            title_screen()
+        elif myPlayer.location == 'b1':
+            print('You pick up the knife')
+            myPlayer.inventory.append('knife')
+        elif myPlayer.location == 'b2':
+            print1 = 'You take a nap'
+            if myPlayer.job == 'fighter':
+                myPlayer.hp = 120
+            elif myPlayer.job == 'wizard':
+                myPlayer.hp = 300
+            elif myPlayer.job =='healer':
+                myPlayer.hp = 200
+            for character in print1:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.1)
+            time.sleep(1)
+        elif myPlayer.location == 'b3':
+            if not player.money == 0:
+                print1 = '"I will give you some money if you defeat the monsters south of here" said an old man.'
+            else:
+                print1 = 'I have given you some money.\n Now go away!'
+                for character in print1:
+                    sys.stdout(character)
+                    sys.stdout.flush()
+                    time.sleep(0.1)
+                myPlayer.money = myPlayer.money + 40
+                map.zonemap[myPlayer.location][SOLVED] = True
+            time.sleep(1)
+        elif myPlayer.location == 'c2':
+            print1 = 'You take a nap'
+            if myPlayer.job == 'fighter':
+                myPlayer.hp = 120
+            elif myPlayer.job == 'wizard':
+                myPlayer.hp = 300
+            elif myPlayer.job =='healer':
+                myPlayer.hp = 200
+            for character in print1:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.1)
+            time.sleep(1)
+        elif myPlayer.location == 'c3':
+            print1 = 'You take a nap'
+            if myPlayer.job == 'fighter':
+                myPlayer.hp = 120
+            elif myPlayer.job == 'wizard':
+                myPlayer.hp = 300
+            elif myPlayer.job =='healer':
+                myPlayer.hp = 200
+            for character in print1:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.1)
+            time.sleep(1)
+        elif myPlayer.location == 'c4':
+            turn_based_combat()
+        elif myPlayer.location == 'd3':
+            turn_based_combat()
+        elif myPlayer.location == 'd2':
+            print('this beach is so sandy that...')
+            print1 = 'you take a nap.'
+            if myPlayer.job == 'fighter':
+                myPlayer.hp = 120
+            elif myPlayer.job == 'wizard':
+                myPlayer.hp = 300
+            elif myPlayer.job == 'healer':
+                myPlayer.hp = 200
+            for character in print1:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.1)
+            time.sleep(1)
+        else:
+            print(map.zonemap[myPlayer.location][ACTION])
     else:
-        print(map.zonemap[myPlayer.location][ACTION])
-    map.zonemap[myPlayer.location][SOLVED] = True
+        print('There is nothing to do here!')
+        
 
 def combat(enemy, name):
     print(enemy.appear)
@@ -607,6 +610,7 @@ def combat(enemy, name):
                 time.sleep(0.1)
     print(enemy.defeat)
     myPlayer.xp = myPlayer.xp + enemy.xp
+    myPlayer.money = myPlayer.money + enemy.money
     levels = math.floor((myPlayer.xp/1000))
     if levels%10 == 0:
         myPlayer.ap = myPlayer.ap + 1
@@ -619,7 +623,6 @@ def turn_based_combat():
         combat(skeleton, 'skeleton')
     elif random_attacker == 3:
         combat(zombie, 'zombie')
-    map.zonemap[myPlayer.location][SOLVED] = True
     main_game_loop()
 
 print('________________        _________            _______ ______          _______ _      _________        _______ _______             _______ _______ _______ _______  ')
