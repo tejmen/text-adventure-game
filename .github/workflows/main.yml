@@ -31,7 +31,7 @@ jobs:
     # Runs a single command using the runners shell
     - name: Build project using PyInstaller
       run: |
-        pyinstaller -F -i favicon.ico game.py
+        pyinstaller -F -i buildfile/favicon.ico game.py
         zip --junk-paths text-adventure-game.zip dist/game.exe
       
     - name: Create Release
