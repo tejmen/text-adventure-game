@@ -25,6 +25,7 @@ class player:
         self.name = ''
         self.job = ''
         self.hp = 0
+        self.max = 0
         self.ap = 0
         self.heal = 0
         self.status_effects = []
@@ -88,6 +89,26 @@ class Knife:
     def __init__(self):
         self.name = "Traveller's Knife"
         self.ap = 80
+class Boots:
+    def __init__(self):
+        self.name = 'Iron Boots'
+        self.hp = 30
+        self.durability = 100
+class leggings:
+    def __init__(self):
+        self.name = 'Iron Leggings'
+        self.hp = 40
+        self.durability = 100
+class chestplate:
+    def __init__(self):
+        self.name = 'Iron Chestplate'
+        self.hp = 60
+        self.durability = 100
+class helmet:
+    def __init__(self):
+        self.name = 'Iron Helmet'
+        self.hp = 50
+        self.durability = 100
 
 ##### Title Screen #####
 def title_screen_selections():
@@ -148,7 +169,6 @@ def title_screen_selections():
             godanswer = input()
             if godanswer == 'a':
                     print('Hello god. Fancy seeing you here.')
-                    godbool = 'yes'
                     title_screen()
             title_screen()
 
@@ -199,18 +219,6 @@ def acknowledgements_menu():
     title_screen()
 
 
-
-##### MAP #####
-#     1     2    3    4     PLAYER STARTS AT b2
-#   ---------------------
-#   |   |       |   |   |  a
-#   ---------------------
-#   |   | Home  |   |   |  b
-#   ---------------------
-#   |   |       |   |   |  c
-#   ---------------------
-#   |   |       |   |   |  d
-#   ---------------------
 
 ZONENAME = ''
 DESCRIPTION = 'description'
@@ -349,10 +357,66 @@ def stats():
     print('# You have ' + str(myPlayer.hp) + ' hp.')
     print('# You have ' + str(myPlayer.xp) + ' xp and you are at level ' + str(levels) + '.')
     print('# You have ' + str(myPlayer.ap) + ' strength.')
-    print('# You have ' + str(myPlayer.money) + ' money.')
+    print('# You have ₴ ' + str(myPlayer.money))
     print('# Your current weapon, the ' + myPlayer.weapon.name + ' does ' + str(myPlayer.weapon.ap) + ' of damage.')
     print('# Your Inventory contains ' + str(myPlayer.inventory) + ' .')
     print('#######################################################')
+
+def shop():
+    print('##############################################################')
+    print('#                           SHOP                             #')
+    print('#         ,   ,   ,   ,      #     ____________              #')
+    print('#         |===|   |===|      #     |   ____   |              #')
+    print('#         |   |   |   |      #     |   |  |   |              #')
+    print('#         /  &|   |&  \      #     |   |  |   |              #')
+    print("#     .-'`  , )* *( ,  `'-.  #     |___|  |___|              #")
+    print('#     `"""""`"`   `"`"""""`  #                               #')
+    print('#   [1]Boots        ₴ 10     #  [2]Leggings     ₴ 20         #')
+    print('##############################################################')
+    print('#                            #                               #')
+    print('#                            #                               #')
+    print('#                            #                               #')
+    print('#                            #                               #')
+    print('#                            #                               #')
+    print('#                            #                               #')
+    print('#                            #                               #')
+    print('##############################################################')
+    print('#         TYPE THE THING YOU WANT TO BUY TO PURCHASE!        #')
+    print('#                  TYPE BACK TO GO BACK!                     #')
+    cart = input('> ')
+    acceptable_cart = ['1','2', '3', '4','back']
+    while cart.lower().strip() not in acceptable_cart:
+        print('Unknown action, try again.\n')
+        cart = input('> ')
+        if cart.lower().strip() == '1':
+            #PURCHASE BOOTS
+            print('You have equiped the ' + Boots.__name__)
+        if cart.lower().strip() == '2':
+            #PURCHASE LEGGINGS
+            print('You have equiped the ' + leggings.__name__)
+        if cart.lower().strip() == '3':
+            #PURCHASE HELMET
+            print('You have equiped the ' + helmet.__name__)
+        if cart.lower().strip() == '4':
+            #PURCHASE CHESTPLATE
+            print('You have equiped the ' + chestplate.__name__)
+        if cart.lower().strip() == 'back':
+            main_game_loop()
+    if cart.lower().strip() == '1':
+        #PURCHASE BOOTS
+        print('You have equiped the ' + Boots.__name__)
+    if cart.lower().strip() == '2':
+        #PURCHASE LEGGINGS
+        print('You have equiped the ' + leggings.__name__)
+    if cart.lower().strip() == '3':
+        #PURCHASE HELMET
+        print('You have equiped the ' + helmet.__name__)
+    if cart.lower().strip() == '4':
+        #PURCHASE CHESTPLATE
+        print('You have equiped the ' + chestplate.__name__)
+    if cart.lower().strip() == 'back':
+        main_game_loop()        
+
 
 
 ##### GAME FUNCTIONALITY #####
@@ -397,15 +461,18 @@ def setup_game():
             print('you are now a ' + player_job + '!\n')
     ### PLAYER STATS ###
     if myPlayer.job == 'fighter':
-        myPlayer.hp = 120
+        myPlayer.max = 120
+        myPlayer.hp = myPlayer.max
         myPlayer.ap = 40
         myPlayer.weapon = Sword()
     elif myPlayer.job == 'wizard':
-        myPlayer.hp = 300
+        myPlayer.max = 300
+        myPlayer.hp = myPlayer.max
         myPlayer.ap = 20
         myPlayer.weapon = Staff()
     elif myPlayer.job == 'healer':
-        myPlayer.hp = 200
+        myPlayer.max = 200
+        myPlayer.hp = myPlayer.max
         myPlayer.ap = 20
         myPlayer.heal = 40
         myPlayer.weapon = MagicBook()
@@ -463,19 +530,14 @@ def player_act():
             myPlayer.inventory.append('knife')
         elif myPlayer.location == 'b2':
             print1 = 'You take a nap'
-            if myPlayer.job == 'fighter':
-                myPlayer.hp = 120
-            elif myPlayer.job == 'wizard':
-                myPlayer.hp = 300
-            elif myPlayer.job =='healer':
-                myPlayer.hp = 200
+            myPlayer.hp = myPlayer.max
             for character in print1:
                 sys.stdout.write(character)
                 sys.stdout.flush()
                 time.sleep(0.1)
             time.sleep(1)
         elif myPlayer.location == 'b3':
-            if not player.money == 0:
+            if not myPlayer.money == 0:
                 print1 = '"I will give you some money if you defeat the monsters south of here" said an old man.'
             else:
                 print1 = 'I have given you some money.\n Now go away!'
@@ -488,12 +550,7 @@ def player_act():
             time.sleep(1)
         elif myPlayer.location == 'c2':
             print1 = 'You take a nap'
-            if myPlayer.job == 'fighter':
-                myPlayer.hp = 120
-            elif myPlayer.job == 'wizard':
-                myPlayer.hp = 300
-            elif myPlayer.job =='healer':
-                myPlayer.hp = 200
+            myPlayer.hp = myPlayer.max
             for character in print1:
                 sys.stdout.write(character)
                 sys.stdout.flush()
@@ -501,12 +558,7 @@ def player_act():
             time.sleep(1)
         elif myPlayer.location == 'c3':
             print1 = 'You take a nap'
-            if myPlayer.job == 'fighter':
-                myPlayer.hp = 120
-            elif myPlayer.job == 'wizard':
-                myPlayer.hp = 300
-            elif myPlayer.job =='healer':
-                myPlayer.hp = 200
+            myPlayer.hp = myPlayer.max
             for character in print1:
                 sys.stdout.write(character)
                 sys.stdout.flush()
@@ -519,17 +571,21 @@ def player_act():
         elif myPlayer.location == 'd2':
             print('this beach is so sandy that...')
             print1 = 'you take a nap.'
-            if myPlayer.job == 'fighter':
-                myPlayer.hp = 120
-            elif myPlayer.job == 'wizard':
-                myPlayer.hp = 300
-            elif myPlayer.job == 'healer':
-                myPlayer.hp = 200
+            myPlayer.hp = myPlayer.max
             for character in print1:
                 sys.stdout.write(character)
                 sys.stdout.flush()
                 time.sleep(0.1)
             time.sleep(1)
+        elif myPlayer.location == 'a1':
+            if myPlayer.money == 0:
+                print1 = '"Go get money so you can buy stuff!" shouts one of the merchants'
+                for character in print1:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                time.sleep(0.1)
+            else:
+                shop()
         else:
             print(map.zonemap[myPlayer.location][ACTION])
     else:
