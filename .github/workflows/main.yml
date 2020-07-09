@@ -34,7 +34,6 @@ jobs:
         zip --junk-paths text-adventure-game.zip src/dist/main.exe
       
     - name: Create Release
-      if: github.event == ''
       id: create_release
       uses: actions/create-release@v1
       env:
