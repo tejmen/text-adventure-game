@@ -27,7 +27,8 @@ jobs:
       uses: JackMcKew/pyinstaller-action-windows@v0.1.2
       with:
         # Directory containing source code (optional requirements.txt).
-        path: src# default is src
+        path: src # default is src
+        spec: main.spec
       
     - name: Zip .exe file
       id: zip_file
