@@ -20,7 +20,7 @@ screen_width = 100
 
 godbool = '1'
 ##### Player Setup #####
-class player:
+class Player:
     def __init__(self):
         self.name = ''
         self.job = ''
@@ -29,13 +29,14 @@ class player:
         self.ap = 0
         self.heal = 0
         self.status_effects = []
+        self.armour = []
         self.location = 'b2'
         self.game_over = False
         self.inventory = []
         self.weapon = ''
         self.xp = 0
         self.money = 0
-myPlayer = player()
+myPlayer = Player()
 
 class Gslime:
     def __init__(self):
@@ -75,37 +76,45 @@ class Skelemob:
 skeleton = Skelemob()
 class Sword:
     def __init__(self):
+        self.nick = 'sword'
         self.name = "Soldier's Broadsword"
         self.ap = 100
 class Staff:
     def __init__(self):
+        self.nick = 'staff'
         self.name = "Wizard's Arcane Staff"
         self.ap = 75
 class MagicBook:
     def __init__(self):
+        self.nick = 'book'
         self.name = "Healer's Book of Magic"
         self.ap = 50
 class Knife:
     def __init__(self):
+        self.nick = 'knife'
         self.name = "Traveller's Knife"
         self.ap = 80
 class Boots:
     def __init__(self):
+        self.nick = 'boots'
         self.name = 'Iron Boots'
         self.hp = 30
         self.durability = 100
-class leggings:
+class Leggings:
     def __init__(self):
+        self.nick = 'leggings'
         self.name = 'Iron Leggings'
         self.hp = 40
         self.durability = 100
-class chestplate:
+class Chestplate:
     def __init__(self):
+        self.nick = 'chestplate'
         self.name = 'Iron Chestplate'
         self.hp = 60
         self.durability = 100
-class helmet:
+class Helmet:
     def __init__(self):
+        self.name = 'helmet'
         self.name = 'Iron Helmet'
         self.hp = 50
         self.durability = 100
@@ -242,9 +251,9 @@ def print_location():
 def prompt():
     print('\n' + '===============================')
     print('What would you like to do?')
-    print("(You can 'move', 'quit', 'look', 'xp', 'talk', 'switchweapon', 'stats' or 'act')")
+    print("(You can 'move', 'quit', 'look', 'xp', 'talk', 'equip', 'stats' or 'act')")
     action = input('> ')
-    acceptable_actions = ['move', 'quit', 'look', '/god', 'acceptable_actions', 'act', 'xp', 'talk', 'switchweapon', 'stats']
+    acceptable_actions = ['move', 'quit', 'look', '/god', 'acceptable_actions', 'act', 'xp', 'talk', 'equip', 'stats']
     while action.lower() not in acceptable_actions:
         print('Unknown action, try again.\n')
         action = input('> ')
@@ -276,7 +285,7 @@ def prompt():
         print('xp.')
     elif action.lower().strip() == 'talk':
         player_talk()
-    elif action.lower().strip() == 'switchweapon':
+    elif action.lower().strip() == 'equip':
         switch_weapon()
     elif action.lower().strip() == 'stats':
         stats()
@@ -341,10 +350,10 @@ def switch_weapon():
     askweaponsw = 'which weapon do you want to switch to?\n>'
     print('You can switch weapons now.')
     weapon_to_switch = input(askweaponsw)
-    if weapon_to_switch == 'knife' and 'knife' in myPlayer.inventory:
-        myPlayer.inventory.append(myPlayer.weapon)
-        myPlayer.inventory.remove('knife')
-        myPlayer.weapon = Knife()
+    if weapon_to_switch in name_to_class and weapon_to_switch in myPlayer.inventory:
+        myPlayer.inventory.append(myPlayer.weapon.nick)
+        myPlayer.inventory.remove(weapon_to_switch)
+        myPlayer.weapon = name_to_class[weapon_to_switch][EQUIPMENT_CLASS]
         print('You equipped the ' + myPlayer.weapon.name)
     else:
         print('Are you sure you own that weapon?')
@@ -365,24 +374,33 @@ def stats():
 def shop():
     print('##############################################################')
     print('#                           SHOP                             #')
-    print('#         ,   ,   ,   ,      #     ____________              #')
-    print('#         |===|   |===|      #     |   ____   |              #')
-    print('#         |   |   |   |      #     |   |  |   |              #')
-    print('#         /  &|   |&  \      #     |   |  |   |              #')
-    print("#     .-'`  , )* *( ,  `'-.  #     |___|  |___|              #")
-    print('#     `"""""`"`   `"`"""""`  #                               #')
+    print('#                            #        ████████████████       #')
+    print('#      ██████    ██████      #      ██              ▒▒██     #')
+    print('#    ██  ▒▒██    ██  ▒▒██    #      ██              ▒▒██     #')
+    print('#    ██  ▒▒██    ██  ▒▒██    #      ██    ▒▒▒▒▒▒▒▒  ▒▒██     #')
+    print('#    ██  ▒▒██    ██  ▒▒██    #      ██  ▒▒▒▒████▒▒  ▒▒██     #')
+    print("#  ██    ▒▒██    ██      ██  #      ██  ▒▒██    ██  ▒▒██     #")
+    print('#██    ▒▒▒▒██    ██▒▒    ▒▒██#      ██  ▒▒██    ██  ▒▒██     #')
+    print('#██▒▒▒▒▒▒██        ██▒▒▒▒▒▒██#      ██  ▒▒██    ██  ▒▒██     #')
+    print('#████████            ████████#      ██▒▒▒▒██    ██▒▒▒▒██     #')
+    print('#                            #      ████████    ████████     #')
     print('#   [1]Boots        ₴ 10     #  [2]Leggings     ₴ 20         #')
     print('##############################################################')
-    print('#       ████████████         #                               #')
-    print('#     ██          ▒▒██       #                               #')
-    print('#   ██            ▒▒▒▒██     #                               #')
-    print('#   ██          ▒▒▒▒▒▒██     #                               #')
-    print('#   ██    ████████▒▒▒▒██     #                               #')
-    print('#   ██  ████████████▒▒██     #                               #')
-    print('#   ██  ████████████▒▒██     #                               #')
-    print('#     ████        ████       #                               #')
+    print('#                            #       ████        ████        #')
+    print('#                            #   ████  ▒▒██    ██    ████    #')
+    print('#       ████████████         # ██      ▒▒██    ██      ▒▒██  #')
+    print('#     ██          ▒▒██       # ██          ████        ▒▒██  #')
+    print('#   ██            ▒▒▒▒██     # ██▒▒                  ▒▒▒▒██  #')
+    print('#   ██          ▒▒▒▒▒▒██     #   ██                ▒▒▒▒██    #')
+    print('#   ██    ████████▒▒▒▒██     #   ██▒▒              ▒▒▒▒██    #')
+    print('#   ██  ████████████▒▒██     #     ██              ▒▒██      #')
+    print('#   ██  ████████████▒▒██     #     ██            ▒▒▒▒██      #')
+    print('#     ████        ████       #     ██▒▒        ▒▒▒▒▒▒██      #')
+    print('#                            #     ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██      #')
+    print('#                            #       ██▒▒▒▒▒▒▒▒▒▒▒▒██        #')
+    print('#                            #         ████████████          #')
     print('#                            #                               #')
-    print('#    [3]Helmet      ₴ 30     #                               #')    
+    print('#    [3]Helmet      ₴ 30     #      [4]Chestplate ₴ 40       #')    
     print('##############################################################')
     print('#         TYPE THE THING YOU WANT TO BUY TO PURCHASE!        #')
     print('#                  TYPE BACK TO GO BACK!                     #')
@@ -393,30 +411,38 @@ def shop():
         cart = input('> ')
         if cart.lower().strip() == '1':
             #PURCHASE BOOTS
-            print('You have equiped the ' + Boots.__name__)
+            myPlayer.inventory.append(Boots())
+            print('You have purchased the Iron Boots.')
         if cart.lower().strip() == '2':
             #PURCHASE LEGGINGS
-            print('You have equiped the ' + leggings.__name__)
+            myPlayer.inventory.append(Leggings())
+            print('You have purchased the Iron Leggings.')
         if cart.lower().strip() == '3':
             #PURCHASE HELMET
-            print('You have equiped the ' + helmet.__name__)
+            myPlayer.inventory.append(Helmet())
+            print('You have purchased the Iron Helmet.')
         if cart.lower().strip() == '4':
             #PURCHASE CHESTPLATE
-            print('You have equiped the ' + chestplate.__name__)
+            myPlayer.inventory.append(Chestplate())
+            print('You have purchased the Iron Chestplate.')
         if cart.lower().strip() == 'back':
             main_game_loop()
     if cart.lower().strip() == '1':
         #PURCHASE BOOTS
-        print('You have equiped the ' + Boots.__name__)
+        myPlayer.inventory.append(Boots())
+        print('You have purchased the Iron Boots.')
     if cart.lower().strip() == '2':
         #PURCHASE LEGGINGS
-        print('You have equiped the ' + leggings.__name__)
+        myPlayer.inventory.append(Leggings())
+        print('You have purchased the Iron Leggings.')
     if cart.lower().strip() == '3':
         #PURCHASE HELMET
-        print('You have equiped the ' + helmet.__name__)
+        myPlayer.inventory.append(Helmet())
+        print('You have purchased the Iron Helmet.')
     if cart.lower().strip() == '4':
         #PURCHASE CHESTPLATE
-        print('You have equiped the ' + chestplate.__name__)
+        myPlayer.inventory.append(Chestplate())
+        print('You have purchased the Iron Chestplate.')
     if cart.lower().strip() == 'back':
         main_game_loop()        
 
