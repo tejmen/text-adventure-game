@@ -28,7 +28,6 @@ jobs:
       with:
         # Directory containing source code (optional requirements.txt).
         path: src # default is src
-        spec: main.spec
       
     - name: Zip .exe file
       id: zip_file
