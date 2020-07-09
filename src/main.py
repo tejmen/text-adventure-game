@@ -221,10 +221,12 @@ def help_menu():
     print('#  please help to excavate it #')
     print('# • Find more weapons to kill #')
     print('#  monsters                   #')
-    print('# • Help villagers for reward #')
+    print('# • Go to the store to buy    #')
+    print('#  armour                     #')
+    print('# • Equip your armour for     #')
+    print('#  extra health.              #')
     print('#   Copyright 2019 tejmen09   #')
     print('###############################')
-    time.sleep(5)
     title_screen()
 def acknowledgements_menu():
     print('###############################')
@@ -232,7 +234,7 @@ def acknowledgements_menu():
     print('# Beta Tested By:             #')
     print('# • Manas Mengle              #')
     print('# • Pranot Mengle             #')
-    print('# • Mennakshi Mengle          #')
+    print('# • Meenakshi Mengle          #')
     print('# Helped By:                  #')
     print('# • Manas Mengle              #')
     print('# • Pranot Mengle             #')
@@ -370,7 +372,6 @@ def switch_weapon():
         myPlayer.weapon = weapon_to_class[equipment_to_switch]
         print('You equipped the ' + myPlayer.weapon.name)
     elif equipment_to_switch in armour_to_class and equipment_to_switch in myPlayer.inventory:
-        myPlayer.inventory.append(myPlayer.weapon.nick)
         myPlayer.inventory.remove(equipment_to_switch)
         myPlayer.armour.append(armour_to_class[equipment_to_switch])
         print('You equipped the ' + equipment_to_switch)
@@ -387,7 +388,14 @@ def stats():
     print('# You have ' + str(myPlayer.ap) + ' strength.')
     print('# You have ₴ ' + str(myPlayer.money))
     print('# Your current weapon, the ' + myPlayer.weapon.name + ' does ' + str(myPlayer.weapon.ap) + ' of damage.')
-    print('# Your Inventory contains ' + str(myPlayer.inventory) + ' .')
+    print('# Your Inventory contains: ', end='')
+    for a in myPlayer.inventory:
+        print(a + ',', end='')
+    print('.')
+    print('# You are wearing these pieces of armour: ', end='')
+    for a in myPlayer.armour:
+        print(a.name + ',', end='')
+    print('.')
     print('#######################################################')
 
 def shop():
