@@ -119,6 +119,20 @@ class Helmet:
         self.hp = 50
         self.durability = 100
 
+##### name to weapon linking ####
+weapon_to_class = {
+    'knife' : Knife(),
+    'sword' : Sword(),
+    'staff' : Staff(),
+    'book' : MagicBook(),
+}
+armour_to_class = {
+    'helmet' : Helmet(),
+    'chestplate' : Chestplate(),
+    'leggings' : Leggings(),
+    'boots' : Boots(),
+}
+
 ##### Title Screen #####
 def title_screen_selections():
     option = input("> ")
@@ -349,12 +363,17 @@ def player_talk():
 def switch_weapon():
     askweaponsw = 'which weapon do you want to switch to?\n>'
     print('You can switch weapons now.')
-    weapon_to_switch = input(askweaponsw)
-    if weapon_to_switch in name_to_class and weapon_to_switch in myPlayer.inventory:
+    equipment_to_switch = input(askweaponsw)
+    if equipment_to_switch in weapon_to_class and equipment_to_switch in myPlayer.inventory:
         myPlayer.inventory.append(myPlayer.weapon.nick)
-        myPlayer.inventory.remove(weapon_to_switch)
-        myPlayer.weapon = name_to_class[weapon_to_switch][EQUIPMENT_CLASS]
+        myPlayer.inventory.remove(equipment_to_switch)
+        myPlayer.weapon = weapon_to_class[equipment_to_switch]
         print('You equipped the ' + myPlayer.weapon.name)
+    elif equipment_to_switch in armour_to_class and equipment_to_switch in myPlayer.inventory:
+        myPlayer.inventory.append(myPlayer.weapon.nick)
+        myPlayer.inventory.remove(equipment_to_switch)
+        myPlayer.armour.append(armour_to_class[equipment_to_switch])
+        print('You equipped the ' + equipment_to_switch)
     else:
         print('Are you sure you own that weapon?')
 
@@ -411,37 +430,37 @@ def shop():
         cart = input('> ')
         if cart.lower().strip() == '1':
             #PURCHASE BOOTS
-            myPlayer.inventory.append(Boots())
+            myPlayer.inventory.append('boots')
             print('You have purchased the Iron Boots.')
         if cart.lower().strip() == '2':
             #PURCHASE LEGGINGS
-            myPlayer.inventory.append(Leggings())
+            myPlayer.inventory.append('leggings')
             print('You have purchased the Iron Leggings.')
         if cart.lower().strip() == '3':
             #PURCHASE HELMET
-            myPlayer.inventory.append(Helmet())
+            myPlayer.inventory.append('helmet')
             print('You have purchased the Iron Helmet.')
         if cart.lower().strip() == '4':
             #PURCHASE CHESTPLATE
-            myPlayer.inventory.append(Chestplate())
+            myPlayer.inventory.append('chestplate')
             print('You have purchased the Iron Chestplate.')
         if cart.lower().strip() == 'back':
             main_game_loop()
     if cart.lower().strip() == '1':
         #PURCHASE BOOTS
-        myPlayer.inventory.append(Boots())
+        myPlayer.inventory.append('boots')
         print('You have purchased the Iron Boots.')
     if cart.lower().strip() == '2':
         #PURCHASE LEGGINGS
-        myPlayer.inventory.append(Leggings())
+        myPlayer.inventory.append('leggings')
         print('You have purchased the Iron Leggings.')
     if cart.lower().strip() == '3':
         #PURCHASE HELMET
-        myPlayer.inventory.append(Helmet())
+        myPlayer.inventory.append('helmet')
         print('You have purchased the Iron Helmet.')
     if cart.lower().strip() == '4':
         #PURCHASE CHESTPLATE
-        myPlayer.inventory.append(Chestplate())
+        myPlayer.inventory.append('chestplate')
         print('You have purchased the Iron Chestplate.')
     if cart.lower().strip() == 'back':
         main_game_loop()        
