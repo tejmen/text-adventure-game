@@ -22,12 +22,11 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: Checkout Code
       uses: actions/checkout@v2
-
+    
     - name: PyInstaller Windows
-      uses: JackMcKew/pyinstaller-action-windows@v0.1.2
+      uses: JackMcKew/pyinstaller-action-windows@main
       with:
-        # Directory containing source code (optional requirements.txt).
-        path: src # default is src
+        path: src
       
     - name: Zip .exe file
       id: zip_file
