@@ -31,7 +31,7 @@ jobs:
     - name: Zip .exe file
       id: zip_file
       run: |
-        zip --junk-paths text-adventure-game.zip dist/main.exe
+        zip --junk-paths text-adventure-game.zip src/dist/main.exe
       
     - name: Create Release
       id: create_release
