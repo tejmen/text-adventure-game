@@ -3,8 +3,8 @@
 block_cipher = None
 
 
-a = Analysis(['src\\main.py'],
-             pathex=['C:\\Users\\meena.mengle\\Desktop\\tejas\\Code\\text-adventure-game'],
+a = Analysis(['main.py'],
+             pathex=['C:\\Users\\meena.mengle\\Desktop\\tejas\\Code\\text-adventure-game\\src'],
              binaries=[],
              datas=[],
              hiddenimports=[],
@@ -30,4 +30,4 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=True , icon='buildfiles\\favicon.ico')
+          console=True , icon='favicon.ico')
