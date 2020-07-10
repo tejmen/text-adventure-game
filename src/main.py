@@ -123,7 +123,6 @@ class Shield:
     def __init__(self):
         self.nick = 'shield'
         self.name = myPlayer.job + "'s Shield"
-        self.shield_on = True
 
 ##### name to weapon linking ####
 weapon_to_class = {
@@ -388,6 +387,7 @@ def switch_weapon():
         print('You equipped the ' + equipment_to_switch)
     elif equipment_to_switch and equipment_to_switch in myPlayer.inventory:
         myPlayer.shield = True
+        myPlayer.inventory.remove(equipment_to_switch)
     else:
         print('Are you sure you own that weapon?')
 
