@@ -385,9 +385,10 @@ def switch_weapon():
         myPlayer.inventory.remove(equipment_to_switch)
         myPlayer.armour.append(armour_to_class[equipment_to_switch])
         print('You equipped the ' + equipment_to_switch)
-    elif equipment_to_switch and equipment_to_switch in myPlayer.inventory:
+    elif equipment_to_switch == 'shield' and equipment_to_switch in myPlayer.inventory:
         myPlayer.shield = True
         myPlayer.inventory.remove(equipment_to_switch)
+        print('You have equipped the ' + myPlayer.job + "'s Shield")
     else:
         print('Are you sure you own that weapon?')
 
