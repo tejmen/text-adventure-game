@@ -16,7 +16,7 @@ import map
 import math
 
 random_attacker = (random.randint(1,3))
-screen_width = 100
+screen_width = 1000
 
 godbool = '1'
 ##### Player Setup #####
@@ -30,6 +30,7 @@ class Player:
         self.heal = 0
         self.status_effects = []
         self.armour = []
+        self.shield = False
         self.location = 'b2'
         self.game_over = False
         self.inventory = []
@@ -114,10 +115,15 @@ class Chestplate:
         self.durability = 100
 class Helmet:
     def __init__(self):
-        self.name = 'helmet'
+        self.nick = 'helmet'
         self.name = 'Iron Helmet'
         self.hp = 50
         self.durability = 100
+class Shield:
+    def __init__(self):
+        self.nick = 'shield'
+        self.name = myPlayer.job + "'s Shield"
+        self.shield_on = True
 
 ##### name to weapon linking ####
 weapon_to_class = {
@@ -267,9 +273,9 @@ def print_location():
 def prompt():
     print('\n' + '===============================')
     print('What would you like to do?')
-    print("(You can 'move', 'quit', 'look', 'xp', 'talk', 'equip', 'stats' or 'act')")
+    print("(You can 'move', 'quit', 'look', 'talk', 'equip', 'help', 'stats' or 'act')")
     action = input('> ')
-    acceptable_actions = ['move', 'quit', 'look', '/god', 'acceptable_actions', 'act', 'xp', 'talk', 'equip', 'stats']
+    acceptable_actions = ['move', 'quit', 'look', '/god', 'acceptable_actions', 'act', 'talk', 'equip', 'stats', 'money', 'help']
     while action.lower() not in acceptable_actions:
         print('Unknown action, try again.\n')
         action = input('> ')
@@ -305,6 +311,11 @@ def prompt():
         switch_weapon()
     elif action.lower().strip() == 'stats':
         stats()
+    elif action.lower().strip() == 'help':
+        help_menu()
+    elif action.lower().strip() == 'money':
+        myPlayer.money = input('Money = ?\n')
+
 def player_move():
     ask = 'Where would you like to move to?\n'
     print("You can move 'up', 'down', 'left' or 'right'.")
@@ -375,6 +386,8 @@ def switch_weapon():
         myPlayer.inventory.remove(equipment_to_switch)
         myPlayer.armour.append(armour_to_class[equipment_to_switch])
         print('You equipped the ' + equipment_to_switch)
+    elif equipment_to_switch and equipment_to_switch in myPlayer.inventory:
+        myPlayer.shield = True
     else:
         print('Are you sure you own that weapon?')
 
@@ -399,61 +412,43 @@ def stats():
     print('#######################################################')
 
 def shop():
-    print('##############################################################')
-    print('#                           SHOP                             #')
-    print('#                            #        ████████████████       #')
-    print('#      ██████    ██████      #      ██              ▒▒██     #')
-    print('#    ██  ▒▒██    ██  ▒▒██    #      ██              ▒▒██     #')
-    print('#    ██  ▒▒██    ██  ▒▒██    #      ██    ▒▒▒▒▒▒▒▒  ▒▒██     #')
-    print('#    ██  ▒▒██    ██  ▒▒██    #      ██  ▒▒▒▒████▒▒  ▒▒██     #')
-    print("#  ██    ▒▒██    ██      ██  #      ██  ▒▒██    ██  ▒▒██     #")
-    print('#██    ▒▒▒▒██    ██▒▒    ▒▒██#      ██  ▒▒██    ██  ▒▒██     #')
-    print('#██▒▒▒▒▒▒██        ██▒▒▒▒▒▒██#      ██  ▒▒██    ██  ▒▒██     #')
-    print('#████████            ████████#      ██▒▒▒▒██    ██▒▒▒▒██     #')
-    print('#                            #      ████████    ████████     #')
-    print('#   [1]Boots        ₴ 10     #  [2]Leggings     ₴ 20         #')
-    print('##############################################################')
-    print('#                            #       ████        ████        #')
-    print('#                            #   ████  ▒▒██    ██    ████    #')
-    print('#       ████████████         # ██      ▒▒██    ██      ▒▒██  #')
-    print('#     ██          ▒▒██       # ██          ████        ▒▒██  #')
-    print('#   ██            ▒▒▒▒██     # ██▒▒                  ▒▒▒▒██  #')
-    print('#   ██          ▒▒▒▒▒▒██     #   ██                ▒▒▒▒██    #')
-    print('#   ██    ████████▒▒▒▒██     #   ██▒▒              ▒▒▒▒██    #')
-    print('#   ██  ████████████▒▒██     #     ██              ▒▒██      #')
-    print('#   ██  ████████████▒▒██     #     ██            ▒▒▒▒██      #')
-    print('#     ████        ████       #     ██▒▒        ▒▒▒▒▒▒██      #')
-    print('#                            #     ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██      #')
-    print('#                            #       ██▒▒▒▒▒▒▒▒▒▒▒▒██        #')
-    print('#                            #         ████████████          #')
-    print('#                            #                               #')
-    print('#    [3]Helmet      ₴ 30     #      [4]Chestplate ₴ 40       #')    
-    print('##############################################################')
+    print('#######################################################################################################')
+    print('#                                          SHOP              #                                        #')
+    print('#                            #        ████████████████       #       ██████████████████████████       #')
+    print('#      ██████    ██████      #      ██              ▒▒██     #     ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██     #')
+    print('#    ██  ▒▒██    ██  ▒▒██    #      ██              ▒▒██     #     ██▒▒                      ▒▒██     #')
+    print('#    ██  ▒▒██    ██  ▒▒██    #      ██    ▒▒▒▒▒▒▒▒  ▒▒██     #     ██▒▒                      ▒▒██     #')
+    print('#    ██  ▒▒██    ██  ▒▒██    #      ██  ▒▒▒▒████▒▒  ▒▒██     #     ██▒▒                      ▒▒██     #')
+    print("#  ██    ▒▒██    ██      ██  #      ██  ▒▒██    ██  ▒▒██     #     ██▒▒                      ▒▒██     #")
+    print('#██    ▒▒▒▒██    ██▒▒    ▒▒██#      ██  ▒▒██    ██  ▒▒██     #     ██▒▒                      ▒▒██     #')
+    print('#██▒▒▒▒▒▒██        ██▒▒▒▒▒▒██#      ██  ▒▒██    ██  ▒▒██     #     ██▒▒                      ▒▒██     #')
+    print('#████████            ████████#      ██▒▒▒▒██    ██▒▒▒▒██     #     ██▒▒                      ▒▒██     #')
+    print('#                            #      ████████    ████████     #     ██▒▒          ██          ▒▒██     #')
+    print('#   [1]Boots        ₴ 10     #  [2]Leggings     ₴ 20         #     ██▒▒        ██████        ▒▒██     #')
+    print('##############################################################     ██▒▒          ██          ▒▒██     #')
+    print('#                            #       ████        ████        #     ██▒▒                      ▒▒██     #')
+    print('#                            #   ████  ▒▒██    ██    ████    #     ██▒▒                      ▒▒██     #')
+    print('#       ████████████         # ██      ▒▒██    ██      ▒▒██  #     ██▒▒                      ▒▒██     #')
+    print('#     ██          ▒▒██       # ██          ████        ▒▒██  #     ██▒▒                      ▒▒██     #')
+    print('#   ██            ▒▒▒▒██     # ██▒▒                  ▒▒▒▒██  #     ██▒▒                      ▒▒██     #')
+    print('#   ██          ▒▒▒▒▒▒██     #   ██                ▒▒▒▒██    #       ██▒▒                  ▒▒██       #')
+    print('#   ██    ████████▒▒▒▒██     #   ██▒▒              ▒▒▒▒██    #         ██▒▒              ▒▒██         #')
+    print('#   ██  ████████████▒▒██     #     ██              ▒▒██      #           ██▒▒          ▒▒██           #')
+    print('#   ██  ████████████▒▒██     #     ██            ▒▒▒▒██      #             ██▒▒▒▒▒▒▒▒▒▒██             #')
+    print('#     ████        ████       #     ██▒▒        ▒▒▒▒▒▒██      #               ██▒▒▒▒▒▒██               #')
+    print('#                            #     ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██      #                 ██▒▒██                 #')
+    print('#                            #       ██▒▒▒▒▒▒▒▒▒▒▒▒██        #                   ██                   #')
+    print('#                            #         ████████████          #                                        #')
+    print('#                            #                               #                                        #')
+    print('#    [3]Helmet      ₴ 30     #      [4]Chestplate ₴ 40       #     [5]Shield     ₴ 35                 #')
+    print('#######################################################################################################')
     print('#         TYPE THE THING YOU WANT TO BUY TO PURCHASE!        #')
     print('#                  TYPE BACK TO GO BACK!                     #')
     cart = input('> ')
-    acceptable_cart = ['1','2', '3', '4','back']
+    acceptable_cart = ['1','2', '3', '4', '5','back']
     while cart.lower().strip() not in acceptable_cart:
         print('Unknown action, try again.\n')
         cart = input('> ')
-        if cart.lower().strip() == '1':
-            #PURCHASE BOOTS
-            myPlayer.inventory.append('boots')
-            print('You have purchased the Iron Boots.')
-        if cart.lower().strip() == '2':
-            #PURCHASE LEGGINGS
-            myPlayer.inventory.append('leggings')
-            print('You have purchased the Iron Leggings.')
-        if cart.lower().strip() == '3':
-            #PURCHASE HELMET
-            myPlayer.inventory.append('helmet')
-            print('You have purchased the Iron Helmet.')
-        if cart.lower().strip() == '4':
-            #PURCHASE CHESTPLATE
-            myPlayer.inventory.append('chestplate')
-            print('You have purchased the Iron Chestplate.')
-        if cart.lower().strip() == 'back':
-            main_game_loop()
     if cart.lower().strip() == '1':
         #PURCHASE BOOTS
         myPlayer.inventory.append('boots')
@@ -470,9 +465,13 @@ def shop():
         #PURCHASE CHESTPLATE
         myPlayer.inventory.append('chestplate')
         print('You have purchased the Iron Chestplate.')
+    if cart.lower().strip() == '5':
+        #PURCAHSE SHIELD
+        myPlayer.inventory.append('shield')
+        print('You have purchased the shield.') 
     if cart.lower().strip() == 'back':
-        main_game_loop()        
-
+        main_game_loop()
+       
 
 
 ##### GAME FUNCTIONALITY #####
