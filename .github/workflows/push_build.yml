@@ -24,17 +24,12 @@ jobs:
       uses: JackMcKew/pyinstaller-action-windows@main
       with:
         path: src
-      
-    - name: Zip .exe file
-      id: zip_file
-      run: |
-        zip --junk-paths text-adventure-game.zip src/dist/main.exe
-    
+
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2
       with:
         # Artifact name
         name: text-adventure-game # optional
         # A file, directory or wildcard pattern that describes what to upload
-        path: ./text-adventure-game.zip
+        path: src/dist/main.exe
   
