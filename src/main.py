@@ -274,7 +274,7 @@ def prompt():
     print('What would you like to do?')
     print("(You can 'move', 'quit', 'look', 'talk', 'equip', 'help', 'stats' or 'act')")
     action = input('> ')
-    acceptable_actions = ['move', 'quit', 'look', '/god', 'acceptable_actions', 'act', 'talk', 'equip', 'stats', 'money', 'help']
+    acceptable_actions = ['move', 'quit', 'look', 'act', 'talk', 'equip', 'stats', 'money', 'help']
     while action.lower() not in acceptable_actions:
         print('Unknown action, try again.\n')
         action = input('> ')
@@ -291,13 +291,6 @@ def prompt():
         player_move()
     elif action.lower().strip() ==  'look':
         player_examine()
-    elif action.lower().strip() == '/god':
-        print('God mode not enabled, you cheat.')
-        print('PLAY THE GAME PROPERLY YOU WEASAL!')
-        print("DON'T CHEAT EVER AGAIN!")
-    elif action.lower().strip() == 'acceptable_actions':
-        print('You have found an easter egg.')
-        print("Don't tell anyone." + " ;)")
     elif action.lower().strip() == 'act':
         player_act()
     elif action.lower().strip() == 'xp':
@@ -443,8 +436,8 @@ def shop():
     print('#                            #                               #                                        #')
     print('#    [3]Helmet      ₴ 30     #      [4]Chestplate ₴ 40       #     [5]Shield     ₴ 35                 #')
     print('#######################################################################################################')
-    print('#         TYPE THE THING YOU WANT TO BUY TO PURCHASE!        #')
-    print('#                  TYPE BACK TO GO BACK!                     #')
+    print('#                                   TYPE THE THING YOU WANT TO BUY TO PURCHASE!                       #')
+    print('#                                              TYPE BACK TO GO BACK!                                  #')
     cart = input('> ')
     acceptable_cart = ['1','2', '3', '4', '5','back']
     while cart.lower().strip() not in acceptable_cart:
@@ -452,24 +445,42 @@ def shop():
         cart = input('> ')
     if cart.lower().strip() == '1':
         #PURCHASE BOOTS
-        myPlayer.inventory.append('boots')
-        print('You have purchased the Iron Boots.')
+        if myPlayer.money <= 10:
+            myPlayer.inventory.append('boots')
+            print('You have purchased the Iron Boots.')
+        else:
+            print('You do not have enough money!')
     if cart.lower().strip() == '2':
         #PURCHASE LEGGINGS
-        myPlayer.inventory.append('leggings')
-        print('You have purchased the Iron Leggings.')
+        if myPlayer.money <= 20:
+            myPlayer.inventory.append('leggings')
+            print('You have purchased the Iron Leggings.')
+        else:
+            print('You do not have enough money!') 
     if cart.lower().strip() == '3':
         #PURCHASE HELMET
-        myPlayer.inventory.append('helmet')
-        print('You have purchased the Iron Helmet.')
-    if cart.lower().strip() == '4':
+        if myPlayer.money <= 30:
+            myPlayer.inventory.append('helmet')
+            print('You have purchased the Iron Helmet.')
+        else:
+            print('You do not have enough money!') 
+    if cart.lower().strip() == 4:
         #PURCHASE CHESTPLATE
-        myPlayer.inventory.append('chestplate')
-        print('You have purchased the Iron Chestplate.')
+        if myPlayer.money <= 40:
+            myPlayer.inventory.append('chestplate')
+            print('You have purchased the Iron Chestplate.')
+        else:
+            print('You do not have enough money!')
     if cart.lower().strip() == '5':
         #PURCAHSE SHIELD
-        myPlayer.inventory.append('shield')
+        if myPlayer.money <= 35:
+            myPlayer.inventory.append('shield')
+            print('You have purchased the shield.')
         print('You have purchased the shield.') 
+            print('You have purchased the shield.')
+        else:
+            print('You do not have enough money!')
+        
     if cart.lower().strip() == 'back':
         main_game_loop()
        
@@ -572,11 +583,12 @@ def player_act():
         if myPlayer.location == 'b4':
             myPlayer.location = 'c1'
             map.zonemap[myPlayer.location][ZONENAME] = 'Telporter'
+            map.zonemap['b4'][ZONENAME] = 'Telporter'
             destination = myPlayer.location
             movement_handler(destination)
         elif myPlayer.location == 'c1':
             myPlayer.location = 'b4'
-            map.zonemap[myPlayer.location][ZONENAME] = 'Telporter'
+            map.zonemap['c1'][ZONENAME] = 'Telporter'
             destination = myPlayer.location
             movement_handler(destination)
         elif myPlayer.location == 'd4':
@@ -625,8 +637,8 @@ def player_act():
         elif myPlayer.location == 'd3':
             turn_based_combat()
         elif myPlayer.location == 'd2':
-            print('this beach is so sandy that...')
-            print1 = 'you take a nap.'
+            print()
+            print1 = 'this beach is so sandy that... \n you take a nap.'
             myPlayer.hp = myPlayer.max
             for character in print1:
                 sys.stdout.write(character)
