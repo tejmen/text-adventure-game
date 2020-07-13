@@ -476,8 +476,6 @@ def shop():
         if myPlayer.money <= 35:
             myPlayer.inventory.append('shield')
             print('You have purchased the shield.')
-        print('You have purchased the shield.') 
-            print('You have purchased the shield.')
         else:
             print('You do not have enough money!')
         
