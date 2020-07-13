@@ -713,11 +713,11 @@ def combat(enemy, name):
                 else:
                     willdefend = False
                     print("Unfortunately, your defence failed.")
+                    print(enemy.attack)
         if enemy.hp > 0:
             damage = enemy.ap
             for i in myPlayer.armour:
                 damage = damage - i.dp
-                print(damage)
             if willdefend == False:
                 print(enemy.attack)
                 myPlayer.hp = myPlayer.hp - damage
