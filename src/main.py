@@ -42,7 +42,7 @@ myPlayer = Player()
 class Gslime:
     def __init__(self):
         self.hp = 300
-        self.ap = 20
+        self.ap = 40
         self.xp = 100
         self.money = 10
         self.max = 300
@@ -54,7 +54,7 @@ GreenS = Gslime()
 class Zomboy:
     def __init__(self):
         self.hp = 500
-        self.ap = 40
+        self.ap = 60
         self.xp = 500
         self.money = 25
         self.max = 500
@@ -66,7 +66,7 @@ zombie = Zomboy()
 class Skelemob:
     def __init__(self):
         self.hp = 500
-        self.ap = 40
+        self.ap = 60
         self.xp = 500
         self.money = 25    
         self.max = 500
@@ -99,25 +99,25 @@ class Boots:
     def __init__(self):
         self.nick = 'boots'
         self.name = 'Iron Boots'
-        self.hp = 30
+        self.dp = 5
         self.durability = 100
 class Leggings:
     def __init__(self):
         self.nick = 'leggings'
         self.name = 'Iron Leggings'
-        self.hp = 40
+        self.dp = 15
         self.durability = 100
 class Chestplate:
     def __init__(self):
         self.nick = 'chestplate'
         self.name = 'Iron Chestplate'
-        self.hp = 60
+        self.dp = 20
         self.durability = 100
 class Helmet:
     def __init__(self):
         self.nick = 'helmet'
         self.name = 'Iron Helmet'
-        self.hp = 50
+        self.dp = 10
         self.durability = 100
 class Shield:
     def __init__(self):
@@ -608,7 +608,7 @@ def player_act():
             else:
                 print1 = 'I have given you some money.\n Now go away!'
                 for character in print1:
-                    sys.stdout(character)
+                    sys.stdout.write(character)
                     sys.stdout.flush()
                     time.sleep(0.1)
                 myPlayer.money = myPlayer.money + 40
@@ -659,24 +659,19 @@ def player_act():
         
 
 def combat(enemy, name):
+    willdefend = False
     print(enemy.appear)
     while enemy.hp > 0:
         print('What would you like to do?')
         print("(You can type 'attack' to attack the monster.)")
         print("(If you are a healer, you can type 'heal' to heal.)")
+        if 'shield' in myPlayer.inventory:
+            print("(You own a shield! type 'defend' to (hopefully) protect you from the enemy's attack!")
         attack = input('> ')
-        acceptable_attack = ['attack','kill', 'heal']
+        acceptable_attack = ['attack','kill', 'heal', 'defend']
         while attack.lower().strip() not in acceptable_attack:
             print('Unknown action, try again.\n')
             attack = input('> ')
-            if attack.lower().strip() == 'attack':
-                enemy.hp = enemy.hp - (myPlayer.weapon.ap + myPlayer.ap)
-                print("The monster's health is ")
-                print(enemy.hp)
-            elif attack.lower().strip() == 'kill':
-                enemy.hp = 0
-                print("The monster's health is ")
-                print(enemy.hp)
         if attack.lower().strip() == 'attack':
             enemy.hp = enemy.hp - (myPlayer.ap + myPlayer.weapon.ap)
             if enemy.hp < 0:
@@ -690,7 +685,7 @@ def combat(enemy, name):
             enemy.hp = 0
             print("The monster's health is ")
             print(enemy.hp)
-        if attack.lower().strip() == 'heal':
+        elif attack.lower().strip() == 'heal':
             if myPlayer.job == 'healer':
                 myPlayer.hp = myPlayer.hp + myPlayer.heal
                 if myPlayer.hp > 200:
@@ -709,9 +704,23 @@ def combat(enemy, name):
                     time.sleep(0.1)
             else:
                 print("You can't heal. You're not a healer.")
+        elif attack.lower().strip() == 'defend':
+            if 'shield' in myPlayer.inventory:
+                defends = random.randint(0, 10)
+                if defends < 7:
+                    willdefend = True
+                    print("Your defence was successful, and the shield deflected the blow")
+                else:
+                    willdefend = False
+                    print("Unfortunately, your defence failed.")
         if enemy.hp > 0:
-            print(enemy.attack)
-            myPlayer.hp = myPlayer.hp - enemy.ap
+            damage = enemy.ap
+            for i in myPlayer.armour:
+                damage = damage - i.dp
+                print(damage)
+            if willdefend == False:
+                print(enemy.attack)
+                myPlayer.hp = myPlayer.hp - damage
             if myPlayer.hp <= 0:
                 myPlayer.hp = 0
                 myPlayer.game_over = True
