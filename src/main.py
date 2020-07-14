@@ -245,7 +245,6 @@ def acknowledgements_menu():
     print('# • Pranot Mengle             #')
     print('# Copyright 2019 Tejas Mengle #')
     print('###############################')
-    time.sleep(3)
     title_screen()
 
 
@@ -719,7 +718,6 @@ def combat(enemy, name):
             for i in myPlayer.armour:
                 damage = damage - i.dp
             if willdefend == False:
-                print(enemy.attack)
                 myPlayer.hp = myPlayer.hp - damage
             if myPlayer.hp <= 0:
                 myPlayer.hp = 0
