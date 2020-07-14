@@ -613,14 +613,6 @@ def player_act():
                 myPlayer.money = myPlayer.money + 40
                 map.zonemap[myPlayer.location][SOLVED] = True
             time.sleep(1)
-        elif myPlayer.location == 'c2':
-            print1 = 'You take a nap'
-            myPlayer.hp = myPlayer.max
-            for character in print1:
-                sys.stdout.write(character)
-                sys.stdout.flush()
-                time.sleep(0.1)
-            time.sleep(1)
         elif myPlayer.location == 'c3':
             print1 = 'You take a nap'
             myPlayer.hp = myPlayer.max
@@ -651,6 +643,13 @@ def player_act():
                 time.sleep(0.1)
             else:
                 shop()
+        elif myPlayer.location == 'c2':
+            if map.zonemap['c1'][ZONENAME] == 'Telporter':
+                print("'Thank you for finding out what that place was! I'll give you a reward for doing that'said the mysterious man, giving you some\n money.")
+                myPlayer.money = myPlayer.money + 30
+                map.zonemap[myPlayer.location] [SOLVED] = True
+            else:
+                print('"Can you please find out what is in the place left of us.I really want to live there" said a mysterious man')
         else:
             print(map.zonemap[myPlayer.location][ACTION])
     else:
