@@ -27,7 +27,13 @@ jobs:
       uses: JackMcKew/pyinstaller-action-windows@main
       with:
         path: src
-      
+        
+    - name: Zip .exe file
+      id: zip_file
+      run: |
+        ls src/dist/windows
+        zip --junk-paths text-adventure-game.zip src/dist/windows
+          
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
