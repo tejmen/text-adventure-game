@@ -305,7 +305,7 @@ def prompt():
     elif action.lower().strip() == 'help':
         help_menu()
     elif action.lower().strip() == 'money':
-        myPlayer.money = input('Money = ?\n')
+        myPlayer.money = int(input('Money = ?\n'))
 
 def player_move():
     ask = 'Where would you like to move to?\n'
@@ -435,8 +435,9 @@ def shop():
     print('#                            #                               #                                        #')
     print('#    [3]Helmet      ₴ 30     #      [4]Chestplate ₴ 40       #     [5]Shield     ₴ 35                 #')
     print('#######################################################################################################')
-    print('#                                   TYPE THE THING YOU WANT TO BUY TO PURCHASE!                       #')
-    print('#                                              TYPE BACK TO GO BACK!                                  #')
+    print('                                    TYPE THE THING YOU WANT TO BUY TO PURCHASE!                        ')
+    print('                                               TYPE BACK TO GO BACK!                                   ')
+    print('                                            YOU HAVE ₴ ' + str(myPlayer.money) + '.                         ')
     cart = input('> ')
     acceptable_cart = ['1','2', '3', '4', '5','back']
     while cart.lower().strip() not in acceptable_cart:
@@ -444,36 +445,41 @@ def shop():
         cart = input('> ')
     if cart.lower().strip() == '1':
         #PURCHASE BOOTS
-        if myPlayer.money <= 10:
+        if myPlayer.money > 9:
             myPlayer.inventory.append('boots')
+            myPlayer.money = myPlayer.money - 10
             print('You have purchased the Iron Boots.')
         else:
             print('You do not have enough money!')
     if cart.lower().strip() == '2':
         #PURCHASE LEGGINGS
-        if myPlayer.money <= 20:
+        if myPlayer.money > 19:
             myPlayer.inventory.append('leggings')
+            myPlayer.money = myPlayer.money - 20
             print('You have purchased the Iron Leggings.')
         else:
             print('You do not have enough money!') 
     if cart.lower().strip() == '3':
         #PURCHASE HELMET
-        if myPlayer.money <= 30:
+        if myPlayer.money > 29:
             myPlayer.inventory.append('helmet')
+            myPlayer.money = myPlayer.money - 30
             print('You have purchased the Iron Helmet.')
         else:
             print('You do not have enough money!') 
-    if cart.lower().strip() == 4:
+    if cart.lower().strip() == '4':
         #PURCHASE CHESTPLATE
-        if myPlayer.money <= 40:
+        if myPlayer.money > 39:
             myPlayer.inventory.append('chestplate')
+            myPlayer.money = myPlayer.money - 40
             print('You have purchased the Iron Chestplate.')
         else:
             print('You do not have enough money!')
     if cart.lower().strip() == '5':
         #PURCAHSE SHIELD
-        if myPlayer.money <= 35:
+        if myPlayer.money > 34:
             myPlayer.inventory.append('shield')
+            myPlayer.money = myPlayer.money - 35
             print('You have purchased the shield.')
         else:
             print('You do not have enough money!')
@@ -649,7 +655,7 @@ def player_act():
                 myPlayer.money = myPlayer.money + 30
                 map.zonemap[myPlayer.location] [SOLVED] = True
             else:
-                print('"Can you please find out what is in the place left of us.I really want to live there" said a mysterious man')
+                print('"Can you please find;  out what is in the place left of us.I really want to live there" said a mysterious man')
         else:
             print(map.zonemap[myPlayer.location][ACTION])
     else:
@@ -715,7 +721,7 @@ def combat(enemy, name):
         if enemy.hp > 0:
             damage = enemy.ap
             for i in myPlayer.armour:
-                damage = damage - i.dp
+                damage = damage - math.floor((i.dp / 2 ))
             if willdefend == False:
                 myPlayer.hp = myPlayer.hp - damage
             if myPlayer.hp <= 0:
