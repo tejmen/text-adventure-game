@@ -499,6 +499,22 @@ def main_game_loop():
         prompt()
 
 def setup_game():
+    ### PLAYER SETTING ###
+    myPlayer.name = ''
+    myPlayer.job = ''
+    myPlayer.hp = 0
+    myPlayer.max = 0
+    myPlayer.ap = 0
+    myPlayer.heal = 0
+    myPlayer.status_effects = []
+    myPlayer.armour = []
+    myPlayer.shield = False
+    myPlayer.location = 'b2'
+    myPlayer.game_over = False
+    myPlayer.inventory = []
+    myPlayer.weapon = ''
+    myPlayer.xp = 0
+    myPlayer.money = 0
     ### NAME COLLECTING ###
     question1 = 'What is your name young traveller?\n'
     for character in question1:
@@ -722,11 +738,13 @@ def combat(enemy, name):
             damage = enemy.ap
             for i in myPlayer.armour:
                 damage = damage - math.floor((i.dp / 2 ))
+                i.durability = i.durability - 1
             if willdefend == False:
                 myPlayer.hp = myPlayer.hp - damage
             if myPlayer.hp <= 0:
                 myPlayer.hp = 0
                 myPlayer.game_over = True
+                main_game_loop()
             if myPlayer.game_over == True:
                 print(enemy.die)
                 time.sleep(5)
