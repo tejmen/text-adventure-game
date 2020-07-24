@@ -312,14 +312,14 @@ def player_move():
     print("You can move 'up', 'down', 'left' or 'right'.")
     dest = input(ask)
     if dest == 'up' or dest == 'north':
-        if 'a' in myPlayer.location:
+        if 'a' or 'e' in myPlayer.location:
             print("You have reached the end of the map. Don't go up.")
         else:
             print(map.zonemap[myPlayer.location][UP])
             destination = map.zonemap[myPlayer.location][UP]
             movement_handler(destination)
     elif dest == 'down' or dest == 'south':
-        if 'd' in myPlayer.location:
+        if 'd' or 'g' in myPlayer.location:
             print("You have reached the end of the map. Don't go down.")
         else:
             print(map.zonemap[myPlayer.location][DOWN])
@@ -332,7 +332,7 @@ def player_move():
             destination = map.zonemap[myPlayer.location][LEFT]
             movement_handler(destination)
     elif dest == 'right' or dest == 'east':
-        if '4' in myPlayer.location:
+        if '4' or 'e5' or 'f5' or 'g5' in myPlayer.location:
             print("You have reached the end of the map. Don't go right.")
         else:
             destination = map.zonemap[myPlayer.location][RIGHT]
