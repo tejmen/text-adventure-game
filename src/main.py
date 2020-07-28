@@ -522,7 +522,16 @@ def setup_game():
         sys.stdout.flush()
         time.sleep(0.05)
     player_name = input("> ")
-    myPlayer.name = player_name
+    if player_name == 'dev':
+        myPlayer.name = 'Developer'
+        myPlayer.job = 'fighter'
+        myPlayer.max = 120
+        myPlayer.hp = myPlayer.max
+        myPlayer.ap = 40
+        myPlayer.weapon = Sword()
+        main_game_loop()
+    else:
+        myPlayer.name = player_name
     ### JOB HANDELLING ###
     question2 = 'What is will your role be ' + player_name +'?\n'
     question2added = '(You can be a Fighter, Wizard or healer)\n'
