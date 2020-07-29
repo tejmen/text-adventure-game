@@ -311,39 +311,30 @@ def player_move():
     ask = 'Where would you like to move to?\n'
     print("You can move 'up', 'down', 'left' or 'right'.")
     dest = input(ask)
-    if dest == 'up' or dest == 'north':
-        if 'a' or 'e' in myPlayer.location:
-            print("You have reached the end of the map. Don't go up.")
-        else:
-            print(map.zonemap[myPlayer.location][UP])
-            destination = map.zonemap[myPlayer.location][UP]
-            movement_handler(destination)
-    elif dest == 'down' or dest == 'south':
-        if 'd' or 'g' in myPlayer.location:
-            print("You have reached the end of the map. Don't go down.")
-        else:
-            print(map.zonemap[myPlayer.location][DOWN])
-            destination = map.zonemap[myPlayer.location][DOWN]
-            movement_handler(destination)
-    elif dest == 'left' or dest == 'west':
-        if '1' in myPlayer.location:
-            print("You have reached the end of the map. Don't go left.")
-        else:
-            destination = map.zonemap[myPlayer.location][LEFT]
-            movement_handler(destination)
-    elif dest == 'right' or dest == 'east':
-        if '4' or 'e5' or 'f5' or 'g5' in myPlayer.location:
-            print("You have reached the end of the map. Don't go right.")
-        else:
-            destination = map.zonemap[myPlayer.location][RIGHT]
-            movement_handler(destination)
-    #if godbool == 'yes':
-    if dest == 'tp':
+    if dest == 'up' and map.zonemap[myPlayer.location][UP] != 'null':
+        print(map.zonemap[myPlayer.location][UP])
+        destination = map.zonemap[myPlayer.location][UP]
+        movement_handler(destination)
+    elif dest == 'down' and map.zonemap[myPlayer.location][DOWN] != 'null':
+        print(map.zonemap[myPlayer.location][DOWN])
+        destination = map.zonemap[myPlayer.location][DOWN]
+        movement_handler(destination)
+    elif dest == 'left' and map.zonemap[myPlayer.location][LEFT] != 'null':
+        print(map.zonemap[myPlayer.location][LEFT])
+        destination = map.zonemap[myPlayer.location][LEFT]
+        movement_handler(destination)
+    elif dest == 'right' and map.zonemap[myPlayer.location][RIGHT] != 'null':
+        print(map.zonemap[myPlayer.location][RIGHT])
+        destination = map.zonemap[myPlayer.location][RIGHT]
+        movement_handler(destination)
+    elif dest == 'tp':
         print('Where do you want to go god?')
         qa = input('_')
         myPlayer.location = qa
         destination = myPlayer.location
         movement_handler(destination)
+    else:
+        print("You have reached the end of the map.")
 
 def movement_handler(destination):
 
@@ -620,7 +611,10 @@ def player_act():
             destination = myPlayer.location
             movement_handler(destination)
         elif myPlayer.location == 'd4':
-            title_screen()
+            New_Map()
+            myPlayer.location = 'e1'
+            destination = myPlayer.location
+            movement_handler(destination)
         elif myPlayer.location == 'b1':
             print('You pick up the knife')
             myPlayer.inventory.append('knife')
@@ -633,7 +627,7 @@ def player_act():
                 time.sleep(0.1)
             time.sleep(1)
         elif myPlayer.location == 'b3':
-            if not myPlayer.money == 0:
+            if not myPlayer.xp == 0:
                 print1 = '"I will give you some money if you defeat the monsters south of here" said an old man.'
             else:
                 print1 = 'I have given you some money.\n Now go away!'
@@ -681,6 +675,9 @@ def player_act():
                 map.zonemap[myPlayer.location] [SOLVED] = True
             else:
                 print('"Can you please find;  out what is in the place left of us.I really want to live there" said a mysterious man')
+        elif myPlayer.location == 'e1':
+            print('You pick up the shield.')
+            myPlayer.inventory.append('shield')
         else:
             print(map.zonemap[myPlayer.location][ACTION])
     else:
@@ -785,7 +782,23 @@ def turn_based_combat():
     elif random_attacker == 3:
         combat(zombie, 'zombie')
     main_game_loop()
-
+""" def New_Map():
+    sequence = 'You look through the portal, deciding whether or not to go to wherever the portal goes\nUnsure,you step into the portal going wherever the portal takes you.'
+    for character in sequence:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.1)
+    print('                                         80GLLLLfffffLLLLG08                                      \n')
+    print("                                  0GLti1;ii1tfffffffffff11iii11fL08                                \n")
+    print("                              Gf1ii1fLG08                   80GL1iiitL0                            \n")
+    print('\n')
+    print('\n')
+    print('\n')
+    print('\n')
+    print('\n')
+    print('\n')
+    print('\n')
+ """
 print('________________        _________            _______ ______          _______ _      _________        _______ _______             _______ _______ _______ _______  ')
 print('\__   __(  ____ |\     /\__   __/           (  ___  (  __  \|\     /(  ____ ( (    /\__   __|\     /(  ____ (  ____ \           (  ____ (  ___  (       (  ____ \ ')
 print('   ) (  | (    \( \   / )  ) (              | (   ) | (  \  | )   ( | (    \|  \  ( |  ) (  | )   ( | (    )| (    \/           | (    \| (   ) | () () | (    \/ ')
