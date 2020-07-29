@@ -5,20 +5,18 @@
 #     /
 
 
-import cmd
-import textwrap
-import sys
-import os
-import time
-import random
-from random import randrange
-import map
 import math
+import random
+import sys
+import time
 
-random_attacker = (random.randint(1,3))
+import map
+
 screen_width = 1000
 
 godbool = '1'
+
+
 ##### Player Setup #####
 class Player:
     def __init__(self):
@@ -37,7 +35,10 @@ class Player:
         self.weapon = ''
         self.xp = 0
         self.money = 0
+
+
 myPlayer = Player()
+
 
 class Gslime:
     def __init__(self):
@@ -50,7 +51,11 @@ class Gslime:
         self.attack = '################################\n# The Green Slime attacked you.#\n################################'
         self.die = '############################################\n# You are Dieing slowly, incased in slime. #\n############################################'
         self.defeat = '####################################\n# You have defeated a green slime. #\n#     You have gained 100 XP.      #\n#    You have gained 10 money.     #\n####################################\n'
+
+
 GreenS = Gslime()
+
+
 class Zomboy:
     def __init__(self):
         self.hp = 500
@@ -62,90 +67,116 @@ class Zomboy:
         self.attack = '############################\n# The Zombie attacked you. #\n############################'
         self.die = '##########################################################################\n# You are now a zombie as the zombie who just killed you is now a human. #\n##########################################################################'
         self.defeat = '####################################\n#   You have defeated a zombie.    #\n#     You have gained 500 XP.      #\n#    You have gained 25 money.     #\n####################################\n'
+
+
 zombie = Zomboy()
+
+
 class Skelemob:
     def __init__(self):
         self.hp = 500
         self.ap = 60
         self.xp = 500
-        self.money = 25    
+        self.money = 25
         self.max = 500
         self.appear = '#######################################\n# A skeleton appeared out of the dark #\n#######################################'
         self.attack = '##############################\n# The skeleton attacked you. #\n##############################'
         self.die = '#####################################################\n# You are Dead, with a arrow inpaled in your heart. #\n#####################################################'
         self.defeat = '####################################\n#   You have defeated a skeleton.  #\n#    You have gained 25 money.     #\n#     You have gained 300 XP.      #\n####################################\n'
+
+
 skeleton = Skelemob()
+
+
 class Sword:
     def __init__(self):
         self.nick = 'sword'
         self.name = "Soldier's Broadsword"
         self.ap = 100
+
+
 class Staff:
     def __init__(self):
         self.nick = 'staff'
         self.name = "Wizard's Arcane Staff"
         self.ap = 75
+
+
 class MagicBook:
     def __init__(self):
         self.nick = 'book'
         self.name = "Healer's Book of Magic"
         self.ap = 50
+
+
 class Knife:
     def __init__(self):
         self.nick = 'knife'
         self.name = "Traveller's Knife"
         self.ap = 80
+
+
 class Boots:
     def __init__(self):
         self.nick = 'boots'
         self.name = 'Iron Boots'
         self.dp = 5
         self.durability = 100
+
+
 class Leggings:
     def __init__(self):
         self.nick = 'leggings'
         self.name = 'Iron Leggings'
         self.dp = 15
         self.durability = 100
+
+
 class Chestplate:
     def __init__(self):
         self.nick = 'chestplate'
         self.name = 'Iron Chestplate'
         self.dp = 20
         self.durability = 100
+
+
 class Helmet:
     def __init__(self):
         self.nick = 'helmet'
         self.name = 'Iron Helmet'
         self.dp = 10
         self.durability = 100
+
+
 class Shield:
     def __init__(self):
         self.nick = 'shield'
         self.name = myPlayer.job + "'s Shield"
 
+
 ##### name to weapon linking ####
 weapon_to_class = {
-    'knife' : Knife(),
-    'sword' : Sword(),
-    'staff' : Staff(),
-    'book' : MagicBook(),
+    'knife': Knife(),
+    'sword': Sword(),
+    'staff': Staff(),
+    'book': MagicBook(),
 }
 armour_to_class = {
-    'helmet' : Helmet(),
-    'chestplate' : Chestplate(),
-    'leggings' : Leggings(),
-    'boots' : Boots(),
+    'helmet': Helmet(),
+    'chestplate': Chestplate(),
+    'leggings': Leggings(),
+    'boots': Boots(),
 }
+
 
 ##### Title Screen #####
 def title_screen_selections():
     option = input("> ")
-    if option.lower().strip() == ("play"):
-        start_game() # placeholder until written
-    elif option.lower().strip() == ("help"):
+    if option.lower().strip() == "play":
+        start_game()  # placeholder until written
+    elif option.lower().strip() == "help":
         help_menu()
-    elif option.lower().strip() == ("quit"):
+    elif option.lower().strip() == "quit":
         print('You have')
         print(myPlayer.xp)
         print('xp.')
@@ -154,9 +185,9 @@ def title_screen_selections():
         print('###############')
         time.sleep(0.5)
         sys.exit()
-    elif option.lower().strip() == ('resume'):
+    elif option.lower().strip() == 'resume':
         main_game_loop()
-    elif option.lower().strip() == ("acknowledgements"):
+    elif option.lower().strip() == "acknowledgements":
         acknowledgements_menu()
     elif option.lower().strip() == '/god':
         print('God mode not enabled, you cheat.')
@@ -173,11 +204,11 @@ def title_screen_selections():
     while option.lower().strip() not in ['play', 'help', 'quit', 'resume', '/god', 'acknowledgements']:
         print("Please enter a valid command.")
         option = input("> ")
-        if option.lower().strip() == ("play"):
-            start_game() # placeholder until written
-        elif option.lower().strip() == ("help"):
+        if option.lower().strip() == "play":
+            start_game()  # placeholder until written
+        elif option.lower().strip() == "help":
             help_menu()
-        elif option.lower().strip() == ("quit"):
+        elif option.lower().strip() == "quit":
             print('You have')
             print(myPlayer.xp)
             print('xp.')
@@ -186,9 +217,9 @@ def title_screen_selections():
             print('###############')
             time.sleep(0.5)
             sys.exit()
-        elif option.lower().strip() == ('resume'):
+        elif option.lower().strip() == 'resume':
             main_game_loop()
-        elif option.lower().strip() == ("acknowledgements"):
+        elif option.lower().strip() == "acknowledgements":
             acknowledgements_menu()
         elif option.lower().strip() == '/god':
             print('God mode not enabled, you cheat.')
@@ -196,9 +227,10 @@ def title_screen_selections():
             print("DON'T CHEAT EVER AGAIN!")
             godanswer = input()
             if godanswer == 'a':
-                    print('Hello god. Fancy seeing you here.')
-                    title_screen()
+                print('Hello god. Fancy seeing you here.')
+                title_screen()
             title_screen()
+
 
 def title_screen():
     print('############################')
@@ -210,6 +242,7 @@ def title_screen():
     print('#         - Quit -         #')
     print('# Copyright 2019 tejmen09  #')
     title_screen_selections()
+
 
 def help_menu():
     print('###############################')
@@ -233,6 +266,8 @@ def help_menu():
     print('#   Copyright 2019 tejmen09   #')
     print('###############################')
     title_screen()
+
+
 def acknowledgements_menu():
     print('###############################')
     print('#       Acknowledgements      #')
@@ -246,7 +281,6 @@ def acknowledgements_menu():
     print('# Copyright 2019 Tejas Mengle #')
     print('###############################')
     title_screen()
-
 
 
 ZONENAME = ''
@@ -264,9 +298,12 @@ ACTION = 'action'
 ##### GAME INTERACTIVITY #####
 def print_location():
     print('\n' + ('#' * (4 + len(map.zonemap[myPlayer.location][DESCRIPTION]))))
-    print('# ' + map.zonemap[myPlayer.location][ZONENAME] + ' ' * (len(map.zonemap[myPlayer.location][DESCRIPTION]) - len(map.zonemap[myPlayer.location][ZONENAME])) +' #')
-    print('# ' + map.zonemap[myPlayer.location][DESCRIPTION] +' #')
+    print('# ' + map.zonemap[myPlayer.location][ZONENAME] + ' ' * (
+            len(map.zonemap[myPlayer.location][DESCRIPTION]) - len(
+        map.zonemap[myPlayer.location][ZONENAME])) + ' #')
+    print('# ' + map.zonemap[myPlayer.location][DESCRIPTION] + ' #')
     print('#' * (4 + len(map.zonemap[myPlayer.location][DESCRIPTION])))
+
 
 def prompt():
     print('\n' + '===============================')
@@ -288,7 +325,7 @@ def prompt():
         sys.exit()
     if action.lower().strip() == 'move':
         player_move()
-    elif action.lower().strip() ==  'look':
+    elif action.lower().strip() == 'look':
         player_examine()
     elif action.lower().strip() == 'act':
         player_act()
@@ -306,6 +343,7 @@ def prompt():
         help_menu()
     elif action.lower().strip() == 'money':
         myPlayer.money = int(input('Money = ?\n'))
+
 
 def player_move():
     ask = 'Where would you like to move to?\n'
@@ -336,14 +374,16 @@ def player_move():
     else:
         print("You have reached the end of the map.")
 
-def movement_handler(destination):
 
-    print('\n'+ 'You have moved to ' + destination + '.')
+def movement_handler(destination):
+    print('\n' + 'You have moved to ' + destination + '.')
     myPlayer.location = destination
     print_location()
 
+
 def player_examine():
     print(map.zonemap[myPlayer.location][EXAMINATION])
+
 
 def player_talk():
     if myPlayer.xp != 0 and myPlayer.location == 'a1' or myPlayer.location == 'a4':
@@ -354,6 +394,7 @@ def player_talk():
         sys.stdout.write(character)
         sys.stdout.flush()
         time.sleep(0.02)
+
 
 def switch_weapon():
     askweaponsw = 'which weapon do you want to switch to?\n>'
@@ -375,8 +416,9 @@ def switch_weapon():
     else:
         print('Are you sure you own that weapon?')
 
+
 def stats():
-    levels = math.floor((myPlayer.xp/1000))
+    levels = math.floor((myPlayer.xp / 1000))
     print('#######################################################')
     print('#                         STATS                         ')
     print('# You are ' + myPlayer.name + ' the ' + myPlayer.job + '.')
@@ -394,6 +436,7 @@ def stats():
         print(a.name + ',', end='')
     print('.')
     print('#######################################################')
+
 
 def shop():
     print('#######################################################################################################')
@@ -428,14 +471,15 @@ def shop():
     print('#######################################################################################################')
     print('                                    TYPE THE THING YOU WANT TO BUY TO PURCHASE!                        ')
     print('                                               TYPE BACK TO GO BACK!                                   ')
-    print('                                            YOU HAVE ₴ ' + str(myPlayer.money) + '.                         ')
+    print(
+        '                                            YOU HAVE ₴ ' + str(myPlayer.money) + '.                         ')
     cart = input('> ')
-    acceptable_cart = ['1','2', '3', '4', '5','back']
+    acceptable_cart = ['1', '2', '3', '4', '5', 'back']
     while cart.lower().strip() not in acceptable_cart:
         print('Unknown action, try again.\n')
         cart = input('> ')
     if cart.lower().strip() == '1':
-        #PURCHASE BOOTS
+        # PURCHASE BOOTS
         if myPlayer.money > 9:
             myPlayer.inventory.append('boots')
             myPlayer.money = myPlayer.money - 10
@@ -443,23 +487,23 @@ def shop():
         else:
             print('You do not have enough money!')
     if cart.lower().strip() == '2':
-        #PURCHASE LEGGINGS
+        # PURCHASE LEGGINGS
         if myPlayer.money > 19:
             myPlayer.inventory.append('leggings')
             myPlayer.money = myPlayer.money - 20
             print('You have purchased the Iron Leggings.')
         else:
-            print('You do not have enough money!') 
+            print('You do not have enough money!')
     if cart.lower().strip() == '3':
-        #PURCHASE HELMET
+        # PURCHASE HELMET
         if myPlayer.money > 29:
             myPlayer.inventory.append('helmet')
             myPlayer.money = myPlayer.money - 30
             print('You have purchased the Iron Helmet.')
         else:
-            print('You do not have enough money!') 
+            print('You do not have enough money!')
     if cart.lower().strip() == '4':
-        #PURCHASE CHESTPLATE
+        # PURCHASE CHESTPLATE
         if myPlayer.money > 39:
             myPlayer.inventory.append('chestplate')
             myPlayer.money = myPlayer.money - 40
@@ -467,27 +511,28 @@ def shop():
         else:
             print('You do not have enough money!')
     if cart.lower().strip() == '5':
-        #PURCAHSE SHIELD
+        # PURCHASE SHIELD
         if myPlayer.money > 34:
             myPlayer.inventory.append('shield')
             myPlayer.money = myPlayer.money - 35
             print('You have purchased the shield.')
         else:
             print('You do not have enough money!')
-        
+
     if cart.lower().strip() == 'back':
         main_game_loop()
-       
 
 
 ##### GAME FUNCTIONALITY #####
 def start_game():
     setup_game()
 
+
 def main_game_loop():
     print_location()
     while myPlayer.game_over is False:
         prompt()
+
 
 def setup_game():
     ### PLAYER SETTING ###
@@ -524,7 +569,7 @@ def setup_game():
     else:
         myPlayer.name = player_name
     ### JOB HANDELLING ###
-    question2 = 'What is will your role be ' + player_name +'?\n'
+    question2 = 'What is will your role be ' + player_name + '?\n'
     question2added = '(You can be a Fighter, Wizard or healer)\n'
     for character in question2:
         sys.stdout.write(character)
@@ -564,7 +609,7 @@ def setup_game():
         myPlayer.weapon = MagicBook()
 
     ### INTRODUCTION ###
-    question3 = 'Welcome ' + player_name +' the ' + player_job + '.\n'
+    question3 = 'Welcome ' + player_name + ' the ' + player_job + '.\n'
     for character in question3:
         sys.stdout.write(character)
         sys.stdout.flush()
@@ -597,8 +642,9 @@ def setup_game():
     print('############################')
     main_game_loop()
 
+
 def player_act():
-    if map.zonemap[myPlayer.location][SOLVED] == False:
+    if not map.zonemap[myPlayer.location][SOLVED]:
         if myPlayer.location == 'b4':
             myPlayer.location = 'c1'
             map.zonemap[myPlayer.location][ZONENAME] = 'Telporter'
@@ -611,7 +657,7 @@ def player_act():
             destination = myPlayer.location
             movement_handler(destination)
         elif myPlayer.location == 'd4':
-            #New_Map()
+            # New_Map()
             myPlayer.location = 'e1'
             destination = myPlayer.location
             movement_handler(destination)
@@ -629,6 +675,10 @@ def player_act():
         elif myPlayer.location == 'b3':
             if not myPlayer.xp == 0:
                 print1 = '"I will give you some money if you defeat the monsters south of here" said an old man.'
+                for character in print1:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.1)
             else:
                 print1 = 'I have given you some money.\n Now go away!'
                 for character in print1:
@@ -670,11 +720,13 @@ def player_act():
                 shop()
         elif myPlayer.location == 'c2':
             if map.zonemap['c1'][ZONENAME] == 'Telporter':
-                print("'Thank you for finding out what that place was! I'll give you a reward for doing that'said the mysterious man, giving you some\n money.")
+                print(
+                    "'Thank you for finding out what that place was! I'll give you a reward for doing that'said the mysterious man, giving you some\n money.")
                 myPlayer.money = myPlayer.money + 30
-                map.zonemap[myPlayer.location] [SOLVED] = True
+                map.zonemap[myPlayer.location][SOLVED] = True
             else:
-                print('"Can you please find;  out what is in the place left of us.I really want to live there" said a mysterious man')
+                print(
+                    '"Can you please find;  out what is in the place left of us.I really want to live there" said a mysterious man')
         elif myPlayer.location == 'e1':
             print('You pick up the shield.')
             myPlayer.inventory.append('shield')
@@ -682,9 +734,9 @@ def player_act():
             print(map.zonemap[myPlayer.location][ACTION])
     else:
         print('There is nothing to do here!')
-        
 
-def combat(enemy, name):
+
+def combat(enemy):
     willdefend = False
     print(enemy.appear)
     while enemy.hp > 0:
@@ -694,7 +746,7 @@ def combat(enemy, name):
         if 'shield' in myPlayer.inventory:
             print("(You own a shield! type 'defend' to (hopefully) protect you from the enemy's attack!")
         attack = input('> ')
-        acceptable_attack = ['attack','kill', 'heal', 'defend']
+        acceptable_attack = ['attack', 'kill', 'heal', 'defend']
         while attack.lower().strip() not in acceptable_attack:
             print('Unknown action, try again.\n')
             attack = input('> ')
@@ -743,15 +795,15 @@ def combat(enemy, name):
         if enemy.hp > 0:
             damage = enemy.ap
             for i in myPlayer.armour:
-                damage = damage - math.floor((i.dp / 2 ))
+                damage = damage - math.floor((i.dp / 2))
                 i.durability = i.durability - 1
-            if willdefend == False:
+            if not willdefend:
                 myPlayer.hp = myPlayer.hp - damage
             if myPlayer.hp <= 0:
                 myPlayer.hp = 0
                 myPlayer.game_over = True
                 main_game_loop()
-            if myPlayer.game_over == True:
+            if myPlayer.game_over:
                 print(enemy.die)
                 time.sleep(5)
                 title_screen()
@@ -769,43 +821,46 @@ def combat(enemy, name):
     print(enemy.defeat)
     myPlayer.xp = myPlayer.xp + enemy.xp
     myPlayer.money = myPlayer.money + enemy.money
-    levels = math.floor((myPlayer.xp/1000))
-    if levels%10 == 0:
+    levels = math.floor((myPlayer.xp / 1000))
+    if levels % 10 == 0:
         myPlayer.ap = myPlayer.ap + 1
     enemy.hp = enemy.max
+
+
 def turn_based_combat():
-    random_attacker = (random.randint(1,3))
-    if random_attacker == 1 :
-        combat(GreenS, 'slime')
+    random_attacker = (random.randint(1, 3))
+    if random_attacker == 1:
+        combat(GreenS)
     elif random_attacker == 2:
-        combat(skeleton, 'skeleton')
+        combat(skeleton)
     elif random_attacker == 3:
-        combat(zombie, 'zombie')
+        combat(zombie)
     main_game_loop()
-""" def New_Map():
+
+
+def new_map():
     sequence = 'You look through the portal, deciding whether or not to go to wherever the portal goes\nUnsure,you step into the portal going wherever the portal takes you.'
     for character in sequence:
         sys.stdout.write(character)
         sys.stdout.flush()
         time.sleep(0.1)
-    print('                                         80GLLLLfffffLLLLG08                                      \n')
-    print("                                  0GLti1;ii1tfffffffffff11iii11fL08                                \n")
-    print("                              Gf1ii1fLG08                   80GL1iiitL0                            \n")
-    print('\n')
-    print('\n')
-    print('\n')
-    print('\n')
-    print('\n')
-    print('\n')
-    print('\n')
- """
-print('________________        _________            _______ ______          _______ _      _________        _______ _______             _______ _______ _______ _______  ')
-print('\__   __(  ____ |\     /\__   __/           (  ___  (  __  \|\     /(  ____ ( (    /\__   __|\     /(  ____ (  ____ \           (  ____ (  ___  (       (  ____ \ ')
-print('   ) (  | (    \( \   / )  ) (              | (   ) | (  \  | )   ( | (    \|  \  ( |  ) (  | )   ( | (    )| (    \/           | (    \| (   ) | () () | (    \/ ')
-print('   | |  | (__    \ (_) /   | |      _____   | (___) | |   ) | |   | | (__   |   \ | |  | |  | |   | | (____)| (__       _____   | |     | (___) | || || | (__     ')
-print('   | |  |  __)    ) _ (    | |     (_____)  |  ___  | |   | ( (   ) |  __)  | (\ \) |  | |  | |   | |     __|  __)     (_____)  | | ____|  ___  | |(_)| |  __)    ')
-print('   | |  | (      / ( ) \   | |              | (   ) | |   ) |\ \_/ /| (     | | \   |  | |  | |   | | (\ (  | (                 | | \_  | (   ) | |   | | (       ')
-print('   | |  | (____/( /   \ )  | |              | )   ( | (__/  ) \   / | (____/| )  \  |  | |  | (___) | ) \ \_| (____/\           | (___) | )   ( | )   ( | (____/\ ')
-print('   )_(  (_______|/     \|  )_(              |/     \(______/   \_/  (_______|/    )_)  )_(  (_______|/   \__(_______/           (_______|/     \|/     \(_______/ ')
+
+
+print(
+    '________________        _________            _______ ______          _______ _      _________        _______ _______             _______ _______ _______ _______  ')
+print(
+    '\__   __(  ____ |\     /\__   __/           (  ___  (  __  \|\     /(  ____ ( (    /\__   __|\     /(  ____ (  ____ \           (  ____ (  ___  (       (  ____ \ ')
+print(
+    '   ) (  | (    \( \   / )  ) (              | (   ) | (  \  | )   ( | (    \|  \  ( |  ) (  | )   ( | (    )| (    \/           | (    \| (   ) | () () | (    \/ ')
+print(
+    '   | |  | (__    \ (_) /   | |      _____   | (___) | |   ) | |   | | (__   |   \ | |  | |  | |   | | (____)| (__       _____   | |     | (___) | || || | (__     ')
+print(
+    '   | |  |  __)    ) _ (    | |     (_____)  |  ___  | |   | ( (   ) |  __)  | (\ \) |  | |  | |   | |     __|  __)     (_____)  | | ____|  ___  | |(_)| |  __)    ')
+print(
+    '   | |  | (      / ( ) \   | |              | (   ) | |   ) |\ \_/ /| (     | | \   |  | |  | |   | | (\ (  | (                 | | \_  | (   ) | |   | | (       ')
+print(
+    '   | |  | (____/( /   \ )  | |              | )   ( | (__/  ) \   / | (____/| )  \  |  | |  | (___) | ) \ \_| (____/\           | (___) | )   ( | )   ( | (____/\ ')
+print(
+    '   )_(  (_______|/     \|  )_(              |/     \(______/   \_/  (_______|/    )_)  )_(  (_______|/   \__(_______/           (_______|/     \|/     \(_______/ ')
 
 title_screen()
