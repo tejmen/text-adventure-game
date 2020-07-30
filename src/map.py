@@ -198,8 +198,8 @@ zonemap = {
     },
     'd4': {
         ZONENAME: 'End Portal',
-        DESCRIPTION: 'This is where you go if you want to stop exploring.',
-        EXAMINATION: 'This is a way to go to the main menu.',
+        DESCRIPTION: 'This is where you go if you want to leave this world.',
+        EXAMINATION: 'This is a way to go to a whole new world.',
         SOLVED: False,
         UP: 'c4',
         DOWN: 'null',
