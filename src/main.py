@@ -15,6 +15,25 @@ screen_width = 1000
 
 godbool = '1'
 
+def Reset():
+    myPlayer.name = ''
+    myPlayer.name = ''
+    myPlayer.job = ''
+    myPlayer.job = ''
+    myPlayer.hp = 0
+    myPlayer.max = 0
+    myPlayer.ap = 0
+    myPlayer.heal = 0
+    myPlayer.status_effects = []
+    myPlayer.armour = []
+    myPlayer.shield = False
+    myPlayer.location = 'b2'
+    myPlayer.game_over = False
+    myPlayer.inventory = []
+    myPlayer.weapon = ''
+    myPlayer.xp = 0
+    myPlayer.money = 0
+
 
 ##### Player Setup #####
 class Player:
@@ -174,7 +193,7 @@ def title_screen_selections():
     if option.lower().strip() == "play":
         start_game()  # placeholder until written
     elif option.lower().strip() == "help":
-        help_menu()
+        help_menu(False)
     elif option.lower().strip() == "quit":
         print('You have')
         print(myPlayer.xp)
@@ -206,7 +225,7 @@ def title_screen_selections():
         if option.lower().strip() == "play":
             start_game()  # placeholder until written
         elif option.lower().strip() == "help":
-            help_menu()
+            help_menu(False)
         elif option.lower().strip() == "quit":
             print('You have')
             print(myPlayer.xp)
@@ -243,7 +262,7 @@ def title_screen():
     title_screen_selections()
 
 
-def help_menu():
+def help_menu(inGame):
     print('###############################')
     print('#            Help             #')
     print('# • Type "move" command to    #')
@@ -264,7 +283,11 @@ def help_menu():
     print('#  extra health.              #')
     print('#   Copyright 2019 tejmen09   #')
     print('###############################')
-    title_screen()
+    if inGame:
+        main_game_loop()
+    elif not inGame:
+        title_screen()
+
 
 
 def acknowledgements_menu():
@@ -274,6 +297,7 @@ def acknowledgements_menu():
     print('# • Manas Mengle              #')
     print('# • Pranot Mengle             #')
     print('# • Meenakshi Mengle          #')
+    print('# • Anahita Maradani          #')
     print('# Helped By:                  #')
     print('# • Manas Mengle              #')
     print('# • Pranot Mengle             #')
@@ -339,7 +363,7 @@ def prompt():
     elif action.lower().strip() == 'stats':
         stats()
     elif action.lower().strip() == 'help':
-        help_menu()
+        help_menu(True)
     elif action.lower().strip() == 'money':
         myPlayer.money = int(input('Money = ?\n'))
 
@@ -419,7 +443,7 @@ def switch_weapon():
 def stats():
     levels = math.floor((myPlayer.xp / 1000))
     print('#######################################################')
-    print('#                         STATS                         ')
+    print('#                         STATS                        ')
     print('# You are ' + myPlayer.name + ' the ' + myPlayer.job + '.')
     print('# You have ' + str(myPlayer.hp) + ' hp.')
     print('# You have ' + str(myPlayer.xp) + ' xp and you are at level ' + str(levels) + '.')
@@ -470,8 +494,7 @@ def shop():
     print('#######################################################################################################')
     print('                                    TYPE THE THING YOU WANT TO BUY TO PURCHASE!                        ')
     print('                                               TYPE BACK TO GO BACK!                                   ')
-    print(
-        '                                            YOU HAVE ₴ ' + str(myPlayer.money) + '.                         ')
+    print('                                    YOU HAVE ₴ ' + str(myPlayer.money) + '.                    ')
     cart = input('> ')
     acceptable_cart = ['1', '2', '3', '4', '5', 'back']
     while cart.lower().strip() not in acceptable_cart:
@@ -534,22 +557,7 @@ def main_game_loop():
 
 
 def setup_game():
-    ### PLAYER SETTING ###
-    myPlayer.name = ''
-    myPlayer.job = ''
-    myPlayer.hp = 0
-    myPlayer.max = 0
-    myPlayer.ap = 0
-    myPlayer.heal = 0
-    myPlayer.status_effects = []
-    myPlayer.armour = []
-    myPlayer.shield = False
-    myPlayer.location = 'b2'
-    myPlayer.game_over = False
-    myPlayer.inventory = []
-    myPlayer.weapon = ''
-    myPlayer.xp = 0
-    myPlayer.money = 0
+    Reset()
     ### NAME COLLECTING ###
     question1 = 'What is your name young traveller?\n'
     for character in question1:
@@ -564,6 +572,7 @@ def setup_game():
         myPlayer.hp = myPlayer.max
         myPlayer.ap = 40
         myPlayer.weapon = Sword()
+        myPlayer.inventory = ['shield']
         main_game_loop()
     else:
         myPlayer.name = player_name
@@ -729,6 +738,20 @@ def player_act():
         elif myPlayer.location == 'e1':
             print('You pick up the shield.')
             myPlayer.inventory.append('shield')
+        elif myPlayer.location == 'e5':
+            turn_based_combat()
+        elif myPlayer.location == 'f1':
+            print1 = 'You take a nap'
+            myPlayer.hp = myPlayer.max
+            for character in print1:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.1)
+            time.sleep(1)
+        elif myPlayer.location == 'f4':
+            turn_based_combat()
+        elif myPlayer.location == 'f5':
+            title_screen()
         else:
             print(map.zonemap[myPlayer.location][ACTION])
     else:
@@ -799,7 +822,7 @@ def combat(enemy):
             if not willdefend:
                 myPlayer.hp = myPlayer.hp - damage
             if myPlayer.hp <= 0:
-                myPlayer.hp = 0
+                myPlayer.hp = 0 
                 myPlayer.game_over = True
                 main_game_loop()
             if myPlayer.game_over:
