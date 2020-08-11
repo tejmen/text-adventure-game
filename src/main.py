@@ -15,6 +15,7 @@ screen_width = 1000
 
 godbool = '1'
 
+
 def Reset():
     myPlayer.name = ''
     myPlayer.name = ''
@@ -239,7 +240,7 @@ def title_screen_selections():
             main_game_loop()
         elif option.lower().strip() == "acknowledgements":
             acknowledgements_menu()
-        elif option.lower().strip() == '/god':  
+        elif option.lower().strip() == '/god':
             print('God mode not enabled, you cheat.')
             print('PLAY THE GAME PROPERLY YOU WEASAL!')
             print("DON'T CHEAT EVER AGAIN!")
@@ -287,7 +288,6 @@ def help_menu(inGame):
         main_game_loop()
     elif not inGame:
         title_screen()
-
 
 
 def acknowledgements_menu():
@@ -822,7 +822,7 @@ def combat(enemy):
             if not willdefend:
                 myPlayer.hp = myPlayer.hp - damage
             if myPlayer.hp <= 0:
-                myPlayer.hp = 0 
+                myPlayer.hp = 0
                 myPlayer.game_over = True
                 main_game_loop()
             if myPlayer.game_over:
