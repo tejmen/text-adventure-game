@@ -354,12 +354,12 @@ def prompt():
     print('What would you like to do?')
     print("(You can 'move', 'quit', 'look', 'talk', 'equip', 'help', 'stats' or 'act')")
     action = input('> ')
-    acceptable_actions = ['move', 'quit', 'look', 'act', 'talk', 'equip', 'stats', 'money', 'help']
-    while action.lower() not in acceptable_actions:
+    acceptable_actions = ('move', 'quit', 'look', 'act', 'talk', 'equip', 'stats', 'money', 'help')
+    while not action.lower().strip().startswith(acceptable_actions):
         print('Unknown action, try again.\n')
         action = input('> ')
     process(action)
-    '''    if action.lower().strip() == 'quit':
+    """ if action.lower().strip() == 'quit':
             leave()
         if action.lower().strip() == 'move':
             player_move()
@@ -378,8 +378,7 @@ def prompt():
         elif action.lower().strip() == 'help':
             help_menu(True)
         elif action.lower().strip() == 'money':
-            set_money()
-    '''
+            set_money()"""
 
 
 def set_money():
@@ -403,10 +402,10 @@ def leave():
     sys.exit()
 
 
-def player_move():
-    ask = 'Where would you like to move to?\n'
-    print("You can move 'up', 'down', 'left' or 'right'.")
-    dest = input(ask)
+def player_move(dest):
+    """ ask = 'Where would you like to move to?\n'
+        print("You can move 'up', 'down', 'left' or 'right'.")
+        dest = input(ask)"""
     if dest == 'up' and map.zonemap[myPlayer.location][UP] != 'null':
         print(map.zonemap[myPlayer.location][UP])
         destination = map.zonemap[myPlayer.location][UP]
