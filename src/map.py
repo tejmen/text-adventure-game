@@ -211,7 +211,7 @@ zonemap = {
     'e1': {
         ZONENAME: 'Chest',
         DESCRIPTION: 'This is an unlocked chest!',
-        EXAMINATION: 'The key is already in the Chest lock.',
+        EXAMINATION: 'There is no key in the Chest lock.',
         SOLVED: False,
         UP: 'null',
         DOWN: 'f1',

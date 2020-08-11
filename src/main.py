@@ -224,7 +224,7 @@ def title_screen_selections():
         print("Please enter a valid command.")
         option = input("> ")
         if option.lower().strip() == "play":
-            start_game()  # placeholder until written
+            start_game()
         elif option.lower().strip() == "help":
             help_menu(False)
         elif option.lower().strip() == "quit":
@@ -411,6 +411,9 @@ def player_examine():
 def player_talk():
     if myPlayer.xp != 0 and myPlayer.location == 'a1' or myPlayer.location == 'a4':
         dialogue = 'Thanks for getting rid of some monsters' + myPlayer.name + ', although there is still more'
+    elif myPlayer.location == 'f1':
+        dialogue = "'You want to open the chest! \n I locked it away when the creaures came. 'said the farm owner\n Here you go"
+        myPlayer.inventory.append('key')
     else:
         dialogue = map.zonemap[myPlayer.location][DIALOGUE]
     for character in dialogue:
@@ -736,8 +739,11 @@ def player_act():
                 print(
                     '"Can you please find;  out what is in the place left of us.I really want to live there" said a mysterious man')
         elif myPlayer.location == 'e1':
-            print('You pick up the shield.')
-            myPlayer.inventory.append('shield')
+            if 'key' in myPlayer.inventory:
+                print('You pick up the shield.')
+                myPlayer.inventory.append('shield')
+            else:
+                print('You NEED A KEY!')
         elif myPlayer.location == 'e5':
             turn_based_combat()
         elif myPlayer.location == 'f1':
