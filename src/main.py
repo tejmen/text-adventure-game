@@ -406,22 +406,30 @@ def player_move(dest):
     """ ask = 'Where would you like to move to?\n'
         print("You can move 'up', 'down', 'left' or 'right'.")
         dest = input(ask)"""
-    if dest == 'up' and map.zonemap[myPlayer.location][UP] != 'null':
-        print(map.zonemap[myPlayer.location][UP])
-        destination = map.zonemap[myPlayer.location][UP]
-        movement_handler(destination)
+    if dest == 'up':
+        isedge = on_edge(map.zonemap[myPlayer.location][UP])
+        if not isedge:
+            print(map.zonemap[myPlayer.location][UP])
+            destination = map.zonemap[myPlayer.location][UP]
+            movement_handler(destination)
     elif dest == 'down' and map.zonemap[myPlayer.location][DOWN] != 'null':
-        print(map.zonemap[myPlayer.location][DOWN])
-        destination = map.zonemap[myPlayer.location][DOWN]
-        movement_handler(destination)
+        isedge = on_edge(map.zonemap[myPlayer.location][DOWN])
+        if not isedge:
+            print(map.zonemap[myPlayer.location][DOWN])
+            destination = map.zonemap[myPlayer.location][DOWN]
+            movement_handler(destination)
     elif dest == 'left' and map.zonemap[myPlayer.location][LEFT] != 'null':
-        print(map.zonemap[myPlayer.location][LEFT])
-        destination = map.zonemap[myPlayer.location][LEFT]
-        movement_handler(destination)
+        isedge = on_edge(map.zonemap[myPlayer.location][LEFT])
+        if not isedge:
+            print(map.zonemap[myPlayer.location][LEFT])
+            destination = map.zonemap[myPlayer.location][LEFT]
+            movement_handler(destination)
     elif dest == 'right' and map.zonemap[myPlayer.location][RIGHT] != 'null':
-        print(map.zonemap[myPlayer.location][RIGHT])
-        destination = map.zonemap[myPlayer.location][RIGHT]
-        movement_handler(destination)
+        isedge = on_edge(map.zonemap[myPlayer.location][RIGHT])
+        if not isedge:
+            print(map.zonemap[myPlayer.location][RIGHT])
+            destination = map.zonemap[myPlayer.location][RIGHT]
+            movement_handler(destination)
     elif dest == 'tp':
         print('Where do you want to go god?')
         qa = input('_')
@@ -429,8 +437,13 @@ def player_move(dest):
         destination = myPlayer.location
         movement_handler(destination)
     else:
+        print(dest + " is an invalid direction")
+def on_edge(location):
+    if location == 'null':
         print("You have reached the end of the map.")
-
+        return True
+    elif location != 'null':
+        return False
 
 def movement_handler(destination):
     print('\n' + 'You have moved to ' + destination + '.')
