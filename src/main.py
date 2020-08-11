@@ -194,7 +194,7 @@ def title_screen_selections():
     if option.lower().strip() == "play":
         start_game()  # placeholder until written
     elif option.lower().strip() == "help":
-        help_menu(False)
+        help_menu()
     elif option.lower().strip() == "quit":
         print('You have')
         print(myPlayer.xp)
@@ -226,7 +226,7 @@ def title_screen_selections():
         if option.lower().strip() == "play":
             start_game()  # placeholder until written
         elif option.lower().strip() == "help":
-            help_menu(False)
+            help_menu()
         elif option.lower().strip() == "quit":
             print('You have')
             print(myPlayer.xp)
@@ -263,7 +263,7 @@ def title_screen():
     title_screen_selections()
 
 
-def help_menu(inGame):
+def help_menu():
     print('###############################')
     print('#            Help             #')
     print('# • Type "move" command to    #')
@@ -284,10 +284,31 @@ def help_menu(inGame):
     print('#  extra health.              #')
     print('#   Copyright 2019 tejmen09   #')
     print('###############################')
-    if inGame:
-        main_game_loop()
-    elif not inGame:
-        title_screen()
+    title_screen()
+
+
+def help():
+    print('###############################')
+    print('#            Help             #')
+    print('# • Type "move" command to    #')
+    print('#   move                      #')
+    print('# • Type your commands to do  #')
+    print('#   them                      #')
+    print('# • Type "look" to inspect    #')
+    print('#   something                 #')
+    print('# • Type "act" to do what you #')
+    print('#   can on your place         #')
+    print('# • If you find a Dungeon,    #')
+    print('#  please help to excavate it #')
+    print('# • Find more weapons to kill #')
+    print('#  monsters                   #')
+    print('# • Go to the store to buy    #')
+    print('#  armour                     #')
+    print('# • Equip your armour for     #')
+    print('#  extra health.              #')
+    print('#   Copyright 2019 tejmen09   #')
+    print('###############################')
+    main_game_loop()
 
 
 def acknowledgements_menu():
@@ -884,17 +905,14 @@ cmds = {
     'talk': player_talk,
     'equip': switch_weapon,
     'stats': stats,
-    'help': help_menu,
+    'help': help,
     'money': set_money,
 }
 
 
 def process(action):
     cmd, *args = action.split()
-    if cmd == 'help':
-        help_menu(True)
-    else:
-        return cmds[cmd](*args)
+    return cmds[cmd](*args)
 
 
 def new_map():
