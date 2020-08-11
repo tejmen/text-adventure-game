@@ -337,35 +337,49 @@ def prompt():
     while action.lower() not in acceptable_actions:
         print('Unknown action, try again.\n')
         action = input('> ')
-    if action.lower().strip() == 'quit':
-        print('You have')
-        print(myPlayer.xp)
-        print('xp.')
-        print('###############')
-        print('#  GOODBYE!!  #')
-        print('###############')
-        time.sleep(0.5)
-        sys.exit()
-    if action.lower().strip() == 'move':
-        player_move()
-    elif action.lower().strip() == 'look':
-        player_examine()
-    elif action.lower().strip() == 'act':
-        player_act()
-    elif action.lower().strip() == 'xp':
-        print('You have')
-        print(myPlayer.xp)
-        print('xp.')
-    elif action.lower().strip() == 'talk':
-        player_talk()
-    elif action.lower().strip() == 'equip':
-        switch_weapon()
-    elif action.lower().strip() == 'stats':
-        stats()
-    elif action.lower().strip() == 'help':
-        help_menu(True)
-    elif action.lower().strip() == 'money':
-        myPlayer.money = int(input('Money = ?\n'))
+    process(action)
+    '''    if action.lower().strip() == 'quit':
+            leave()
+        if action.lower().strip() == 'move':
+            player_move()
+        elif action.lower().strip() == 'look':
+            player_examine()
+        elif action.lower().strip() == 'act':
+            player_act()
+        elif action.lower().strip() == 'xp':
+            xp()
+        elif action.lower().strip() == 'talk':
+            player_talk()
+        elif action.lower().strip() == 'equip':
+            switch_weapon()
+        elif action.lower().strip() == 'stats':
+            stats()
+        elif action.lower().strip() == 'help':
+            help_menu(True)
+        elif action.lower().strip() == 'money':
+            set_money()
+    '''
+
+
+def set_money():
+    myPlayer.money = int(input('Money = ?\n'))
+
+
+def xp():
+    print('You have')
+    print(myPlayer.xp)
+    print('xp.')
+
+
+def leave():
+    print('You have')
+    print(myPlayer.xp)
+    print('xp.')
+    print('###############')
+    print('#  GOODBYE!!  #')
+    print('###############')
+    time.sleep(0.5)
+    sys.exit()
 
 
 def player_move():
@@ -858,6 +872,29 @@ def turn_based_combat():
     elif random_attacker == 3:
         combat(zombie)
     main_game_loop()
+
+
+#### COMMANDS DICT ####
+cmds = {
+    'quit': leave,
+    'move': player_move,
+    'look': player_examine,
+    'act': player_act,
+    'xp': xp,
+    'talk': player_talk,
+    'equip': switch_weapon,
+    'stats': stats,
+    'help': help_menu,
+    'money': set_money,
+}
+
+
+def process(action):
+    cmd, *args = action.split()
+    if cmd == 'help':
+        help_menu(True)
+    else:
+        return cmds[cmd](*args)
 
 
 def new_map():
