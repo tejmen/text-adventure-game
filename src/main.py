@@ -16,7 +16,7 @@ screen_width = 1000
 godbool = '1'
 
 
-def Reset():
+def reset():
     myPlayer.name = ''
     myPlayer.name = ''
     myPlayer.job = ''
@@ -263,7 +263,7 @@ def title_screen():
     title_screen_selections()
 
 
-def help_menu(inGame):
+def help_menu(ingame):
     print('###############################')
     print('#            Help             #')
     print('# • Type "move" command to    #')
@@ -284,9 +284,9 @@ def help_menu(inGame):
     print('#  extra health.              #')
     print('#   Copyright 2019 tejmen09   #')
     print('###############################')
-    if inGame:
+    if ingame:
         main_game_loop()
-    elif not inGame:
+    elif not ingame:
         title_screen()
 
 
@@ -557,7 +557,7 @@ def main_game_loop():
 
 
 def setup_game():
-    Reset()
+    reset()
     ### NAME COLLECTING ###
     question1 = 'What is your name young traveller?\n'
     for character in question1:
