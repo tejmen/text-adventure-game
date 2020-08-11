@@ -100,13 +100,24 @@ class Skelemob:
         self.max = 500
         self.appear = '#######################################\n# A skeleton appeared out of the dark #\n#######################################'
         self.attack = '##############################\n# The skeleton attacked you. #\n##############################'
-        self.die = '#####################################################\n# You are Dead, with a arrow inpaled in your heart. #\n#####################################################'
+        self.die = '#####################################################\n# You are Dead, with a arrow impaled in your heart. #\n#####################################################'
         self.defeat = '####################################\n#   You have defeated a skeleton.  #\n#    You have gained 25 money.     #\n#     You have gained 300 XP.      #\n####################################\n'
 
 
 skeleton = Skelemob()
 
-
+class Spideeer:
+    def __init__(self):
+        self.hp = 600
+        self.ap = 10
+        self.status_effects = 'poison'
+        self.xp = 500
+        self.money = 25
+        self.max = 500
+        self.appear = '#######################################\n# A skeleton appeared out of the dark #\n#######################################'
+        self.attack = '##############################\n# The skeleton attacked you. #\n##############################'
+        self.die = '#####################################################\n# You are Dead, with a arrow impaled in your heart. #\n#####################################################'
+        self.defeat = '####################################\n#   You have defeated a skeleton.  #\n#    You have gained 25 money.     #\n#     You have gained 300 XP.      #\n####################################\n'
 class Sword:
     def __init__(self):
         self.nick = 'sword'
