@@ -868,13 +868,9 @@ def combat(enemy):
 
 
 def turn_based_combat():
-    random_attacker = (random.randint(1, 3))
-    if random_attacker == 1:
-        combat(GreenS)
-    elif random_attacker == 2:
-        combat(skeleton)
-    elif random_attacker == 3:
-        combat(zombie)
+    enemies = [GreenS, skeleton, zombie]
+    random_attacker = (random.choice(enemies))
+    combat(random_attacker)
     main_game_loop()
 
 
