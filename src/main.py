@@ -770,6 +770,14 @@ def player_act():
             turn_based_combat()
         elif myPlayer.location == 'f5':
             title_screen()
+        elif myPlayer.location == 'g1':
+            print1 = 'You eat some corn.'
+            myPlayer.hp = myPlayer.max
+            for character in print1:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.05)
+            time.sleep(0.2)
         else:
             print(map.zonemap[myPlayer.location][ACTION])
     else:
@@ -836,9 +844,9 @@ def combat(enemy):
             damage = enemy.ap
             for i in myPlayer.armour:
                 damage = damage - math.floor((i.dp / 2))
-                i.durability = i.durability - 1
+                i.durability -= 1
             if not willdefend:
-                myPlayer.hp = myPlayer.hp - damage
+                myPlayer.hp -= damage
             if myPlayer.hp <= 0:
                 myPlayer.hp = 0
                 myPlayer.game_over = True
@@ -859,8 +867,8 @@ def combat(enemy):
                 sys.stdout.flush()
                 time.sleep(0.1)
     print(enemy.defeat)
-    myPlayer.xp = myPlayer.xp + enemy.xp
-    myPlayer.money = myPlayer.money + enemy.money
+    myPlayer.xp += enemy.xp
+    myPlayer.money += enemy.money
     levels = math.floor((myPlayer.xp / 1000))
     if levels % 10 == 0:
         myPlayer.ap = myPlayer.ap + 1

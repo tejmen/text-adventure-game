@@ -242,7 +242,7 @@ zonemap = {
         LEFT: 'e2',
         RIGHT: 'e4',
         DIALOGUE: 'Nobody is here',
-        ACTION: 'You are looking at the code'
+        ACTION: 'Theres nothing to do here'
     },
     'e4': {
         ZONENAME: 'Spikes',
@@ -254,7 +254,7 @@ zonemap = {
         LEFT: 'e3',
         RIGHT: 'e5',
         DIALOGUE: 'Nobody is here!',
-        ACTION: 'You are looking at the code'
+        ACTION: 'Theres nothing to do here'
     },
     'e5': {
         ZONENAME: 'Dungeon',
@@ -290,7 +290,7 @@ zonemap = {
         LEFT: 'f1',
         RIGHT: 'f3',
         DIALOGUE: 'Nobody is here',
-        ACTION: 'You are looking at the code'
+        ACTION: 'I wish I could play pooh sticks, but I have no one to play with me.'
     },
     'f3': {
         ZONENAME: 'Spikes',
@@ -302,7 +302,7 @@ zonemap = {
         LEFT: 'f2',
         RIGHT: 'f4',
         DIALOGUE: 'Nobody is here!',
-        ACTION: 'You are looking at the code'
+        ACTION: 'Theres nothing to do here'
     },
     'f4': {
         ZONENAME: 'Dungeon',
@@ -331,13 +331,13 @@ zonemap = {
     'g1': {
         ZONENAME: 'Farmland',
         DESCRIPTION: 'There is some farmland in this area',
-        EXAMINATION: 'The crops are growing perfectly',
+        EXAMINATION: 'The corn are growing perfectly',
         SOLVED: False,
         UP: 'f1',
         DOWN: 'null',
         LEFT: 'null',
         RIGHT: 'g2',
-        DIALOGUE: '"You can eat some of the crops if you want"',
+        DIALOGUE: '"You can eat some of the corn if you want"',
         ACTION: 'You are looking at the code'
     },
     'g2': {
@@ -350,7 +350,7 @@ zonemap = {
         LEFT: 'g1',
         RIGHT: 'g3',
         DIALOGUE: 'Nobody is here',
-        ACTION: 'You are looking at the code'
+        ACTION: 'I wish I could play pooh sticks, but I have no one to play with me.'
     },
     'g3': {
         ZONENAME: 'Spikes',
@@ -362,7 +362,7 @@ zonemap = {
         LEFT: 'g2',
         RIGHT: 'e4',
         DIALOGUE: 'Nobody is here!',
-        ACTION: 'You are looking at the code'
+        ACTION: 'Theres nothing to do here'
     },
     'g4': {
         ZONENAME: 'Spikes',
@@ -374,7 +374,7 @@ zonemap = {
         LEFT: 'g2',
         RIGHT: 'e5',
         DIALOGUE: 'Nobody is here!',
-        ACTION: 'You are looking at the code'
+        ACTION: 'Theres nothing to do here'
     },
     'g5': {
         ZONENAME: 'Dungeon',
@@ -385,7 +385,7 @@ zonemap = {
         DOWN: 'null',
         LEFT: 'g4',
         RIGHT: 'null',
-        DIALOGUE: 'Theres nobody to talk to here...',
-        ACTION: 'You are looking at the code'
+        DIALOGUE: 'Nobody is here!',
+        ACTION: 'Theres nothing to do here'
     },
 }
