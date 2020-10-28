@@ -34,6 +34,7 @@ def reset():
     myPlayer.weapon = ''
     myPlayer.xp = 0
     myPlayer.money = 0
+    myPlayer.missions = []
 
 
 ##### Player Setup #####
@@ -54,6 +55,7 @@ class Player:
         self.weapon = ''
         self.xp = 0
         self.money = 0
+        self.missions = []
 
 
 myPlayer = Player()
@@ -343,9 +345,9 @@ def print_location():
 def prompt():
     print('\n' + '===============================')
     print('What would you like to do?')
-    print("(You can 'move', 'quit', 'look', 'talk', 'equip', 'help', 'stats' or 'act')")
+    print("(You can 'move', 'quit', 'look', 'talk', 'equip', 'help', 'stats' or 'act' or 'mission')")
     action = input('> ')
-    acceptable_actions = ['move', 'quit', 'look', 'act', 'talk', 'equip', 'stats', 'money', 'help']
+    acceptable_actions = ['move', 'quit', 'look', 'act', 'talk', 'equip', 'stats', 'money', 'help','mission']
     while action.lower() not in acceptable_actions:
         print('Unknown action, try again.\n')
         action = input('> ')
@@ -376,6 +378,8 @@ def prompt():
         stats()
     elif action.lower().strip() == 'help':
         help_menu(True)
+    elif action.lower().strip() == 'mission':
+        mission()
     elif action.lower().strip() == 'money':
         myPlayer.money = int(input('Money = ?\n'))
 
@@ -519,7 +523,7 @@ def shop():
         # PURCHASE BOOTS
         if myPlayer.money > 9:
             myPlayer.inventory.append('boots')
-            myPlayer.money = myPlayer.money - 10
+            myPlayer.money -= 10
             print('You have purchased the Iron Boots.')
         else:
             print('You do not have enough money!')
@@ -527,7 +531,7 @@ def shop():
         # PURCHASE LEGGINGS
         if myPlayer.money > 19:
             myPlayer.inventory.append('leggings')
-            myPlayer.money = myPlayer.money - 20
+            myPlayer.money -= 20
             print('You have purchased the Iron Leggings.')
         else:
             print('You do not have enough money!')
@@ -535,7 +539,7 @@ def shop():
         # PURCHASE HELMET
         if myPlayer.money > 29:
             myPlayer.inventory.append('helmet')
-            myPlayer.money = myPlayer.money - 30
+            myPlayer.money -= 30
             print('You have purchased the Iron Helmet.')
         else:
             print('You do not have enough money!')
@@ -543,7 +547,7 @@ def shop():
         # PURCHASE CHESTPLATE
         if myPlayer.money > 39:
             myPlayer.inventory.append('chestplate')
-            myPlayer.money = myPlayer.money - 40
+            myPlayer.money -= 40
             print('You have purchased the Iron Chestplate.')
         else:
             print('You do not have enough money!')
@@ -551,7 +555,7 @@ def shop():
         # PURCHASE SHIELD
         if myPlayer.money > 34:
             myPlayer.inventory.append('shield')
-            myPlayer.money = myPlayer.money - 35
+            myPlayer.money -= 35
             print('You have purchased the shield.')
         else:
             print('You do not have enough money!')
@@ -559,6 +563,19 @@ def shop():
     if cart.lower().strip() == 'back':
         main_game_loop()
 
+def mission():
+    comma_needed = ''
+    if len(myPlayer.missions) > 1:
+        comma_needed = ','
+    print('#########################################')
+    print('#               Missions                #')
+    print('# • ', end='' )
+    for a in myPlayer.missions:
+        print(a + comma_needed, end='')
+    if len(myPlayer.missions) != 1:
+        comma_needed = ','
+    print('.')
+    print('#########################################')
 
 ##### GAME FUNCTIONALITY #####
 def start_game():

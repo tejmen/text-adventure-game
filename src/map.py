@@ -125,6 +125,7 @@ if myPlayer.xp == 0:
         sys.stdout.write(character)
         sys.stdout.flush()
         time.sleep(0.1)
+    myPlayer.missions.append('Defeat Monsters')
 else:
     print1 = "I have given you some money."
     print2 = "Now go away!"
@@ -139,6 +140,7 @@ else:
         time.sleep(0.1)
     myPlayer.money = myPlayer.money + 40
     map.zonemap[myPlayer.location][SOLVED] = True
+    myPlayer.missions.remove('Defeat Monsters')
 time.sleep(1)
         '''
     },
@@ -192,8 +194,10 @@ if map.zonemap['c1'][ZONENAME] == 'Telporter':
     print("'Thank you for finding out what that place was! I'll give you a reward for doing that'said the mysterious man, giving you some money.")
     myPlayer.money = myPlayer.money + 30
     map.zonemap[myPlayer.location][SOLVED] = True
+    myPlayer.missions.remove('Find out what that place is.')
 else:
     print('"Can you please find;  out what is in the place left of us.I really want to live there" said a mysterious man')
+    myPlayer.missions.append('Find out what that place is.')
         '''
     },
     'c3': {
@@ -309,8 +313,10 @@ movement_handler(destination)
 if 'key' in myPlayer.inventory:
     print('You pick up the shield.')
     myPlayer.inventory.append('shield')
+    myPlayer.missions.remove('Find a key.')
 else:
     print('You NEED A KEY!')
+    myPlayer.missions.append('Find a key.')
         '''
     },
     'e2': {
