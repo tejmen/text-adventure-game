@@ -1,8 +1,8 @@
 # Python Text RPG
 # Created by tej_men
-#     \
-# (:D)-<
 #     /
+# (:D)-<
+#     \
 
 
 import math
@@ -751,6 +751,9 @@ def combat(enemy):
             for i in myPlayer.armour:
                 damage = damage - math.floor((i.dp / 2))
                 i.durability -= 1
+                for x in range(0, 3):
+                    if i.durability <= 0:
+                        myPlayer.armour.remove(i)
             if not willdefend:
                 myPlayer.hp -= damage
             if myPlayer.hp <= 0:
