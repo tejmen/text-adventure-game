@@ -1,8 +1,8 @@
 # Python Text RPG
 # Created by tej_men
-#     \
-# (:D)-<
 #     /
+# (:D)-<
+#     \
 
 
 import math
@@ -34,6 +34,7 @@ def reset():
     myPlayer.weapon = ''
     myPlayer.xp = 0
     myPlayer.money = 0
+    myPlayer.missions = []
 
 
 ##### Player Setup #####
@@ -54,6 +55,7 @@ class Player:
         self.weapon = ''
         self.xp = 0
         self.money = 0
+        self.missions = []
 
 
 myPlayer = Player()
@@ -100,13 +102,25 @@ class Skelemob:
         self.max = 500
         self.appear = '#######################################\n# A skeleton appeared out of the dark #\n#######################################'
         self.attack = '##############################\n# The skeleton attacked you. #\n##############################'
-        self.die = '#####################################################\n# You are Dead, with a arrow inpaled in your heart. #\n#####################################################'
+        self.die = '#####################################################\n# You are Dead, with a arrow impaled in your heart. #\n#####################################################'
         self.defeat = '####################################\n#   You have defeated a skeleton.  #\n#    You have gained 25 money.     #\n#     You have gained 300 XP.      #\n####################################\n'
 
 
 skeleton = Skelemob()
 
-
+class Spideeer:
+    def __init__(self):
+        self.hp = 600
+        self.ap = 10
+        self.status_effects = 'poison'
+        self.xp = 500
+        self.money = 25
+        self.max = 500
+        self.appear = '#######################################\n# A spider appeared out of the dark #\n#######################################'
+        self.attack = '##############################\n# The spider attacked you. #\n##############################'
+        self.die = '#####################################################\n# You are Dead, biten by the spider. #\n#####################################################'
+        self.defeat = '####################################\n#   You have defeated a spider.    #\n#    You have gained 40 money.     #\n#     You have gained 500 XP.      #\n####################################\n'
+spider = Spideeer()
 class Sword:
     def __init__(self):
         self.nick = 'sword'
@@ -331,9 +345,9 @@ def print_location():
 def prompt():
     print('\n' + '===============================')
     print('What would you like to do?')
-    print("(You can 'move', 'quit', 'look', 'talk', 'equip', 'help', 'stats' or 'act')")
+    print("(You can 'move', 'quit', 'look', 'talk', 'equip', 'help', 'stats' or 'act' or 'mission')")
     action = input('> ')
-    acceptable_actions = ['move', 'quit', 'look', 'act', 'talk', 'equip', 'stats', 'money', 'help']
+    acceptable_actions = ['move', 'quit', 'look', 'act', 'talk', 'equip', 'stats', 'money', 'help','mission']
     while action.lower() not in acceptable_actions:
         print('Unknown action, try again.\n')
         action = input('> ')
@@ -364,6 +378,8 @@ def prompt():
         stats()
     elif action.lower().strip() == 'help':
         help_menu(True)
+    elif action.lower().strip() == 'mission':
+        mission()
     elif action.lower().strip() == 'money':
         myPlayer.money = int(input('Money = ?\n'))
 
@@ -507,7 +523,7 @@ def shop():
         # PURCHASE BOOTS
         if myPlayer.money > 9:
             myPlayer.inventory.append('boots')
-            myPlayer.money = myPlayer.money - 10
+            myPlayer.money -= 10
             print('You have purchased the Iron Boots.')
         else:
             print('You do not have enough money!')
@@ -515,7 +531,7 @@ def shop():
         # PURCHASE LEGGINGS
         if myPlayer.money > 19:
             myPlayer.inventory.append('leggings')
-            myPlayer.money = myPlayer.money - 20
+            myPlayer.money -= 20
             print('You have purchased the Iron Leggings.')
         else:
             print('You do not have enough money!')
@@ -523,7 +539,7 @@ def shop():
         # PURCHASE HELMET
         if myPlayer.money > 29:
             myPlayer.inventory.append('helmet')
-            myPlayer.money = myPlayer.money - 30
+            myPlayer.money -= 30
             print('You have purchased the Iron Helmet.')
         else:
             print('You do not have enough money!')
@@ -531,7 +547,7 @@ def shop():
         # PURCHASE CHESTPLATE
         if myPlayer.money > 39:
             myPlayer.inventory.append('chestplate')
-            myPlayer.money = myPlayer.money - 40
+            myPlayer.money -= 40
             print('You have purchased the Iron Chestplate.')
         else:
             print('You do not have enough money!')
@@ -539,7 +555,7 @@ def shop():
         # PURCHASE SHIELD
         if myPlayer.money > 34:
             myPlayer.inventory.append('shield')
-            myPlayer.money = myPlayer.money - 35
+            myPlayer.money -= 35
             print('You have purchased the shield.')
         else:
             print('You do not have enough money!')
@@ -547,6 +563,19 @@ def shop():
     if cart.lower().strip() == 'back':
         main_game_loop()
 
+def mission():
+    comma_needed = ''
+    if len(myPlayer.missions) > 1:
+        comma_needed = ','
+    print('#########################################')
+    print('#               Missions                #')
+    print('# • ', end='' )
+    for a in myPlayer.missions:
+        print(a + comma_needed, end='')
+    if len(myPlayer.missions) != 1:
+        comma_needed = ','
+    print('.')
+    print('#########################################')
 
 ##### GAME FUNCTIONALITY #####
 def start_game():
@@ -656,110 +685,7 @@ def setup_game():
 
 def player_act():
     if not map.zonemap[myPlayer.location][SOLVED]:
-        if myPlayer.location == 'b4':
-            myPlayer.location = 'c1'
-            map.zonemap[myPlayer.location][ZONENAME] = 'Telporter'
-            map.zonemap['b4'][ZONENAME] = 'Telporter'
-            destination = myPlayer.location
-            movement_handler(destination)
-        elif myPlayer.location == 'c1':
-            myPlayer.location = 'b4'
-            map.zonemap['c1'][ZONENAME] = 'Telporter'
-            destination = myPlayer.location
-            movement_handler(destination)
-        elif myPlayer.location == 'd4':
-            # New_Map()
-            myPlayer.location = 'e1'
-            destination = myPlayer.location
-            movement_handler(destination)
-        elif myPlayer.location == 'b1':
-            print('You pick up the knife')
-            myPlayer.inventory.append('knife')
-        elif myPlayer.location == 'b2':
-            print1 = 'You take a nap'
-            myPlayer.hp = myPlayer.max
-            for character in print1:
-                sys.stdout.write(character)
-                sys.stdout.flush()
-                time.sleep(0.1)
-            time.sleep(1)
-        elif myPlayer.location == 'b3':
-            if not myPlayer.xp == 0:
-                print1 = '"I will give you some money if you defeat the monsters south of here" said an old man.'
-                for character in print1:
-                    sys.stdout.write(character)
-                    sys.stdout.flush()
-                    time.sleep(0.1)
-            else:
-                print1 = 'I have given you some money.\n Now go away!'
-                for character in print1:
-                    sys.stdout.write(character)
-                    sys.stdout.flush()
-                    time.sleep(0.1)
-                myPlayer.money = myPlayer.money + 40
-                map.zonemap[myPlayer.location][SOLVED] = True
-            time.sleep(1)
-        elif myPlayer.location == 'c3':
-            print1 = 'You take a nap'
-            myPlayer.hp = myPlayer.max
-            for character in print1:
-                sys.stdout.write(character)
-                sys.stdout.flush()
-                time.sleep(0.1)
-            time.sleep(1)
-        elif myPlayer.location == 'c4':
-            turn_based_combat()
-        elif myPlayer.location == 'd3':
-            turn_based_combat()
-        elif myPlayer.location == 'd2':
-            print()
-            print1 = 'this beach is so sandy that... \n you take a nap.'
-            myPlayer.hp = myPlayer.max
-            for character in print1:
-                sys.stdout.write(character)
-                sys.stdout.flush()
-                time.sleep(0.1)
-            time.sleep(1)
-        elif myPlayer.location == 'a1':
-            if myPlayer.money == 0:
-                print1 = '"Go get money so you can buy stuff!" shouts one of the merchants'
-                for character in print1:
-                    sys.stdout.write(character)
-                    sys.stdout.flush()
-                time.sleep(0.1)
-            else:
-                shop()
-        elif myPlayer.location == 'c2':
-            if map.zonemap['c1'][ZONENAME] == 'Telporter':
-                print(
-                    "'Thank you for finding out what that place was! I'll give you a reward for doing that'said the mysterious man, giving you some\n money.")
-                myPlayer.money = myPlayer.money + 30
-                map.zonemap[myPlayer.location][SOLVED] = True
-            else:
-                print(
-                    '"Can you please find;  out what is in the place left of us.I really want to live there" said a mysterious man')
-        elif myPlayer.location == 'e1':
-            if 'key' in myPlayer.inventory:
-                print('You pick up the shield.')
-                myPlayer.inventory.append('shield')
-            else:
-                print('You NEED A KEY!')
-        elif myPlayer.location == 'e5':
-            turn_based_combat()
-        elif myPlayer.location == 'f1':
-            print1 = 'You take a nap'
-            myPlayer.hp = myPlayer.max
-            for character in print1:
-                sys.stdout.write(character)
-                sys.stdout.flush()
-                time.sleep(0.1)
-            time.sleep(1)
-        elif myPlayer.location == 'f4':
-            turn_based_combat()
-        elif myPlayer.location == 'f5':
-            title_screen()
-        else:
-            print(map.zonemap[myPlayer.location][ACTION])
+        exec(map.zonemap[myPlayer.location][ACTION])
     else:
         print('There is nothing to do here!')
 
@@ -824,9 +750,12 @@ def combat(enemy):
             damage = enemy.ap
             for i in myPlayer.armour:
                 damage = damage - math.floor((i.dp / 2))
-                i.durability = i.durability - 1
+                i.durability -= 1
+                for x in range(0, 3):
+                    if i.durability <= 0:
+                        myPlayer.armour.remove(i)
             if not willdefend:
-                myPlayer.hp = myPlayer.hp - damage
+                myPlayer.hp -= damage
             if myPlayer.hp <= 0:
                 myPlayer.hp = 0
                 myPlayer.game_over = True
@@ -847,8 +776,8 @@ def combat(enemy):
                 sys.stdout.flush()
                 time.sleep(0.1)
     print(enemy.defeat)
-    myPlayer.xp = myPlayer.xp + enemy.xp
-    myPlayer.money = myPlayer.money + enemy.money
+    myPlayer.xp += enemy.xp
+    myPlayer.money += enemy.money
     levels = math.floor((myPlayer.xp / 1000))
     if levels % 10 == 0:
         myPlayer.ap = myPlayer.ap + 1
@@ -868,7 +797,7 @@ def new_map():
         sys.stdout.write(character)
         sys.stdout.flush()
         time.sleep(0.1)
-
+    
 
 print('________________        _________            _______ ______          _______ _      _________        _______ _______             _______ _______ _______ _______  ')
 print('\__   __(  ____ |\     /\__   __/           (  ___  (  __  \|\     /(  ____ ( (    /\__   __|\     /(  ____ (  ____ \           (  ____ (  ___  (       (  ____ \ ')

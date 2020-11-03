@@ -26,7 +26,16 @@ zonemap = {
         LEFT: 'null',
         RIGHT: 'a2',
         DIALOGUE: 'A Seller in the Market says: "I used to go fishing at the beach, but now theres monsters nearby!"',
-        ACTION: 'You are looking at the code'
+        ACTION: '''
+if myPlayer.money == 0:
+    print1 = '"Go get money so you can buy stuff!" shouts one of the merchants'
+    for character in print1:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+    time.sleep(0.1)
+else:
+    shop()
+        '''
     },
     'a2': {
         ZONENAME: 'Town Entrance',
@@ -38,7 +47,7 @@ zonemap = {
         LEFT: 'a1',
         RIGHT: 'a3',
         DIALOGUE: 'A old villager by the entrance says: "Hello my dear child, where have you come from?"',
-        ACTION: 'The mayoral election are going on. Everyone is talking about it.'
+        ACTION: '''print("The mayoral election are going on. Everyone is talking about it.")'''
     },
     'a3': {
         ZONENAME: 'Town Square',
@@ -62,7 +71,7 @@ zonemap = {
         LEFT: 'a3',
         RIGHT: 'null',
         DIALOGUE: 'The Mayor comes out of the town hall. He says: "Beware all, for there are monsters south of here!"',
-        ACTION: "There is a weird smell of rotten eggs inside. I'm not going inside!"
+        ACTION: """print("There is a weird smell of rotten eggs inside. I'm not going inside!")"""
     },
     'b1': {
         ZONENAME: 'Chest',
@@ -74,7 +83,10 @@ zonemap = {
         LEFT: 'null',
         RIGHT: 'b2',
         DIALOGUE: 'Theres nobody to talk to here...',
-        ACTION: 'You are looking at the code'
+        ACTION: '''
+print('You pick up the knife')
+myPlayer.inventory.append('knife')
+        '''
     },
     'b2': {
         ZONENAME: 'Home',
@@ -86,7 +98,15 @@ zonemap = {
         LEFT: 'b1',
         RIGHT: 'b3',
         DIALOGUE: '"Good luck on your journey.",Said your Mom .',
-        ACTION: 'You are looking at the code'
+        ACTION: '''
+print1 = 'You take a nap'
+myPlayer.hp = myPlayer.max
+for character in print1:
+    sys.stdout.write(character)
+    sys.stdout.flush()
+    time.sleep(0.1)
+time.sleep(1)
+        '''
     },
     'b3': {
         ZONENAME: 'Forest',
@@ -98,7 +118,31 @@ zonemap = {
         LEFT: 'b2',
         RIGHT: 'b4',
         DIALOGUE: '"I will give you a reward if you save to town from the monsters", said an old man',
-        ACTION: 'You are looking at the code'
+        ACTION: '''
+if myPlayer.xp == 0:
+    print1 = '"I will give you some money if you defeat the monsters south of here" said an old man.'
+    for character in print1:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.1)
+    myPlayer.missions.append('Defeat Monsters')
+else:
+    print1 = "I have given you some money."
+    print2 = "Now go away!"
+    for character in print1:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.1)
+    print('')
+    for character in print2:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.1)
+    myPlayer.money = myPlayer.money + 40
+    map.zonemap[myPlayer.location][SOLVED] = True
+    myPlayer.missions.remove('Defeat Monsters')
+time.sleep(1)
+        '''
     },
     'b4': {
         ZONENAME: '???',
@@ -110,7 +154,13 @@ zonemap = {
         LEFT: 'b3',
         RIGHT: 'null',
         DIALOGUE: 'Theres nobody to talk to here...',
-        ACTION: 'You are looking at the code'
+        ACTION: '''
+myPlayer.location = 'c1'
+map.zonemap[myPlayer.location][ZONENAME] = 'Telporter'
+map.zonemap['b4'][ZONENAME] = 'Telporter'
+destination = myPlayer.location
+movement_handler(destination)
+        '''
     },
     'c1': {
         ZONENAME: '???',
@@ -122,7 +172,12 @@ zonemap = {
         LEFT: 'null',
         RIGHT: 'c2',
         DIALOGUE: 'Theres nobody to talk to here...',
-        ACTION: 'You are looking at the code'
+        ACTION: '''
+myPlayer.location = 'b4'
+map.zonemap['c1'][ZONENAME] = 'Telporter'
+destination = myPlayer.location
+movement_handler(destination)
+            '''
     },
     'c2': {
         ZONENAME: 'Forest',
@@ -134,7 +189,16 @@ zonemap = {
         LEFT: 'c1',
         RIGHT: 'c3',
         DIALOGUE: 'Theres nobody to talk to here...',
-        ACTION: 'You are looking at the code'
+        ACTION: '''
+if map.zonemap['c1'][ZONENAME] == 'Telporter':
+    print("'Thank you for finding out what that place was! I'll give you a reward for doing that'said the mysterious man, giving you some money.")
+    myPlayer.money = myPlayer.money + 30
+    map.zonemap[myPlayer.location][SOLVED] = True
+    myPlayer.missions.remove('Find out what that place is.')
+else:
+    print('"Can you please find;  out what is in the place left of us.I really want to live there" said a mysterious man')
+    myPlayer.missions.append('Find out what that place is.')
+        '''
     },
     'c3': {
         ZONENAME: 'Forest',
@@ -146,7 +210,15 @@ zonemap = {
         LEFT: 'c2',
         RIGHT: 'c4',
         DIALOGUE: 'Theres nobody to talk to here...',
-        ACTION: 'You are looking at the code'
+        ACTION: '''
+print1 = 'You take a nap'
+myPlayer.hp = myPlayer.max
+for character in print1:
+    sys.stdout.write(character)
+    sys.stdout.flush()
+    time.sleep(0.1)
+time.sleep(1)
+        '''
     },
     'c4': {
         ZONENAME: 'Dungeon',
@@ -158,7 +230,7 @@ zonemap = {
         LEFT: 'c3',
         RIGHT: 'null',
         DIALOGUE: 'Theres nobody to talk to here...',
-        ACTION: 'You are looking at the code'
+        ACTION: '''turn_based_combat()'''
     },
     'd1': {
         ZONENAME: 'Beach',
@@ -170,7 +242,7 @@ zonemap = {
         LEFT: 'null',
         RIGHT: 'd2',
         DIALOGUE: 'Theres nobody to talk to here...',
-        ACTION: 'The beach is too rocky to do anything.'
+        ACTION: '''print('The beach is too rocky to do anything.')'''
     },
     'd2': {
         ZONENAME: 'Beach',
@@ -182,7 +254,21 @@ zonemap = {
         LEFT: 'd1',
         RIGHT: 'd3',
         DIALOGUE: '"my moomy sed dat da plase right of us is wery danegrus" said one of the children',
-        ACTION: 'You are looking at the code'
+        ACTION: '''
+print1 = 'this beach is so sandy that... '
+print2 = ' you take a nap.'
+myPlayer.hp = myPlayer.max
+for character in print1:
+    sys.stdout.write(character)
+    sys.stdout.flush()
+    time.sleep(0.1)
+print('')
+for character in print2:
+    sys.stdout.write(character)
+    sys.stdout.flush()
+    time.sleep(0.1)
+time.sleep(1)
+        '''
     },
     'd3': {
         ZONENAME: 'Dungeon',
@@ -194,7 +280,7 @@ zonemap = {
         LEFT: 'd2',
         RIGHT: 'd4',
         DIALOGUE: 'Theres nobody to talk to here...',
-        ACTION: 'You are looking at the code'
+        ACTION: '''turn_based_combat()'''
     },
     'd4': {
         ZONENAME: 'End Portal',
@@ -206,7 +292,12 @@ zonemap = {
         LEFT: 'd3',
         RIGHT: 'null',
         DIALOGUE: 'Theres nobody to talk to here...',
-        ACTION: 'You are looking at the code'
+        ACTION: '''
+# New_Map()
+myPlayer.location = 'e1'
+destination = myPlayer.location
+movement_handler(destination)
+        '''
     },
     'e1': {
         ZONENAME: 'Chest',
@@ -218,7 +309,15 @@ zonemap = {
         LEFT: 'null',
         RIGHT: 'e2',
         DIALOGUE: 'Nobody is here',
-        ACTION: 'You are looking at the code'
+        ACTION: '''
+if 'key' in myPlayer.inventory:
+    print('You pick up the shield.')
+    myPlayer.inventory.append('shield')
+    myPlayer.missions.remove('Find a key.')
+else:
+    print('You NEED A KEY!')
+    myPlayer.missions.append('Find a key.')
+        '''
     },
     'e2': {
         ZONENAME: 'Bridge',
@@ -230,7 +329,7 @@ zonemap = {
         LEFT: 'e1',
         RIGHT: 'e3',
         DIALOGUE: 'Nobody is here',
-        ACTION: 'I wish I could play pooh sticks, but I have no one to play with me.'
+        ACTION: '''print('I wish I could play pooh sticks, but I have no one to play with me.')'''
     },
     'e3': {
         ZONENAME: 'Spikes',
@@ -242,7 +341,7 @@ zonemap = {
         LEFT: 'e2',
         RIGHT: 'e4',
         DIALOGUE: 'Nobody is here',
-        ACTION: 'You are looking at the code'
+        ACTION: '''print('Theres nothing to do here')'''
     },
     'e4': {
         ZONENAME: 'Spikes',
@@ -254,7 +353,7 @@ zonemap = {
         LEFT: 'e3',
         RIGHT: 'e5',
         DIALOGUE: 'Nobody is here!',
-        ACTION: 'You are looking at the code'
+        ACTION: '''print('Theres nothing to do here')'''
     },
     'e5': {
         ZONENAME: 'Dungeon',
@@ -266,7 +365,7 @@ zonemap = {
         LEFT: 'e4',
         RIGHT: 'null',
         DIALOGUE: 'Theres nobody to talk to here...',
-        ACTION: 'You are looking at the code'
+        ACTION: '''turn_based_combat()'''
     },
     'f1': {
         ZONENAME: 'Farm House',
@@ -278,7 +377,15 @@ zonemap = {
         LEFT: 'null',
         RIGHT: 'f2',
         DIALOGUE: "'You can't go across the bridges, dangers are there' said the farm owner",
-        ACTION: 'You are looking at the code'
+        ACTION: '''
+print1 = 'You take a nap'
+myPlayer.hp = myPlayer.max
+for character in print1:
+    sys.stdout.write(character)
+    sys.stdout.flush()
+    time.sleep(0.1)
+time.sleep(1)
+        '''
     },
     'f2': {
         ZONENAME: 'Bridge',
@@ -290,7 +397,7 @@ zonemap = {
         LEFT: 'f1',
         RIGHT: 'f3',
         DIALOGUE: 'Nobody is here',
-        ACTION: 'You are looking at the code'
+        ACTION: '''print('I wish I could play pooh sticks, but I have no one to play with me.')'''
     },
     'f3': {
         ZONENAME: 'Spikes',
@@ -302,7 +409,7 @@ zonemap = {
         LEFT: 'f2',
         RIGHT: 'f4',
         DIALOGUE: 'Nobody is here!',
-        ACTION: 'You are looking at the code'
+        ACTION: '''print('Theres nothing to do here')'''
     },
     'f4': {
         ZONENAME: 'Dungeon',
@@ -314,7 +421,7 @@ zonemap = {
         LEFT: 'f3',
         RIGHT: 'f5',
         DIALOGUE: 'Theres nobody to talk to here...',
-        ACTION: 'You are looking at the code'
+        ACTION: '''turn_based_combat()'''
     },
     'f5': {
         ZONENAME: 'End Portal',
@@ -326,19 +433,27 @@ zonemap = {
         LEFT: 'f3',
         RIGHT: 'null',
         DIALOGUE: 'Theres nobody to talk to here...',
-        ACTION: 'You are looking at the code'
+        ACTION: '''title_screen()'''
     },
     'g1': {
         ZONENAME: 'Farmland',
         DESCRIPTION: 'There is some farmland in this area',
-        EXAMINATION: 'The crops are growing perfectly',
+        EXAMINATION: 'The corn are growing perfectly',
         SOLVED: False,
         UP: 'f1',
         DOWN: 'null',
         LEFT: 'null',
         RIGHT: 'g2',
-        DIALOGUE: '"You can eat some of the crops if you want"',
-        ACTION: 'You are looking at the code'
+        DIALOGUE: '"You can eat some of the corn if you want"',
+        ACTION: '''
+print1 = 'You eat some corn.'
+myPlayer.hp = myPlayer.max
+for character in print1:
+    sys.stdout.write(character)
+    sys.stdout.flush()
+    time.sleep(0.05)
+time.sleep(0.2)
+        '''
     },
     'g2': {
         ZONENAME: 'Bridge',
@@ -350,7 +465,7 @@ zonemap = {
         LEFT: 'g1',
         RIGHT: 'g3',
         DIALOGUE: 'Nobody is here',
-        ACTION: 'You are looking at the code'
+        ACTION: '''print('I wish I could play pooh sticks, but I have no one to play with me')'''
     },
     'g3': {
         ZONENAME: 'Spikes',
@@ -362,7 +477,7 @@ zonemap = {
         LEFT: 'g2',
         RIGHT: 'e4',
         DIALOGUE: 'Nobody is here!',
-        ACTION: 'You are looking at the code'
+        ACTION: '''print('Theres nothing to do here')'''
     },
     'g4': {
         ZONENAME: 'Spikes',
@@ -374,7 +489,7 @@ zonemap = {
         LEFT: 'g2',
         RIGHT: 'e5',
         DIALOGUE: 'Nobody is here!',
-        ACTION: 'You are looking at the code'
+        ACTION: '''print('Theres nothing to do here')'''
     },
     'g5': {
         ZONENAME: 'Dungeon',
@@ -385,7 +500,7 @@ zonemap = {
         DOWN: 'null',
         LEFT: 'g4',
         RIGHT: 'null',
-        DIALOGUE: 'Theres nobody to talk to here...',
-        ACTION: 'You are looking at the code'
+        DIALOGUE: 'Nobody is here!',
+        ACTION: '''turn_based_combat()'''
     },
 }
