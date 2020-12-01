@@ -76,7 +76,6 @@ class Gslime:
 
 
 GreenS = Gslime()
-print(GreenS.appear)
 
 class Zomboy:
     def __init__(self):
