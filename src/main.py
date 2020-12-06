@@ -60,6 +60,7 @@ class Player:
 
 myPlayer = Player()
 
+enemyAppear = '#####################################{}\n# A {} appeared out of the dark #\n#####################################{}'
 
 class Gslime:
     def __init__(self):
@@ -68,14 +69,13 @@ class Gslime:
         self.xp = 100
         self.money = 10
         self.max = 300
-        self.appear = '##########################################\n# A Green Slime appeared out of the dark #\n##########################################'
+        self.appear = enemyAppear.format('#####','Green Slime','#####')
         self.attack = '################################\n# The Green Slime attacked you.#\n################################'
         self.die = '############################################\n# You are Dieing slowly, incased in slime. #\n############################################'
         self.defeat = '####################################\n# You have defeated a green slime. #\n#     You have gained 100 XP.      #\n#    You have gained 10 money.     #\n####################################\n'
 
 
 GreenS = Gslime()
-
 
 class Zomboy:
     def __init__(self):
@@ -84,7 +84,7 @@ class Zomboy:
         self.xp = 500
         self.money = 25
         self.max = 500
-        self.appear = '#####################################\n# A Zombie appeared out of the dark #\n#####################################'
+        self.appear = enemyAppear.format('','Zombie','')
         self.attack = '############################\n# The Zombie attacked you. #\n############################'
         self.die = '##########################################################################\n# You are now a zombie as the zombie who just killed you is now a human. #\n##########################################################################'
         self.defeat = '####################################\n#   You have defeated a zombie.    #\n#     You have gained 500 XP.      #\n#    You have gained 25 money.     #\n####################################\n'
@@ -100,7 +100,7 @@ class Skelemob:
         self.xp = 500
         self.money = 25
         self.max = 500
-        self.appear = '#######################################\n# A skeleton appeared out of the dark #\n#######################################'
+        self.appear = enemyAppear.format('##','Skeleton','##')
         self.attack = '##############################\n# The skeleton attacked you. #\n##############################'
         self.die = '#####################################################\n# You are Dead, with a arrow impaled in your heart. #\n#####################################################'
         self.defeat = '####################################\n#   You have defeated a skeleton.  #\n#    You have gained 25 money.     #\n#     You have gained 300 XP.      #\n####################################\n'
@@ -116,7 +116,7 @@ class Spideeer:
         self.xp = 500
         self.money = 25
         self.max = 500
-        self.appear = '#######################################\n# A spider appeared out of the dark #\n#######################################'
+        self.appear = enemyAppear.format('##','Spider','##')
         self.attack = '##############################\n# The spider attacked you. #\n##############################'
         self.die = '#####################################################\n# You are Dead, biten by the spider. #\n#####################################################'
         self.defeat = '####################################\n#   You have defeated a spider.    #\n#    You have gained 40 money.     #\n#     You have gained 500 XP.      #\n####################################\n'
@@ -151,6 +151,7 @@ class Knife:
 
 class Boots:
     def __init__(self):
+        self.cost = 9
         self.nick = 'boots'
         self.name = 'Iron Boots'
         self.dp = 5
@@ -159,6 +160,7 @@ class Boots:
 
 class Leggings:
     def __init__(self):
+        self.cost = 19
         self.nick = 'leggings'
         self.name = 'Iron Leggings'
         self.dp = 15
@@ -167,6 +169,7 @@ class Leggings:
 
 class Chestplate:
     def __init__(self):
+        self.cost = 39
         self.nick = 'chestplate'
         self.name = 'Iron Chestplate'
         self.dp = 20
@@ -175,6 +178,7 @@ class Chestplate:
 
 class Helmet:
     def __init__(self):
+        self.cost = 29
         self.nick = 'helmet'
         self.name = 'Iron Helmet'
         self.dp = 10
@@ -183,6 +187,7 @@ class Helmet:
 
 class Shield:
     def __init__(self):
+        self.cost = 34
         self.nick = 'shield'
         self.name = myPlayer.job + "'s Shield"
 
@@ -199,6 +204,7 @@ armour_to_class = {
     'chestplate': Chestplate(),
     'leggings': Leggings(),
     'boots': Boots(),
+    'shield' : Shield(),
 }
 
 
@@ -513,53 +519,21 @@ def shop():
     print('#######################################################################################################')
     print('                                    TYPE THE THING YOU WANT TO BUY TO PURCHASE!                        ')
     print('                                               TYPE BACK TO GO BACK!                                   ')
-    print('                                    YOU HAVE ₴ ' + str(myPlayer.money) + '.                    ')
+    print('                                    YOU HAVE ₴ ' + str(myPlayer.money) + '.                            ')
     cart = input('> ')
     acceptable_cart = ['1', '2', '3', '4', '5', 'back']
+    shop_id = {
+        '1' : 'boots',
+        '2' : 'leggings',
+        '3' : 'helmet',
+        '4' : 'chestplate',
+        '5' : 'shield',}
     while cart.lower().strip() not in acceptable_cart:
         print('Unknown action, try again.\n')
         cart = input('> ')
-    if cart.lower().strip() == '1':
-        # PURCHASE BOOTS
-        if myPlayer.money > 9:
-            myPlayer.inventory.append('boots')
-            myPlayer.money -= 10
-            print('You have purchased the Iron Boots.')
-        else:
-            print('You do not have enough money!')
-    if cart.lower().strip() == '2':
-        # PURCHASE LEGGINGS
-        if myPlayer.money > 19:
-            myPlayer.inventory.append('leggings')
-            myPlayer.money -= 20
-            print('You have purchased the Iron Leggings.')
-        else:
-            print('You do not have enough money!')
-    if cart.lower().strip() == '3':
-        # PURCHASE HELMET
-        if myPlayer.money > 29:
-            myPlayer.inventory.append('helmet')
-            myPlayer.money -= 30
-            print('You have purchased the Iron Helmet.')
-        else:
-            print('You do not have enough money!')
-    if cart.lower().strip() == '4':
-        # PURCHASE CHESTPLATE
-        if myPlayer.money > 39:
-            myPlayer.inventory.append('chestplate')
-            myPlayer.money -= 40
-            print('You have purchased the Iron Chestplate.')
-        else:
-            print('You do not have enough money!')
-    if cart.lower().strip() == '5':
-        # PURCHASE SHIELD
-        if myPlayer.money > 34:
-            myPlayer.inventory.append('shield')
-            myPlayer.money -= 35
-            print('You have purchased the shield.')
-        else:
-            print('You do not have enough money!')
-
+    if myPlayer.money > (armour_to_class[shop_id[cart.lower().strip()]].cost -1):
+        myPlayer.inventory.append(shop_id[cart.lower().strip()])
+        myPlayer.money -= armour_to_class[shop_id[cart.lower().strip()]].cost
     if cart.lower().strip() == 'back':
         main_game_loop()
 
